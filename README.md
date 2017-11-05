@@ -33,32 +33,32 @@ USAGE:
         6. Copy paste the command below to create the "user" table:
 
             create table users (
-                                    email varchar(100) primary key,
+                                    id int PRIMARY KEY AUTO_INCREMENT,
+                                    email varchar(100) NOT NULL UNIQUE,
                                     name varchar(100),
-                                    username varchar(60),
-                                    password varchar(60),
+                                    password varchar(60) NOT NULL,
                                     avatar blob,
                                     is_planner BOOLEAN
                                 );
 
         -> use "describe users" to make user that the table looks like the one below:
 
-            +------------+--------------+------+-----+---------+-------+
-            | Field      | Type         | Null | Key | Default | Extra |
-            +------------+--------------+------+-----+---------+-------+
-            | email      | varchar(100) | NO   | PRI | NULL    |       |
-            | name       | varchar(100) | YES  |     | NULL    |       |
-            | username   | varchar(60)  | YES  |     | NULL    |       |
-            | password   | varchar(60)  | YES  |     | NULL    |       |
-            | avatar     | blob         | YES  |     | NULL    |       |
-            | is_planner | tinyint(1)   | YES  |     | NULL    |       |
-            +------------+--------------+------+-----+---------+-------+
+            +------------+--------------+------+-----+---------+----------------+
+            | Field      | Type         | Null | Key | Default | Extra          |
+            +------------+--------------+------+-----+---------+----------------+
+            | id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+            | email      | varchar(100) | NO   | UNI | NULL    |                |
+            | name       | varchar(100) | YES  |     | NULL    |                |
+            | password   | varchar(60)  | NO   |     | NULL    |                |
+            | avatar     | blob         | YES  |     | NULL    |                |
+            | is_planner | tinyint(1)   | YES  |     | NULL    |                |
+            +------------+--------------+------+-----+---------+----------------+
 
 
         7. Copy paste the command below to create the "planners" table
 
             create table planners (
-                                    email varchar(100) primary key,
+                                    id int PRIMARY KEY AUTO_INCREMENT,
                                     contact_name varchar(100),
                                     contact_email varchar(100),
                                     phone_number varchar(12),
@@ -68,44 +68,44 @@ USAGE:
 
         -> use "describe planners " to make user that the table looks like the one below:
 
-            +---------------+--------------+------+-----+---------+-------+
-            | Field         | Type         | Null | Key | Default | Extra |
-            +---------------+--------------+------+-----+---------+-------+
-            | email         | varchar(100) | NO   | PRI | NULL    |       |
-            | contact_name  | varchar(100) | YES  |     | NULL    |       |
-            | contact_email | varchar(100) | YES  |     | NULL    |       |
-            | phone_number  | varchar(12)  | YES  |     | NULL    |       |
-            | website       | varchar(100) | YES  |     | NULL    |       |
-            +---------------+--------------+------+-----+---------+-------+
+            +---------------+--------------+------+-----+---------+----------------+
+            | Field         | Type         | Null | Key | Default | Extra          |
+            +---------------+--------------+------+-----+---------+----------------+
+            | id            | int(11)      | NO   | PRI | NULL    | auto_increment |
+            | contact_name  | varchar(100) | YES  |     | NULL    |                |
+            | contact_email | varchar(100) | YES  |     | NULL    |                |
+            | phone_number  | varchar(12)  | YES  |     | NULL    |                |
+            | website       | varchar(100) | YES  |     | NULL    |                |
+            +---------------+--------------+------+-----+---------+----------------+
 
         8. Copy paste the command below to create the "events" table
 
             create table events (
-                                    id int primary key AUTO_INCREMENT,
-                                    planner varchar(100),
+                                    id int  PRIMARY KEY  AUTO_INCREMENT,
+                                    planner_id varchar(100) NOT NULL,
                                     building_name varchar(250),
                                     room_num int,
-                                    latitude_o double,
-                                    longitude_o double,
-                                    start_datetime datetime,
-                                    end_datetime datetime,
+                                    latitude_o double  NOT NULL,
+                                    longitude_o double  NOT NULL,
+                                    start_datetime datetime  NOT NULL,
+                                    end_datetime datetime  NOT NULL,
                                     description TEXT,
-                                    is_published BOOLEAN,
-                                    is_open BOLLEAN,
+                                    is_published BOOLEAN  NOT NULL,
+                                    is_open BOLLEAN  NOT NULL,
                                     picture blob
                                 );
 
         9. Copy paste the command below to create the "rsvp_list" table
 
             create table rsvp_list (
-                                        event_id int primary key AUTO_INCREMENT,
-                                        user varchar(100)
-            )
+                                        event_id int  PRIMARY KEY  AUTO_INCREMENT,
+                                        user_id int  NOT NULL
+                                    );
 
 
         10. Copy paste the command below to create the "favorited_events" table
 
-            create table favorited_events (
-                                        user varchar(100) primary key,
-                                        event_id int,
-            )
+            create table favorited_events   (
+                                                user_id int PRIMARY KEY,
+                                                event_id int  NOT NULL
+                                            );
