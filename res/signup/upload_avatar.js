@@ -36,6 +36,6 @@ function load_avatar(input){
 }
 
 function restore_defautlt_avatar(){
-    $('#signup-avatar').attr('src', "imgs/user_avatar_default.png");
+    $('#signup-avatar').attr('src', "../../imgs/user_avatar_default.png");
     document.getElementById('file-label').innerHTML = "<i class='glyphicon glyphicon-upload'></i> Upload Avatar";
 }

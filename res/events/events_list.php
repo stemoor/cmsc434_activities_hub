@@ -1,6 +1,6 @@
 <?php
-  include_once "res/db/db_connect.php";
-  include_once "res/db/functions.php";
+  include_once "../db/db_connect.php";
+  include_once "../db/functions.php";
 
   sec_session_start();
 
@@ -29,7 +29,7 @@
     <title>Activities Hub</title>
 
     <!--google map script-->
-    <script src="js/googlemap/map.js"></script>
+    <script src="../../js/googlemap/map.js"></script>
 
     <!--Bootstrap core JavaScript-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -37,7 +37,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- Custom styles for this page -->
-    <link href="css/main_style.css" rel="stylesheet">
+    <link href="../../css/main_style.css" rel="stylesheet">
 
   </head>
 
@@ -311,7 +311,7 @@
                   }
                 ?>
 
-                <form id="login-form" action="res/login/process_login.php" method="post" autocomplete="off">
+                <form id="login-form" action="../login/process_login.php" method="post" autocomplete="off">
 
                   <!--user name input-->
                   <div class="form-group has-feedback">
@@ -397,10 +397,10 @@
             <div class="modal-body">
               <div class="col-lg-12">
 
-                <form id="signup-form" action="res/signup/process_signup.php" method="post" autocomplete="off">
+                <form id="signup-form" action="../signup/process_signup.php" method="post" autocomplete="off">
 
                   <div class="form-group text-center">
-                    <img src="imgs/user_avatar_default.png" alt="User Avatar" id="signup-avatar" class="img-circle"></img><br>
+                    <img src="../../imgs/user_avatar_default.png" alt="User Avatar" id="signup-avatar" class="img-circle"></img><br>
                     <!--<label for="avatar-file">Avatar</label>-->
                     <!--<input type="file" id="avatar-file" class="form-control-file">-->
                       <label for="avatar-file" id="file-label" class="btn" style="border: solid 1px;"><i class="glyphicon glyphicon-upload"></i> Upload Avatar</label>
@@ -490,7 +490,7 @@
             <!--body -->
             <div class="modal-body">
               <div class="col-lg-12">
-                <form id="event-form" action="res/signup/process_signup" method="post" autocomplete="off">
+                <form id="event-form" action="../signup/process_signup" method="post" autocomplete="off">
 
 
                 </form>
@@ -513,6 +513,11 @@
       <!--</signup-modal>-->
 
     </div>
+
+    <!--script that handles updating avatar image and uplaod button-->
+    <script src="../signup/upload_avatar.js"></script>
+    <!--script that handles updating avatar image and uplaod button-->
+    <script src="../signup/validate_signup.js"></script>
 
   </body>
 </html>
