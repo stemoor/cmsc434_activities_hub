@@ -2,7 +2,7 @@
 
 
 Software required:
-    XAMPP installed to run Apache and MySql)
+    XAMPP installed to run Apache and MySql
         -> Download and Install XAMPP
             1. In the (C:) folder find the XAMPP folder and paste this entire project with root folder "activities_hub" in the htdoc folder (C:\xampp\htdocs)
         -> Open XAMPP control Panel
@@ -58,7 +58,7 @@ USAGE:
         7. Copy paste the command below to create the "planners" table
 
             create table planners (
-                                    id int PRIMARY KEY AUTO_INCREMENT,
+                                    user_id int PRIMARY KEY,
                                     contact_name varchar(100),
                                     contact_email varchar(100),
                                     phone_number varchar(12),

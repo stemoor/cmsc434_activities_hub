@@ -136,7 +136,6 @@
 
         </div>
         <!--</nav bar container>-->
-
       </nav>
       <!--/.navbar-->
 
@@ -145,6 +144,9 @@
       <section class="success" id="home">
           <!--</sectio body>-->
         <div class="section-body">
+
+          //enter your code here
+
         </div>
         <!--</main section container>-->
 
@@ -152,49 +154,7 @@
       <!--</main section>-->
 
 
-      <!-- About Section -->
-      <section class="success" id="about">
-        <div class="container">
 
-          <!--section title-->
-          <div class="row">
-            <div class="col-lg-12 text-center">
-              <h2>About Us</h2>
-              <hr class="star-light">
-            </div>
-          </div>
-          <!--</section title>-->
-
-          <!--section body-->
-          <div class="row">
-            <div class="col-lg-4 col-lg-offset-2">
-              <h3>For Drivers:</h3><br>
-              <p>Going somewhere but does't want to go alone or pay for the costs of the trip alone? RideShare at UMD helps you find carpool mates from anywhere to anywhere completly free. </p>
-              <br><p>Sign up now and start your own ride. Users going to the same destination can join your ride. You may ask them to contribute to trip cost!</p><br>
-              <p>If you ever feel like just enjoying the ride, you can join other riders too. </p>
-            </div>
-
-            <div class="col-lg-4">
-              <h3>For Riders:</h3><br>
-              <p>Going somewhere but don't feel like driving or you don't own a car? RideShare at UMD helps you find carpool drivers from anywhere to anywhere completly free. </p>
-              <br><p>Sign up now and search for trips that match your own. If a match is found you can joing the ride. You may be asked to contribute to the trip cost!</p><br>
-              <p>If you ever feel like driving, you can start your own ride and other riders can joins. </p>
-            </div>
-
-            <div class="col-lg-8 col-lg-offset-2 text-center">
-              <br><h6>(RiderShare is not responsible for any payment transactions between driver and rider)</h6>
-              <a href="http://localhost/rideShareWorking/userRegistration/registration.php" class="btn btn-lg btn-outline">
-                <i class="glyphicon glyphicon-user"></i> Create an Account
-              </a>
-            </div>
-          </div>
-          <!--section body-->
-
-        </div>
-        <!--</sectin container>-->
-
-      </section>
-      <!--</about section>-->
 
       <!-- Footer -->
       <footer class="text-center">
@@ -554,9 +514,5 @@
 
     </div>
 
-    <!--script that handles updating avatar image and uplaod button-->
-    <script src="res/signup/upload_avatar.js"></script>
-    <!--script that handles updating avatar image and uplaod button-->
-    <script src="res/signup/validate_signup.js"></script>
   </body>
 </html>

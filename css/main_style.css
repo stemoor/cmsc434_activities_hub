@@ -45,8 +45,8 @@ input.form-control {
 }
 
 #signup-avatar{
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 150px;
   position: relative;
   align-self: center;
   padding: 5%;
@@ -144,6 +144,11 @@ ul.dropdown-lr {
 /*******************************
     modals
 */
+
+
+.modal.text-center {
+  padding-bottom: 0px;
+}
 .modal.left .modal-dialog,
 .modal.right .modal-dialog {
   position: fixed;
@@ -204,11 +209,10 @@ ul.dropdown-lr {
 .modal-header {
   border-bottom-color: #EEEEEE;
   background-color: #FAFAFA;
+  padding-bottom: 0px;
 }
 
 .modal-footer {
   padding: 2%;
   height: auto;
 }
-
-
