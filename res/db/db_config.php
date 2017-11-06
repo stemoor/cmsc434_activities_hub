@@ -1,4 +1,9 @@
 <?php
+
+	/**
+	 * These are the database login details
+	 */
+
 	$host = "localhost";
 	$user = "root";
 	$password = null;
@@ -9,7 +14,7 @@
 	$rsvp_table = "rsvp_list";
 	$favorited_events = "favorited_events";
 
-	function connectToDB() {
+	function connectDB() {
 		global $host, $user, $password, $database;
 		$db = mysqli_connect($host, $user, null, $database);
 		if (mysqli_connect_errno()) {

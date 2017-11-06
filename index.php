@@ -1,3 +1,20 @@
+<?php
+  include_once "res/db/db_connect.php";
+  include_once "res/db/functions.php";
+
+  sec_session_start();
+
+  $logged = false;
+
+  //check if logged in
+  if(login_check($db_connection) == true) {
+    $logged = true;
+  }
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,13 +28,16 @@
 
     <title>Activities Hub</title>
 
+    <!--google map script-->
+    <script src="js/googlemap/map.js"></script>
+
+    <!--Bootstrap core JavaScript-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- Custom styles for this page -->
     <link href="css/main_style.css" rel="stylesheet">
-
-    <!--google map script-->
-    <script src="js/googlemap/map.js"></script>
 
   </head>
 
@@ -77,7 +97,7 @@
 
               <!--login button and login dropdown form-->
               <li class="dropdown page-scroll">
-                <a href="#" class="" data-toggle="modal" data-target="#login-modal">
+                <a href="#" id="login-btn" class="" data-toggle="modal" data-target="#login-modal">
                   <span class="glyphicon glyphicon-log-in"></span> Login
                 </a>
               </li>
@@ -321,18 +341,29 @@
             <!--body -->
             <div class="modal-body">
               <div class="col-lg-12">
-                <form id="login-form" action="res/login/processLogin.php" method="post" autocomplete="off">
+
+                <!--adds error mgs if login was unsuccessful-->
+                <?php
+                  if(isset($_GET['error'])){
+                    echo "<script> $(\"#login-btn\").click();</script>";
+                    echo '<p class="error">Invalid Email or Password!</p>';
+
+                  }
+                ?>
+
+                <form id="login-form" action="res/login/process_login.php" method="post" autocomplete="off">
 
                   <!--user name input-->
-                  <div class="form-group has-feedback has-feedback-left">
-                    <input type="email" name="email" id="login-email" tabindex="1" class="form-control" placeholder="Email" value="" autocomplete="off" required>
+                  <div class="form-group has-feedback">
+                    <input type="email" name="email" id="login-email" tabindex="1" class="form-control" placeholder="Email" value="" autocomplete="off"  required>
                     <i class="form-control-feedback glyphicon glyphicon-user"></i>
                   </div>
                   <!--</user name input>-->
 
                   <!--password input-->
-                  <div class="form-group">
+                  <div class="form-group has-feedback">
                     <input type="password" name="password" id="login-password" tabindex="1" class="form-control" placeholder="Password" autocomplete="off" required>
+                     <i class="form-control-feedback glyphicon glyphicon-lock"></i>
                   </div>
 
                   <!--remember me option and submit button-->
@@ -390,7 +421,7 @@
             <div class="modal-header text-center">
 
               <!--close button-->
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button id='signup-close' type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
 
@@ -405,27 +436,49 @@
             <!--body -->
             <div class="modal-body">
               <div class="col-lg-12">
-                <form id="signup-form" action="php/login_process.php" method="post" autocomplete="off">
-                  <div class="form-group has-feedback has-feedback-left">
-                    <input type="text" name="signup-username" id="signup-username" tabindex="1" class="form-control" placeholder="Username" value="" autocomplete="off">
-                    <i class="form-control-feedback glyphicon glyphicon-user"></i>
+
+                <form id="signup-form" action="res/signup/process_signup.php" method="post" autocomplete="off">
+
+                  <div class="form-group text-center">
+                    <img src="imgs/user_avatar_default.png" alt="User Avatar" id="signup-avatar" class="img-circle"></img><br>
+                    <!--<label for="avatar-file">Avatar</label>-->
+                    <!--<input type="file" id="avatar-file" class="form-control-file">-->
+                      <label for="avatar-file" id="file-label" class="btn" style="border: solid 1px;"><i class="glyphicon glyphicon-upload"></i> Upload Avatar</label>
+                      <input id="avatar-file" style="display:none;" type="file"></input>
+                  </div>
+
+                  <div class="form-group has-feedback">
+                    <label for="firstname">Fisrt Name</label>
+                    <input type="text" name="first-name" id="firstname" tabindex="1" class="form-control" placeholder="First Name" value="" autocomplete="off" required>
+                  </div>
+
+                  <div class="form-group has-feedback">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" name="last-name" id="lastname" tabindex="1" class="form-control" placeholder="Last Name" value="" autocomplete="off" required>
                   </div>
 
                   <div class="form-group">
-                    <label for="signup-password">Password</label>
-                    <input type="password" name="signup-password" id="signup-password" tabindex="2" class="form-control" placeholder="Password" autocomplete="off">
+                    <label for="signup-password">New Password</label>
+                    <input type="password" name="password" id="signup-password" tabindex="2" class="form-control" placeholder="New Password" autocomplete="off" required>
                   </div>
 
-                                  <!--remember me option and submit button-->
+                  <div class="form-group">
+                    <label for="re-signup-password">Re-enter New Password</label>
+                    <input type="password" name="re-password" id="re-signup-password" tabindex="2" class="form-control" placeholder="Re-Password" autocomplete="off" required>
+                  </div>
+
                   <div class="form-group">
                     <div class="row">
-                      <div class="col-xs-5 pull-right">
-                        <input type="submit" name="signup-submit" id="signup-submit" tabindex="4" class="form-control btn btn-success" value="Log In">
+                      <div class="col-xs-7 pull-right">
+                        <input type="submit" name="signup-submit" id="signup-submit" tabindex="4" class="form-control btn btn-success" value="Create Acount">
                       </div>
+                      <div class="col-xs-5 pull-right">
+                        <input type="reset" name="signup-reset" id="signup-reset" tabindex="4" class="form-control btn btn-success" value="Reset">
+                      </div>
+
                     </div>
                   </div>
 
-                  <input type="hidden" class="hide" name="token" id="signup-token" value="a465a2791ae0bae853cf4bf485dbe1b6">
                 </form>
               </div>
             </div>
@@ -433,8 +486,7 @@
 
             <!--footer-->
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button id='signup-cancel' type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
           </div>
           <!--</modal-content>-->
@@ -446,8 +498,8 @@
       <!--</signup-modal>-->
 
 
-      <!--signup modal-->
-      <div id="event-modal" class="modal fade left" tabindex="-1" role="dialog" aria-labelledby="signup-label" aria-hidden="true">
+      <!--event modal-->
+      <div id="event-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="signup-label" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
 
@@ -470,27 +522,9 @@
             <!--body -->
             <div class="modal-body">
               <div class="col-lg-12">
-                <form id="signup-form" action="" method="post" autocomplete="off">
-                  <div class="form-group has-feedback has-feedback-left">
-                    <input type="text" name="event-username" id="event-username" tabindex="1" class="form-control" placeholder="Username" value="" autocomplete="off">
-                    <i class="form-control-feedback glyphicon glyphicon-user"></i>
-                  </div>
+                <form id="event-form" action="res/signup/process_signup" method="post" autocomplete="off">
 
-                  <div class="form-group">
-                    <label for="event-password">Password</label>
-                    <input type="password" name="event-password" id="event-password" tabindex="2" class="form-control" placeholder="Password" autocomplete="off">
-                  </div>
 
-                                  <!--remember me option and submit button-->
-                  <div class="form-group">
-                    <div class="row">
-                      <div class="col-xs-5 pull-right">
-                        <input type="submit" name="event-submit" id="event-submit" tabindex="4" class="form-control btn btn-success" value="Log In">
-                      </div>
-                    </div>
-                  </div>
-
-                  <input type="hidden" class="hide" name="token" id="event-token" value="a465a2791ae0bae853cf4bf485dbe1b6">
                 </form>
               </div>
             </div>
@@ -510,16 +544,9 @@
       </div>
       <!--</signup-modal>-->
 
-
-
-
-
-
-      <!-- Bootstrap core JavaScript
-      ================================================== -->
-      <!-- Placed at the end of the document so the pages load faster -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </div>
+
+    <!--script that handles updating avatar image and uplaod button-->
+    <script src="res/signup/upload_avatar.js"></script>
   </body>
 </html>

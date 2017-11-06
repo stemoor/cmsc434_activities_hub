@@ -41,6 +41,19 @@ input.form-control {
   height: 100%;
   padding: 10px;
   font-size: 15px;
+
+}
+
+#signup-avatar{
+  height: 200px;
+  width: 200px;
+  position: relative;
+  align-self: center;
+  padding: 5%;
+}
+
+#signup-modal input{
+
 }
 
 /*******************************
@@ -62,7 +75,7 @@ input.form-control {
 
 .wrapper {
 	margin-top: 80px;
-	margin-bottom: 20px;
+	margin-bottom: 0;
 }
 
 .form-signin {
@@ -135,7 +148,7 @@ ul.dropdown-lr {
 .modal.right .modal-dialog {
   position: fixed;
   margin: auto;
-  width: 320px;
+  width: 350px;
   height: 100%;
   -webkit-transform: translate3d(0%, 0, 0);
       -ms-transform: translate3d(0%, 0, 0);
@@ -158,7 +171,7 @@ ul.dropdown-lr {
 
 /*Left*/
 .modal.left.fade .modal-dialog{
-  left: -320px;
+  left: -350px;
   -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
      -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
        -o-transition: opacity 0.3s linear, left 0.3s ease-out;
@@ -171,7 +184,7 @@ ul.dropdown-lr {
 
 /*Right*/
 .modal.right.fade .modal-dialog {
-  right: -320px;
+  right: -350px;
   -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
      -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
        -o-transition: opacity 0.3s linear, right 0.3s ease-out;
@@ -197,7 +210,5 @@ ul.dropdown-lr {
   padding: 2%;
   height: auto;
 }
-
-
 
 
