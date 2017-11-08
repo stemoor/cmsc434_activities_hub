@@ -38,6 +38,7 @@
 
     <!-- Custom styles for this page -->
     <link href="../../css/main_style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/search_style.css">
 
   </head>
 
@@ -61,7 +62,7 @@
             </button>
 
             <!--title of the page-->
-            <a class="navbar-brand navbar-left" href="#">Activitie Hub</a>
+            <a class="navbar-brand navbar-left" href="#">Activity Hub</a>
           </div>
 
           <!--add every nav bar button/link under here so it can be collapsed for mobal-->
@@ -142,10 +143,98 @@
 
       <!-- main section Section -->
       <section class="success" id="home">
-          <!--</sectio body>-->
-        <div class="section-body">
-
-          //enter your code here
+          <!--</section body>-->
+        <div class="section-body"> 
+          <div class="search-box-first">
+            <div class="header-box">
+              <p><font size="5">Google Information Session </font>
+                
+                  <button type="button" class="btn btn-info btn-lg right-header-box" >
+                    <span class="glyphicon glyphicon-save"></span> Save
+                  </button>
+                
+                  <button type="button" class="btn btn-info btn-lg right-header-box">
+                    <span class="glyphicon glyphicon-envelope"></span> RSVP 
+                  </button>
+                
+              </p>
+            </div>
+            <div class="right-date-box">
+                <p class="normal"> Date: 11/7/2017  </p>
+                <p class="normal">Time: 7:00 pm  </p>
+                <p class="normal"> Location: CSIC Room 2117  </p>
+              </div>
+              
+              <p class="describe">
+                <img src="http://5pillarsuk.com/wp-content/uploads/2016/08/google.png" alt="Company/Club logo" style="border:black 3px outset;width:220px;height:142px;float:left; margin-right: 20px;">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.
+              </p>
+              
+            
+          </div>
+          <div class="search-box">
+            <div class="header-box">
+              <p><font size="5">Capital One Tech Talk <font>
+                <button type="button" class="btn btn-info btn-lg right-header-box">
+                  <span class="glyphicon glyphicon-save"></span> Save
+                 </button>
+                 <button type="button" class="btn btn-info btn-lg right-header-box">
+                  <span class="glyphicon glyphicon-envelope"></span> RSVP 
+                </button>
+              </p>
+            </div>
+            <div class="right-date-box">
+                <p class="normal">Date: 12/8/2017 </p>
+                <p class="normal">Time: 5:30 pm </p>
+                <p class="normal">Location: CSIC Room 3102</p>
+            </div>
+            <p class="describe">
+              <img src="https://www.capitalone.com/media/graphic-logo/global/icons/capone-logo200x200.png" alt="Company/Club logo" style="border:black 3px outset;width:220px;height:142px;float:left; margin-right:20px">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.
+            </p>
+          </div>
+          <div class="search-box">
+            <div class="header-box">
+              <p><font size="5">Student Meet N' Greet<font>
+                <button type="button" class="btn btn-info btn-lg right-header-box">
+                  <span class="glyphicon glyphicon-save"></span> Save
+                 </button>
+                 <button type="button" class="btn btn-info btn-lg right-header-box">
+                  <span class="glyphicon glyphicon-envelope"></span> RSVP 
+                </button>
+              </p>
+            </div>
+            <div class="right-date-box">
+                <p class="normal">Date: 11/9/2017 </p>
+                <p class="normal">Time: 6:00 pm </p>
+                <p class="normal">Location: STAMP Student Union Ballroom </p>
+            </div> 
+            <p class="describe">
+              <img src="http://syntheticapertureradar.com/wp-content/uploads/2017/06/1350x760-Northrop-Grumman.png" alt="Company/Club logo" style="border:black 3px outset;width:220px;height:142px;float:left;margin-right: 20px;">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.
+            </p>
+          </div>
+          <div class="search-box">
+            <div class="header-box">
+              <p><font size="5">CS department Ice Cream social <font>
+                <button type="button" class="btn btn-info btn-lg right-header-box" >
+                  <span class="glyphicon glyphicon-save"></span> Save
+                 </button>
+                 <button type="button" class="btn btn-info btn-lg right-header-box" >
+                  <span class="glyphicon glyphicon-envelope"></span> RSVP 
+                </button>
+              </p>
+            </div>
+            <div class="right-date-box">
+                <p class="normal">Date: 11/3/2017 </p>
+                <p class="normal">Time: 1:00 pm </p>
+                <p class="normal">Location: CSIC Lobby </p>
+            </div>
+            <p class="describe">
+              <img src="http://nordoniahills.news/wp-content/uploads/2016/06/ice-cream.jpg" alt="Company/Club logo" style="border:black 3px outset;width:220px;height:142px;float:left;margin-right:20px;">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.
+            </p>
+          </div>
 
         </div>
         <!--</main section container>-->
