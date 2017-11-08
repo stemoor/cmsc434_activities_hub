@@ -214,10 +214,11 @@ ul.dropdown-lr {
 
 /*Event css settings*/
 .event_img {
-	height: 25%;
-	width: 15%;
-	margin-top: 5%;
-	margin-left: 13%;
+	position: absolute;
+	height: auto%;
+	max-width: 100%;
+	margin-top: 4.5%;
+	margin-left: 17%;
 	border:2px solid #021a40;
 }
 
@@ -251,7 +252,7 @@ ul.dropdown-lr {
 .btn.rsvp{
 	position: absolute;
 	background: #555;
-	top: 60%;
+	top: 65%;
 	left: 70%;
 	width: 12%;
 	height: 22%;
@@ -260,6 +261,23 @@ ul.dropdown-lr {
 }
 
 .btn.rsvp:hover{
+	box-shadow: 5px 5px 5px #333;
+	color: #184182;
+	background: white;
+}
+
+.btn.favorite{
+	position: absolute;
+	background: #555;
+	top: 35%;
+	left: 70%;
+	width: 12%;
+	height: 22%;
+	font-size: 250%;
+	box-shadow: 3px 3px 5px #999;
+}
+
+.btn.favorite:hover{
 	box-shadow: 5px 5px 5px #333;
 	color: #184182;
 	background: white;
