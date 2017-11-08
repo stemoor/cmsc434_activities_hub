@@ -37,7 +37,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- Custom styles for this page -->
-    <link href="../../css/main_style.css" rel="stylesheet">
+    <link href="../../css/event_page_style.css" rel="stylesheet">
 
   </head>
 
@@ -150,18 +150,13 @@
           <!--</sectio body>-->
         <div class="section-body">
 			<div class="event_information">			
-				
-				
-				
-				
-				<!--</Image that organizer will choose, but it's a temp for now>-->
 				<img class="event_img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/UMD_Stamp.JPG/1200px-UMD_Stamp.JPG"
-				width=150 height=150 align="left">
+				width=225 height=200 align="left">	
 				
 				<h1>Student Meet N' Greet</h1>
-				
-				
+				<!--</Image that organizer will choose, but it's a temp for now>-->			
 				<!--</RSVP button that will do something>-->
+				<button type="button" class="btn favorite btn-lg"><b>Favorite</b></button>
 				<button type="button" class="btn rsvp btn-lg"><b>RSVP</b></button>
 				<ul>
 					<li><b>Where:</b>		STAMP Student Union Ballroom</li>
