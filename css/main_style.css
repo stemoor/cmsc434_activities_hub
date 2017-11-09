@@ -216,3 +216,33 @@ ul.dropdown-lr {
   padding: 2%;
   height: auto;
 }
+
+/* ------ Create event modal style ------ */
+
+.form-block {
+  display: inline-block;
+    width: 410px;
+    height: 500px;
+    margin: 10px;
+    vertical-align: top;
+}
+
+
+.form-block input[type=text], textarea {
+  resize: none;
+  width: 100%;
+}
+
+.form-block * {
+  margin: 5px;
+}
+
+#rightformblock {
+   border-left: 2px solid;
+}
+
+.form-block img {
+  max-width: 100%;
+  height: auto;
+}
+
