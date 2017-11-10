@@ -1,16 +1,71 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 html, body {
+
   width: 100%;
   height: 100%;
   overflow-x: hidden;
   margin: 0 auto;
+  background: url("https://az616578.vo.msecnd.net/files/2017/01/19/636204307397093862-1842221556_aerials_mcircle_04302010_006_small.jpg") top center/100% 100% fixed no-repeat;
+  background: url("../imgs/bgMain3.png") top center/100% 100% fixed no-repeat;
+
+  height: 100%;
+  width: 100%;
 }
 
-#home {
-  background: url("../imgs/bgMain3.png") top center/100% 100% fixed no-repeat;
+#home .section-body{
+  padding-left: 18%;
+  padding-right: 18%;
+  padding-top: 10%;
+  padding-bottom: 0%;
   height: 100%;
-  min-height: 800px;
+}
+
+
+#about{
+  background: white;
+  margin-top: 5%;
+  margin-bottom: 10%;
+  padding: 5%;
+}
+.main-title {
+  font-family: 'Roboto', sans-serif;
+  color: rgba(0, 0, 0, 1);;
+  padding-bottom: 5%;
+  text-align: center;
+}
+
+.main-title h1 {
+  font-size: 3.5em;
+}
+.event-block{
+  margin-bottom: 2%;
+  margin-right: 5%;
+  color:  rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.events-grid .row{
   width: 100%;
+  align-content:center;
+}
+
+.events-grid {
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 2%;
+  padding-bottom: 5%;
+  align-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  background:rgba(255, 255, 255, .85);
+  border-radius: 0;
+  display: block;
+}
+
+.events-grid .card{
+  margin-top: 10%;
+  height: 150px;
+  display: inline-block;
 }
 
 nav.navbar {
@@ -246,3 +301,48 @@ ul.dropdown-lr {
   height: auto;
 }
 
+
+/*******************************
+    footer
+*/
+
+footer {
+   background: #101010;
+   padding-bottom: 1%;
+   color: #9d9d9d;
+}
+footer .row {
+  height: 100%;
+
+}
+
+.event-block:hover{
+  background: rgba(255,255,255,.9);
+  color: black;
+  cursor: pointer;
+}
+
+.about-img{
+  background-image:  url("https://farm9.static.flickr.com/8059/8231788295_430d4a09eb_b.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  width: 500px;
+  border-right: 50px solid #34c3b9;
+}
+
+.form-control.search {
+
+  min-width: 800px;
+  display: inline-block;
+}
+
+.search-btn{
+    display: inline-block;
+}
+.nav-search-field{
+  align-content: center;
+  align-items: center;
+  display: inline-block;
+  margin-left: 8%;
+}

@@ -38,6 +38,10 @@
 
     <!-- Custom styles for this page -->
     <link href="css/main_style.css" rel="stylesheet">
+    <link href="css/event_search_results_style.css" rel="stylesheet">
+
+    <!--google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Barlow|Roboto:100" rel="stylesheet">
 
   </head>
 
@@ -77,9 +81,9 @@
             <div class="nav-search-field">
               <form class="navbar-form navbar-left">
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Search">
+                  <input type="text" class="form-control search" placeholder="Search">
                 </div>
-                <a href="#" class="btn btn-info">
+                <a href="res/events/search_event_results.php" class="btn btn-info search-btn">
                   <span class="glyphicon glyphicon-search align-bottom"></span>
                 </a>
               </form>
@@ -144,7 +148,55 @@
       <!-- main section Section -->
       <section class="success" id="home">
           <!--</sectio body>-->
-        <div class="section-body">
+        <div class="section-body overlay">
+
+          <div class="events-grid">
+            <diV class="main-title">
+              <h1>Looking for an event? Browse all of them!</h1>
+            </diV>
+
+            <div class="row">
+              <div class="col-sm-4 col-sm-offset-2 green-bg event-block">
+                <div class="card ">
+                  <div class="card-block">
+                   <h2>Workshops</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4 purple-bg event-block">
+                <div class="card ">
+                  <div class="card-block">
+                    <h2>Tech Talks</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row ">
+
+              <div class="col-sm-4   col-sm-offset-2 teal-bg event-block ">
+                <div class="card ">
+                  <div class="card-block">
+                    <h2>Club Meetings</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4 pink-bg event-block" onclick="goToEventsListPage();"">
+                <div class="card ">
+                  <div class="card-block">
+                    <h2><i class="glyphicon glyphicon-plus" ></i>  All Events</h2>
+                    <script>
+                      function goToEventsListPage(){
+                        window.location="res/events/search_event_results.php";
+                      }
+                    </script>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--</events-grid>-->
         </div>
         <!--</main section container>-->
 
@@ -153,13 +205,13 @@
 
 
       <!-- About Section -->
-      <section class="success" id="about">
+      <section class="teal-bg" id="about">
         <div class="container">
 
           <!--section title-->
-          <div class="row">
+          <div class="row main-title">
             <div class="col-lg-12 text-center">
-              <h2>About Us</h2>
+              <h1>About Us</h1>
               <hr class="star-light">
             </div>
           </div>
@@ -167,25 +219,29 @@
 
           <!--section body-->
           <div class="row">
-            <div class="col-lg-4 col-lg-offset-2">
-              <h3>For Drivers:</h3><br>
-              <p>Going somewhere but does't want to go alone or pay for the costs of the trip alone? RideShare at UMD helps you find carpool mates from anywhere to anywhere completly free. </p>
-              <br><p>Sign up now and start your own ride. Users going to the same destination can join your ride. You may ask them to contribute to trip cost!</p><br>
-              <p>If you ever feel like just enjoying the ride, you can join other riders too. </p>
+            <div class="col-lg-4 col-lg-offset-2 event-block">
+              <p>
+              <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h3></p>
+              <br>
+
+              <p class="text-left">
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                  when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+              </p> <br>
+
+              <p>
+                <strong>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</strong>
+              </p><br>
+
+              <p class="text-left">
+                It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+              </p>
+
             </div>
 
-            <div class="col-lg-4">
-              <h3>For Riders:</h3><br>
-              <p>Going somewhere but don't feel like driving or you don't own a car? RideShare at UMD helps you find carpool drivers from anywhere to anywhere completly free. </p>
-              <br><p>Sign up now and search for trips that match your own. If a match is found you can joing the ride. You may be asked to contribute to the trip cost!</p><br>
-              <p>If you ever feel like driving, you can start your own ride and other riders can joins. </p>
-            </div>
-
-            <div class="col-lg-8 col-lg-offset-2 text-center">
-              <br><h6>(RiderShare is not responsible for any payment transactions between driver and rider)</h6>
-              <a href="http://localhost/rideShareWorking/userRegistration/registration.php" class="btn btn-lg btn-outline">
-                <i class="glyphicon glyphicon-user"></i> Create an Account
-              </a>
+            <div class="col-lg-4 event-block">
+              <div class="about-img"></div>
             </div>
           </div>
           <!--section body-->
@@ -250,7 +306,7 @@
                 <!--column title-->
                 <h3>Mission </h3>
                 <!--mission statement -->
-                <p>RideShare is a free to use application created for CMSC389N Spring 2017 at UMD.</p>
+                <p>Activities Hub is a free to use application created for CMSC434 Fall 2017 at UMD.</p>
               </div>
               <!--</mission column-->
 
@@ -301,13 +357,6 @@
             </div>
             <!--</modal-body>-->
 
-            <!--footer-->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-            <!--</modal-footer>-->
-
           </div>
           <!--</modal-content>-->
 
@@ -346,7 +395,7 @@
                 <?php
                   if(isset($_GET['error'])){
                     echo "<script> $(\"#login-btn\").click();</script>";
-                    echo '<p class="error">Invalid Email or Password!</p>';
+                    echo '<p class="error" style="color:red";>>Invalid Email or Password!</p>';
 
                   }
                 ?>
@@ -396,12 +445,6 @@
             </div>
             <!--</modal-body>-->
 
-            <!--footer-->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-            <!--</modal-footer>-->
 
           </div>
           <!--</modal-content>-->
@@ -449,12 +492,14 @@
 
                   <div class="form-group has-feedback">
                     <label for="firstname">Fisrt Name</label>
-                    <input type="text" name="first-name" id="firstname" tabindex="1" class="form-control" placeholder="First Name" value="" autocomplete="off" required>
+                    <input type="text" name="first-name" id="firstname" tabindex="1" class="form-control"
+                           placeholder="First Name" value="" autocomplete="off" required onchange="refreshWarning(this);">
                   </div>
 
                   <div class="form-group has-feedback">
                     <label for="lastname">Last Name</label>
-                    <input type="text" name="last-name" id="lastname" tabindex="1" class="form-control" placeholder="Last Name" value="" autocomplete="off" required>
+                    <input type="text" name="last-name" id="lastname" tabindex="1" class="form-control"
+                           placeholder="Last Name" value="" autocomplete="off" required onchange="refreshWarning(this);">
                   </div>
 
                   <div class="form-group has-feedback">
@@ -466,13 +511,14 @@
                   <div class="form-group">
                     <label for="signup-password">New Password</label>
                     <input type="password" name="password" id="signup-password" tabindex="2" class="form-control"
-                           placeholder="New Password" autocomplete="off" required onchange="compare_passwords(this);"
+                           placeholder="New Password" autocomplete="off" required onchange="refreshWarning(this);"
                            data-placement="bottom" title="Passwords must have more than 8 digits." >
                   </div>
 
                   <div class="form-group">
                     <label for="re-signup-password">Re-enter New Password</label>
-                    <input type="password" name="re-password" id="signup-repassword" tabindex="2" class="form-control" placeholder="Re-Password" autocomplete="off" required>
+                    <input type="password" name="re-password" id="signup-repassword" tabindex="2" class="form-control"
+                           placeholder="Re-Password" autocomplete="off" required onchange="refreshWarning(this);">
                   </div>
 
                   <div class="form-group">
@@ -492,10 +538,6 @@
             </div>
             <!--</modal-body>-->
 
-            <!--footer-->
-            <div class="modal-footer">
-              <button id='signup-cancel' type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            </div>
           </div>
           <!--</modal-content>-->
 
