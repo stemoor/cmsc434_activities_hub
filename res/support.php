@@ -1,19 +1,19 @@
 <?php
-  include_once "../db/db_connect.php";
-  include_once "../db/functions.php";
+    include_once "../db/db_connect.php";
+    include_once "../db/functions.php";
 
-  sec_session_start();
+    sec_session_start();
 
-  $logged = false;
+    $logged = false;
 
-  //check if logged in
-  if(login_check($db_connection) == true) {
-    $logged = true;
-  }
+    //check if logged in
+    if(login_check($db_connection) == true) {
+      $logged = true;
+    }
 
 
-
-?>
+    function generate_page($body) {
+        $page = <<<EOPAGE
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +37,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- Custom styles for this page -->
-    <link href="../../css/event_page_style.css" rel="stylesheet">
+    <link href="../../css/main_style.css" rel="stylesheet">
+    <link href="../../css/event_search_results_style.css" rel="stylesheet">
 
   </head>
 
@@ -69,7 +70,7 @@
 
             <!--home button-->
             <ul class="nav navbar-nav navbar-left">
-              <li class="active"><a href="#home">Home</a></li>
+              <li class="active"><a href="../../index.php">Home</a></li>
               <li><a href="#about">About</a></li>
             </ul>
 
@@ -136,63 +137,13 @@
 
         </div>
         <!--</nav bar container>-->
+
       </nav>
       <!--/.navbar-->
 
-
-      <!-- main section Section -->
-      <section class="success" id="home">
-          <!--</sectio body>-->
-        <div class="section-body">
-
-          <!-- main section Section -->
-      <section class="success" id="home">
-          <!--</sectio body>-->
-        <div class="section-body">
-			<div class="event_information">			
-				<img class="event_img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/UMD_Stamp.JPG/1200px-UMD_Stamp.JPG"
-				width=225 height=200 align="left">	
-				
-				<h1>Student Meet N' Greet</h1>
-				<!--</Image that organizer will choose, but it's a temp for now>-->			
-				<!--</RSVP button that will do something>-->
-				<button type="button" class="btn favorite btn-lg"><b>Favorite</b></button>
-				<button type="button" class="btn rsvp btn-lg"><b>RSVP</b></button>
-				<ul>
-					<li><b>Where:</b>		STAMP Student Union Ballroom</li>
-					<li><b>When:</b>		11/9/2017 6:00 pm</li>
-					<li><b>Price:</b>		Free</li>
-					<li><b>Organizer:</b>	University of Maryland</li>
-				</ul>
-				
-				
-			</div>
-			
-			<!--</Event description that the organizer will set>-->
-			<div class="event_description">
-				<h2> About Our Event </h2>
-				<p> Want to meet new people? Want to eat free food? then come on down
-				to the STAMP Student Union this Thursday and eat free food while meeting new
-				people!</p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eleifend, odio quis condimentum bibendum, massa diam feugiat ipsum, ut tempor lorem est non purus.
-				Aenean ut porttitor sem. Praesent sollicitudin ornare euismod. Sed augue leo, ultricies eget mi fringilla, blandit efficitur mauris. Ut at scelerisque libero. 
-				Pellentesque iaculis eget libero a egestas. Maecenas posuere maximus magna quis euismod. Suspendisse et neque egestas nulla vehicula faucibus congue vitae diam. Maecenas commodo tempus posuere.
-				Maecenas elementum aliquam sollicitudin. Aenean non fringilla dui, sit amet rhoncus augue. Vestibulum aliquam egestas fringilla. Morbi at magna eget enim venenatis vulputate eu in libero. Proin eget turpis venenatis est bibendum ultricies. Integer malesuada fermentum hendrerit. Cras nec varius felis, in tristique nisl. Quisque vel est convallis elit molestie tincidunt.</p>
-			</div>
+        <div class="page-wrapper">
+                    $body
         </div>
-        <!--</main section container>-->
-
-      </section>
-      <!--</main section>-->
-
-        </div>
-        <!--</main section container>-->
-
-      </section>
-      <!--</main section>-->
-
-
-
 
       <!-- Footer -->
       <footer class="text-center">
@@ -341,13 +292,6 @@
               <div class="col-lg-12">
 
                 <!--adds error mgs if login was unsuccessful-->
-                <?php
-                  if(isset($_GET['error'])){
-                    echo "<script> $(\"#login-btn\").click();</script>";
-                    echo '<p class="error">Invalid Email or Password!</p>';
-
-                  }
-                ?>
 
                 <form id="login-form" action="../login/process_login.php" method="post" autocomplete="off">
 
@@ -447,12 +391,14 @@
 
                   <div class="form-group has-feedback">
                     <label for="firstname">Fisrt Name</label>
-                    <input type="text" name="first-name" id="firstname" tabindex="1" class="form-control" placeholder="First Name" value="" autocomplete="off" required>
+                    <input type="text" name="first-name" id="firstname" tabindex="1" class="form-control"
+                           placeholder="First Name" value="" autocomplete="off" required onchange="refreshWarning(this);">
                   </div>
 
                   <div class="form-group has-feedback">
                     <label for="lastname">Last Name</label>
-                    <input type="text" name="last-name" id="lastname" tabindex="1" class="form-control" placeholder="Last Name" value="" autocomplete="off" required>
+                    <input type="text" name="last-name" id="lastname" tabindex="1" class="form-control"
+                           placeholder="Last Name" value="" autocomplete="off" required onchange="refreshWarning(this);">
                   </div>
 
                   <div class="form-group has-feedback">
@@ -464,13 +410,14 @@
                   <div class="form-group">
                     <label for="signup-password">New Password</label>
                     <input type="password" name="password" id="signup-password" tabindex="2" class="form-control"
-                           placeholder="New Password" autocomplete="off" required onchange="compare_passwords(this);"
+                           placeholder="New Password" autocomplete="off" required onchange="refreshWarning(this);"
                            data-placement="bottom" title="Passwords must have more than 8 digits." >
                   </div>
 
                   <div class="form-group">
                     <label for="re-signup-password">Re-enter New Password</label>
-                    <input type="password" name="re-password" id="signup-repassword" tabindex="2" class="form-control" placeholder="Re-Password" autocomplete="off" required>
+                    <input type="password" name="re-password" id="signup-repassword" tabindex="2" class="form-control"
+                           placeholder="Re-Password" autocomplete="off" required onchange="refreshWarning(this);">
                   </div>
 
                   <div class="form-group">
@@ -490,10 +437,6 @@
             </div>
             <!--</modal-body>-->
 
-            <!--footer-->
-            <div class="modal-footer">
-              <button id='signup-cancel' type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            </div>
           </div>
           <!--</modal-content>-->
 
@@ -502,7 +445,6 @@
 
       </div>
       <!--</signup-modal>-->
-
 
       <!--event modal-->
       <div id="event-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="signup-label" aria-hidden="true">
@@ -528,7 +470,7 @@
             <!--body -->
             <div class="modal-body">
               <div class="col-lg-12">
-                <form id="event-form" action="../signup/process_signup" method="post" autocomplete="off">
+                <form id="event-form" action="res/signup/process_signup" method="post" autocomplete="off">
 
 
                 </form>
@@ -556,6 +498,11 @@
     <script src="../signup/upload_avatar.js"></script>
     <!--script that handles updating avatar image and uplaod button-->
     <script src="../signup/validate_signup.js"></script>
-
   </body>
 </html>
+EOPAGE;
+
+        return $page;
+    }
+
+?>

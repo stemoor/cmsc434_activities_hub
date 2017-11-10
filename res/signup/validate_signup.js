@@ -3,33 +3,63 @@ $(document).ready(function(){
     $('input').tooltip();
 });
 
-function compare_passwords(password) {
+document.getElementById("signup-form").onsubmit = validate_input;
 
-    //get other password
-    let repassword =  document.getElementById("signup-repassword");
-    let repassword_val = repassword.value;
+function compare_passwords(password, confirm_password) {
 
-    //trigger a change in the second password in case the first was changed after the second
-    if(repassword_val !== ""){
-        $(repassword).change();
+    if(password.value !== confirm_password.value) {
+        console.log("don't match p: " + password + " rep: " + confirm_password);
+        confirm_password.setCustomValidity("Passwords don't match.");
+        return false;
+    } else {
+        console.log("match");
+        confirm_password.setCustomValidity("");
+        return true;
     }
 
-    $(repassword).change(function () {
-        let repassword_val = repassword.value;
-        let password_val =  password.value;
-
-        if(password_val !== repassword_val && repassword_val !== ""){
-            document.getElementById("pass_error").innerHTML = "<h4>Passwords Don't Match.</h4>";
-        } else {
-            document.getElementById("pass_error").innerHTML = "";
-        }
-    });
 }
 
 function validate_password(password) {
-    return (password !== "" && password !== " " && password.length() > 8);
+
+    let val = password.value.trim();
+
+    if(val === "") {
+        password.setCustomValidity("Password can't be empty space.");
+        return false;
+    } else if (val.length < 8) {
+        password.setCustomValidity("Password must contain at least 8 (non-empty space) characters.");
+        return false;
+    }
+
+    password.setCustomValidity("");
+    return true;
+}
+
+function validate_name(name){
+    if(name.value === " ") {
+        name.setCustomValidity("Insert a valid name.");
+        return false;
+    } else {
+        name.setCustomValidity("");
+        return true;
+    }
 }
 
 function validate_input(){
 
+    let first_name = document.getElementById("firstname");
+    let last_name = document.getElementById("lastname");
+    let password = document.getElementById("signup-password");
+    let confirm_password = document.getElementById("signup-repassword");
+
+    if(!validate_name(first_name) || !validate_name(last_name) || !validate_password(password) || !compare_passwords(password, confirm_password) ) {
+        return false;
+    }
+
+    return true;
+
+}
+
+function refreshWarning(input){
+    input.setCustomValidity("");
 }
