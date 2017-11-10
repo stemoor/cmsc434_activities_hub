@@ -78,9 +78,9 @@
             <div class="nav-search-field">
               <form class="navbar-form navbar-left">
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Search">
+                  <input type="text" class="form-control search" placeholder="Search">
                 </div>
-                <a href="#" class="btn btn-info">
+                <a href="res/events/search_event_results.php" class="btn btn-info search-btn">
                   <span class="glyphicon glyphicon-search align-bottom"></span>
                 </a>
               </form>
