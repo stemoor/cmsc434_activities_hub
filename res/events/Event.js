@@ -89,6 +89,3 @@ class Event {
 }
 
 
-function goToEventsListPage(){
-  window.location="res/events/search_event_results.php";
-}

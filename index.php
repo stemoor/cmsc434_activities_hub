@@ -345,17 +345,52 @@
           <div class="modal-content">
             <!--title-->
             <div class="modal-header">
-              <h5 class="modal-title" id="new-event-label">Modal title</h5>
+              <h1 class="modal-title" id="new-event-label">Create a new event</h1>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <!--</modal-header>-->
 
+            <!-- Content of the new event modal -->
             <div class="modal-body">
-              <p>Modal body text goes here.</p>
+              <form class="new-event-form">
+                 <div class="form-block">
+                    <div class="left-form">
+                      Event name <br>
+                        <input type="text" name="eventname" placeholder="e.g. Free South Campus barbecue"><br>
+                      Event day <br>
+                        <input id="date" type="date"> <br>
+                      Time <br>
+                       From <input type="time" name="timefrom"> Till <input type="time" name="timetill"> <br>
+                      Description <br>
+                        <textarea name="Text1" cols="40" rows="5" placeholder="Give a description of your event here..."></textarea> <br>
+                      Tickets required <br>
+                        <input type="radio" name="ticketsrequired" value="yes"> Yes
+                        <input type="radio" name="ticketsrequired" value="no"> No <br>
+                      Price <br>
+                        Free <input type="checkbox" name="free" value="free"> or $ <input type="number" min="0.00" max="10000.00" step="0.01" / placeholder="0.00"> <br>
+                      Link to buy tickets: <br>
+                        <input type="text" name="link" placeholder="e.g. buyyourtickershere.com/tickets"> <br>
+                    </div>
+                </div>
+                <div id=rightformblock class="form-block">
+                  <div class="right-form">
+                    <h5>Optional: upload an event picture</h5> <br>
+                      <input name="myFile" type="file"> <br>
+                      <img src="imgs/placeholder.jpg">
+                  </div>
+                </div>
+              </form>
             </div>
             <!--</modal-body>-->
+
+            <!--footer-->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            <!--</modal-footer>-->
 
           </div>
           <!--</modal-content>-->
@@ -365,7 +400,6 @@
 
       </div>
       <!--</new-event-modal>-->
-
 
 
       <!--login modal -->
