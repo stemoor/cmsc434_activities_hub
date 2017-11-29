@@ -1,32 +1,66 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
-html, body {
-
+html,
+body {
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+  margin: 0;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-  margin: 0 auto;
-  background: url("https://az616578.vo.msecnd.net/files/2017/01/19/636204307397093862-1842221556_aerials_mcircle_04302010_006_small.jpg") top center/100% 100% fixed no-repeat;
-  background: url("../imgs/bgMain3.png") top center/100% 100% fixed no-repeat;
+  background: url("../imgs/bg.jpg") top center/100% 100% fixed no-repeat;
+  overflow-y: auto;
+}
 
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+.content {
+  position: relative;
+  min-height: 100%;
   height: 100%;
-  width: 100%;
+}
+
+.page-wrapper {
+  position:relative;
+  margin: 0;
+  height: 100%;
 }
 
 #home .section-body{
   padding-left: 18%;
   padding-right: 18%;
-  padding-top: 10%;
-  padding-bottom: 0%;
+  margin-top: 61px;
+  padding-top: 5%;
+  padding-bottom: 5%;
   height: 100%;
 }
 
+.card-block h2 {
+ line-height: 97px;
+ margin: 0;
+}
+
+.navbar-nav>li>a {
+  height: 60px;
+  align-items: center;
+  vertical-align: middle;
+  line-height: 30px;
+}
+
+.navbar-inverse{
+  padding: 0;
+}
 
 #about{
   background: white;
-  margin-top: 5%;
   margin-bottom: 10%;
   padding: 5%;
 }
+
 .main-title {
   font-family: 'Roboto', sans-serif;
   color: rgba(0, 0, 0, 1);;
@@ -42,6 +76,7 @@ html, body {
   margin-right: 5%;
   color:  rgba(0, 0, 0, 0.5);
   text-align: center;
+  align-items: center;
 }
 
 .events-grid .row{
@@ -56,20 +91,20 @@ html, body {
   padding-bottom: 5%;
   align-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.8);
-  background:rgba(255, 255, 255, .85);
+  /*background: rgba(0, 0, 0, 0.8);*/
+  background:rgba(255, 255, 255, .45);
   border-radius: 0;
   display: block;
 }
 
 .events-grid .card{
-  margin-top: 10%;
-  height: 150px;
+  padding: 10%;
   display: inline-block;
 }
 
 nav.navbar {
   min-height: 50px;
+  background: #1b1b1c;
 }
 
 .container-fluid {
@@ -81,9 +116,9 @@ nav.navbar {
 }
 
 .navbar-wrapper.container {
-  padding-left: 5%;
-  padding-right: 5%;
-  height: 100%;
+  padding-left: 15%;
+  padding-right: 15%;
+  height: 50px;
 }
 
 a.btn.btn-info {
@@ -92,9 +127,7 @@ a.btn.btn-info {
 
 }
 
-input.form-control {
-  height: 100%;
-  padding: 10px;
+input.form-control, select.form-control {
   font-size: 15px;
 
 }
@@ -301,27 +334,16 @@ ul.dropdown-lr {
   height: auto;
 }
 
-
-/*******************************
-    footer
-*/
-
-footer {
-   background: #101010;
-   padding-bottom: 1%;
-   color: #9d9d9d;
-}
-footer .row {
-  height: 100%;
-
-}
-
 .event-block:hover{
-  background: rgba(255,255,255,.9);
-  color: black;
+  background: rgba(0,0,0,.5);
+  color: white;
   cursor: pointer;
 }
 
+.navbar-form {
+  padding-top: 11px;
+  margin-top: 0px;
+}
 .about-img{
   background-image:  url("https://farm9.static.flickr.com/8059/8231788295_430d4a09eb_b.jpg");
   background-size: cover;
@@ -331,18 +353,126 @@ footer .row {
   border-right: 50px solid #34c3b9;
 }
 
-.form-control.search {
-
-  min-width: 550px;
+.form-control.search, #search_category{
   display: inline-block;
+  border-radius : 5px;
+  max-height: 40px;
+
+}
+
+#search-category {
+  max-width: 100px;
+  color: gray;
+}
+
+#search_box{
+  min-width: 350px;
 }
 
 .search-btn{
     display: inline-block;
+    height: 40px;
+    border-radius : 5px;
+    z-index: 500;
 }
 .nav-search-field{
   align-content: center;
   align-items: center;
   display: inline-block;
-  margin-left: 8%;
+  margin-left: 5%;
+
+}
+
+.card.my-auto{
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+
+
+/*******************************
+    footer
+*/
+
+#footer {
+   background: #101010;
+   color: #9d9d9d;
+   height: 10px;
+
+}
+
+
+/*******************************
+ * Colors
+*/
+
+
+.right-border {
+	border-right: 20px solid;
+}
+
+.left-border {
+  border-left: 1px solid rgba(0,0,0,.5);
+}
+
+
+.purple-bg {
+	 background: #9b38bd;
+}
+
+.dark-green-bg {
+	 background: #c2d54a;
+}
+
+.green-bg {
+	background: #cfde00;
+}
+
+.teal-bg {
+	 background:  #34c3b9;
+}
+
+.pink-bg{
+	background: #df7575;
+}
+
+.gray-bg {
+   background: rgb(237, 242, 249);
+}
+
+.light-green-bg {
+	background: #E4F8D7;
+}
+
+.pink-border {
+	border-color: #df7575;
+}
+
+.purple-border {
+	border-color: #9b38bd;
+}
+
+.dark-green-border {
+	border-color: #c2d54a;
+}
+
+.green-border {
+	border-color: #cfde00;
+}
+
+.teal-border {
+	 border-color:  #34c3b9;
+}
+
+.light-green-border {
+	border-color: #E4F8D7;
+}
+
+.gray-border {
+   border-color: #aaaeb5;
+}
+
+.drop-right-shadow{
+    box-shadow: 10px 10px 5px rgba(0,0,0,.1);
 }

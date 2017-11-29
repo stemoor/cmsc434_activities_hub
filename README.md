@@ -35,7 +35,8 @@ USAGE:
             create table users (
                                     id int PRIMARY KEY AUTO_INCREMENT,
                                     email varchar(100) NOT NULL UNIQUE,
-                                    name varchar(100),
+                                    first_name varchar(100),
+                                    last_name varchar(100),
                                     password varchar(60) NOT NULL,
                                     avatar blob,
                                     is_planner BOOLEAN
@@ -58,9 +59,8 @@ USAGE:
         7. Copy paste the command below to create the "planners" table
 
             create table planners (
-                                    user_id int PRIMARY KEY,
-                                    contact_name varchar(100),
-                                    contact_email varchar(100),
+                                    id int PRIMARY KEY,
+                                    organization varchar(200) NOT NULL,
                                     phone_number varchar(12),
                                     website varchar(100)
                                 );
@@ -68,32 +68,48 @@ USAGE:
 
         -> use "describe planners " to make user that the table looks like the one below:
 
-            +---------------+--------------+------+-----+---------+----------------+
-            | Field         | Type         | Null | Key | Default | Extra          |
-            +---------------+--------------+------+-----+---------+----------------+
-            | id            | int(11)      | NO   | PRI | NULL    | auto_increment |
-            | contact_name  | varchar(100) | YES  |     | NULL    |                |
-            | contact_email | varchar(100) | YES  |     | NULL    |                |
-            | phone_number  | varchar(12)  | YES  |     | NULL    |                |
-            | website       | varchar(100) | YES  |     | NULL    |                |
-            +---------------+--------------+------+-----+---------+----------------+
+            +--------------+--------------+------+-----+---------+-------+
+            | Field        | Type         | Null | Key | Default | Extra |
+            +--------------+--------------+------+-----+---------+-------+
+            | id           | int(11)      | NO   | PRI | NULL    |       |
+            | organization | varchar(200) | NO   |     | NULL    |       |
+            | phone_number | varchar(12)  | YES  |     | NULL    |       |
+            | website      | varchar(100) | YES  |     | NULL    |       |
+            +--------------+--------------+------+-----+---------+-------+
 
         8. Copy paste the command below to create the "events" table
 
             create table events (
                                     id int  PRIMARY KEY  AUTO_INCREMENT,
-                                    planner_id varchar(100) NOT NULL,
-                                    building_name varchar(250),
-                                    room_num int,
-                                    latitude_o double  NOT NULL,
-                                    longitude_o double  NOT NULL,
+                                    planner_id int NOT NULL,
+                                    title varchar(250) NOT NULL,
+                                    event_type ENUM('techtalk', 'club', 'workshop', 'other') NOT NULL,
+                                    location varchar(250),
                                     start_datetime datetime  NOT NULL,
                                     end_datetime datetime  NOT NULL,
                                     description TEXT,
-                                    is_published BOOLEAN  NOT NULL,
-                                    is_open BOLLEAN  NOT NULL,
+                                    event_status ENUM('closed', 'open') NOT NULL,
+                                    publish_status ENUM('unpublished', 'published') NOT NULL,
                                     picture blob
                                 );
+
+        -> use "describe events " to make user that the table looks like the one below:
+
+            +----------------+--------------------------------------------+------+-----+---------+----------------+
+            | Field          | Type                                       | Null | Key | Default | Extra          |
+            +----------------+--------------------------------------------+------+-----+---------+----------------+
+            | id             | int(11)                                    | NO   | PRI | NULL    | auto_increment |
+            | planner_id     | int(11)                                    | NO   |     | NULL    |                |
+            | title          | varchar(250)                               | NO   |     | NULL    |                |
+            | event_type     | enum('techtalk','club','workshop','other') | NO   |     | NULL    |                |
+            | location       | varchar(250)                               | YES  |     | NULL    |                |
+            | start_datetime | datetime                                   | NO   |     | NULL    |                |
+            | end_datetime   | datetime                                   | NO   |     | NULL    |                |
+            | description    | text                                       | YES  |     | NULL    |                |
+            | event_status   | enum('closed','open')                      | NO   |     | NULL    |                |
+            | publish_status | enum('unpublished','published')            | NO   |     | NULL    |                |
+            | picture        | blob                                       | YES  |     | NULL    |                |
+            +----------------+--------------------------------------------+------+-----+---------+----------------+
 
         9. Copy paste the command below to create the "rsvp_list" table
 
@@ -109,3 +125,20 @@ USAGE:
                                                 user_id int PRIMARY KEY,
                                                 event_id int  NOT NULL
                                             );
+
+
+        11. Insert test data to the user table
+
+            INSERT INTO users (email, first_name, last_name, password, is_planner)
+                VALUES ('user@test.com', 'Test', 'User', "$2y$10$eDzDDxOjCf3QdepWGdkXQuec8Xur5ImLOpfMcbJ2LGNGjWlzjDnsm", true);
+
+
+            INSERT INTO planners (id, organization)
+                VALUES (1, 'Microsfot');
+
+            INSERT INTO events (planner_id, title, event_type, location,
+                                start_datetime, end_datetime, description,
+                                event_status, publish_status)
+                VALUES (1, 'Robotics Tech Talk', 'techtalk', 'CSIC Building #2364',
+                        '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
+                        'open', 'published');

@@ -25,6 +25,8 @@
 
     function login($email, $password, $db_connection) {
 
+        $_SESSION['passHASH'] = 'aaaa rows';
+
         $table = "users";
         //query to find user by username
         $query ="select * from $table where email=\"$email\"";
@@ -54,7 +56,7 @@
                 //found a row in the db matching the email given
 
                 //get first row -> there should only be one row anyway as email are unique
-                $result->datas_seek(0);
+                $result->data_seek(0);
 
                 //get array with the columns  from the row found
                 $row = $result->fetch_array(MYSQLI_ASSOC);
@@ -62,9 +64,9 @@
                 //retrieve password stored in db
                 $db_password = $row['password'];
 
+                $pass = password_hash($password, PASSWORD_DEFAULT);
                 //check password given against passwrd retrieved from database
                 if(password_verify($password, $db_password)){
-
                     //password is correct
                     //get browser info
                     $user_browser = $_SERVER['HTTP_USER_AGENT'];
@@ -72,9 +74,6 @@
                     //save login info in session
                     $_SESSION['email'] = $email;
                     $_SESSION['user_id'] = $row['id'];
-
-                    //hash this two together for login check later
-                    $_SESSION['login_string'] = hash('sha256', $db_password.$user_browser);
 
                     //login successful
                     return true;
@@ -134,7 +133,7 @@
                     //found a row in the db matching the user_id given
 
                     //get first row -> there should only be one row anyway as email are unique
-                    $result->datas_seek(0);
+                    $result->data_seek(0);
 
                     //get array with the columns  from the row found
                     $row = $result->fetch_array(MYSQLI_ASSOC);
@@ -166,4 +165,93 @@
 
         }
     }
+
+
+
+    function fetch_users($db_connection, $user_id, $isPlanner=false){
+        $table;
+
+        if(isPlanner){
+          $table = "planners";
+        } else {
+          $table = "users";
+        }
+
+        $query = "select * from $table where id='$user_id'";
+
+        //send out query
+        $result = $db_connection->query($query);
+
+         //check result from query
+        if(!$result) {
+
+            //something went wrong with the requrest
+            return null;
+
+        } else {
+             //request went through, check the results
+            $num_rows = $result->num_rows;
+
+            //check results from query. It reutnrs the rows from the db that matched the query
+            if ($num_rows == 0) {
+
+                //no rows found -> no event from choosen category
+                return null;
+
+            } else {
+
+
+                //get first row -> there should only be one row anyway as ids are unique
+                $result->datas_seek(0);
+
+                //get array with the columns  from the row found
+                $row = $result->fetch_array(MYSQLI_ASSOC);
+
+                return $row;
+            }
+        }
+    }
+
+     function fetch_events($db_connection, $search_term, $category){
+
+
+        $table = "events";
+
+        //query to find all events
+        $query = "select * from $table ";
+
+        //append condition to query if a category other than all has been selected
+        if($search_term !== "all") {
+            $query ="where category ='$category'";
+        }
+
+        //send out query
+        $result = $db_connection->query($query);
+
+        //check result from query
+        if(!$result) {
+
+            //something went wrong with the requrest
+            return null;
+
+        } else {
+
+            //request went through, check the results
+            $num_rows = $result->num_rows;
+
+            //check results from query. It reutnrs the rows from the db that matched the query
+            if ($num_rows == 0) {
+
+                //no rows found -> no event from choosen category
+                 return null;
+
+            } else {
+
+                return $result;
+            }
+        }
+    }
+
+
+
 ?>

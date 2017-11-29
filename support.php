@@ -1,6 +1,6 @@
 <?php
-    include_once "../db/db_connect.php";
-    include_once "../db/functions.php";
+    include_once "res/db/db_connect.php";
+    include_once "res/db/functions.php";
 
     sec_session_start();
 
@@ -8,11 +8,14 @@
 
     //check if logged in
     if(login_check($db_connection) == true) {
-      $logged = true;
+        $logged = true;
+        echo "<script>console.log('logged in');</script>";
+    } else {
+        echo "<script>console.log('not logged in PASS HASH".$_SESSION['passHASH']."');</script>";
     }
 
 
-    function generate_page($body) {
+    function generate_page($body, $page) {
         $page = <<<EOPAGE
 
 <!DOCTYPE html>
@@ -29,7 +32,7 @@
     <title>Activities Hub</title>
 
     <!--google map script-->
-    <script src="../../js/googlemap/map.js"></script>
+    <script src="js/googlemap/map.js"></script>
 
     <!--Bootstrap core JavaScript-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -37,14 +40,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- Custom styles for this page -->
-    <link href="../../css/main_style.css" rel="stylesheet">
-    <link href="../../css/event_search_results_style.css" rel="stylesheet">
-
+    <link href="css/main_style.css" rel="stylesheet">
+    <link href="css/event_search_results_style.css" rel="stylesheet">
   </head>
 
   <body>
 
-    <div class="container-fluid">
+    <div id="$page" class="page-wrapper">
       <!--navigation bar-->
       <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-wrapper container ">
@@ -62,7 +64,7 @@
             </button>
 
             <!--title of the page-->
-            <a class="navbar-brand navbar-left" href="#">Activitie Hub</a>
+            <a class="navbar-brand navbar-left" href="index.php">Activitie Hub</a>
           </div>
 
           <!--add every nav bar button/link under here so it can be collapsed for mobal-->
@@ -70,19 +72,31 @@
 
             <!--home button-->
             <ul class="nav navbar-nav navbar-left">
-              <li class="active"><a href="../../index.php">Home</a></li>
-              <li><a href="#about">About</a></li>
+              <li class="active"><a href="index.php">Home</a></li>
+              <li><a href="index.php#about">About</a></li>
             </ul>
 
             <!--search bar-->
-            <div class="nav-search-field">
-              <form class="navbar-form navbar-left">
+            <div class="nav-search-field" style="display:none;">
+              <form action="res/events/process_event_search.php" method="post" class="navbar-form navbar-left">
+
                 <div class="form-group">
-                  <input type="text" class="form-control search" placeholder="Search">
+                    <select id="search-category" class="search form-control">
+                        <option name="category" value="all" checked>All</option>
+                        <option name="category" value="club">Club</option>
+                        <option name="category" value="techtalk">Tech Talks</option>
+                        <option name="category" value="workshops">Workshops</option>
+                  </select>
                 </div>
-                <a href="res/events/search_event_results.php" class="btn btn-info search-btn">
-                  <span class="glyphicon glyphicon-search align-bottom"></span>
-                </a>
+
+
+                <div class="form-group search-box">
+                  <input name="search_term" id="search_box" type="text" class="form-control search" placeholder="Search"></input>
+                  <button type="submit" class="btn btn-info search-btn form-control">
+                    <span class="glyphicon glyphicon-search align-bottom"></span>
+                    </button>
+                </div>
+
               </form>
             </div>
 
@@ -140,90 +154,7 @@
 
       </nav>
       <!--/.navbar-->
-
-        <div class="page-wrapper">
-                    $body
-        </div>
-
-      <!-- Footer -->
-      <footer class="text-center">
-
-        <!--the information abode the copyt right text-->
-        <div class="footer-above">
-          <div class="container">
-            <div class="row">
-
-              <!--location column-->
-              <div class="footer-col col-md-4">
-                <h3>Location</h3>
-                <p>University of Maryland
-                <br>College Park, MD
-                <br>(301) 405-1000</p>
-              </div>
-              <!--</location column>-->
-
-              <!--social media icons-->
-              <div class="footer-col col-md-4">
-                <!--column title-->
-                <h3>Around the Web</h3>
-
-                <!--list of social media icons-->
-                <ul class="list-inline">
-                  <li>
-                    <a href="#" class="btn-social btn-outline"><span class="sr-only">Facebook</span><i class="fa fa-fw fa-facebook"></i></a>
-                  </li>
-
-                  <li>
-                    <a href="#" class="btn-social btn-outline"><span class="sr-only">Google Plus</span><i class="fa fa-fw fa-google-plus"></i></a>
-                  </li>
-
-                  <li>
-                    <a href="#" class="btn-social btn-outline"><span class="sr-only">Twitter</span><i class="fa fa-fw fa-twitter"></i></a>
-                  </li>
-
-                  <li>
-                    <a href="#" class="btn-social btn-outline"><span class="sr-only">Linked In</span><i class="fa fa-fw fa-linkedin"></i></a>
-                  </li>
-
-                  <li>
-                    <a href="#" class="btn-social btn-outline"><span class="sr-only">Dribble</span><i class="fa fa-fw fa-dribbble"></i></a>
-                  </li>
-                </ul>
-                <!--</social media list of icons>-->
-
-              </div>
-              <!--</social media icons>-->
-
-              <!--Mission column-->
-              <div class="footer-col col-md-4">
-                <!--column title-->
-                <h3>Mission </h3>
-                <!--mission statement -->
-                <p>RideShare is a free to use application created for CMSC389N Spring 2017 at UMD.</p>
-              </div>
-              <!--</mission column-->
-
-            </div>
-            <!--</end of row>-->
-
-          </div>
-          <!--</end of container>-->
-
-        </div>
-        <!--</footer above>-->
-
-        <!--copyright text-->
-        <div class="footer-below">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-12">
-                Copyright &copy; Activities Hub 2017
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--</copyright text>-->
-      </footer>
+            $body
 
       <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
       <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
@@ -232,21 +163,50 @@
         </a>
       </div>
 
+     </div>
       <!--new event modal-->
       <div id="new-event-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="new-event-label" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <!--title-->
             <div class="modal-header">
-              <h5 class="modal-title" id="new-event-label">Modal title</h5>
+              <h1 class="modal-title" id="new-event-label">Create a new event</h1>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <!--</modal-header>-->
 
+            <!-- Content of the new event modal -->
             <div class="modal-body">
-              <p>Modal body text goes here.</p>
+              <form class="new-event-form">
+                 <div class="form-block">
+                    <div class="left-form">
+                      Event name <br>
+                        <input type="text" name="eventname" placeholder="e.g. Free South Campus barbecue"><br>
+                      Event day <br>
+                        <input id="date" type="date"> <br>
+                      Time <br>
+                       From <input type="time" name="timefrom"> Till <input type="time" name="timetill"> <br>
+                      Description <br>
+                        <textarea name="Text1" cols="40" rows="5" placeholder="Give a description of your event here..."></textarea> <br>
+                      Tickets required <br>
+                        <input type="radio" name="ticketsrequired" value="yes"> Yes
+                        <input type="radio" name="ticketsrequired" value="no"> No <br>
+                      Price <br>
+                        Free <input type="checkbox" name="free" value="free"> or $ <input type="number" min="0.00" max="10000.00" step="0.01"  placeholder="0.00"> <br>
+                      Link to buy tickets: <br>
+                        <input type="text" name="link" placeholder="e.g. buyyourtickershere.com/tickets"> <br>
+                    </div>
+                </div>
+                <div id=rightformblock class="form-block">
+                  <div class="right-form">
+                    <h5>Optional: upload an event picture</h5> <br>
+                      <input name="myFile" type="file"> <br>
+                      <img src="imgs/placeholder.jpg">
+                  </div>
+                </div>
+              </form>
             </div>
             <!--</modal-body>-->
 
@@ -293,9 +253,9 @@
 
                 <!--adds error mgs if login was unsuccessful-->
 
-                <form id="login-form" action="../login/process_login.php" method="post" autocomplete="off">
+                <form id="login-form" action="res/login/process_login.php" method="post" autocomplete="off">
 
-                  <!--user name input-->
+                  <!--user_avatar_default name input-->
                   <div class="form-group has-feedback">
                     <input type="email" name="email" id="login-email" tabindex="1" class="form-control" placeholder="Email" value="" autocomplete="off"  required>
                     <i class="form-control-feedback glyphicon glyphicon-user"></i>
@@ -379,10 +339,10 @@
             <div class="modal-body">
               <div class="col-lg-12">
 
-                <form id="signup-form" action="../signup/process_signup.php" method="post" autocomplete="off">
+                <form id="signup-form" action="res/signup/process_signup.php" method="post" autocomplete="off">
 
                   <div class="form-group text-center">
-                    <img src="../../imgs/user_avatar_default.png" alt="User Avatar" id="signup-avatar" class="img-circle"></img><br>
+                    <img src="imgs/user_avatar_default.png" alt="User Avatar" id="signup-avatar" class="img-circle"></img><br>
                     <!--<label for="avatar-file">Avatar</label>-->
                     <!--<input type="file" id="avatar-file" class="form-control-file">-->
                       <label for="avatar-file" id="file-label" class="btn" style="border: solid 1px;"><i class="glyphicon glyphicon-upload"></i> Upload Avatar</label>
@@ -402,7 +362,7 @@
                   </div>
 
                   <div class="form-group has-feedback">
-                    <label for="signup-email"">Email</label>
+                    <label for="signup-email">Email</label>
                     <input type="email" name="email" id="signup-email" tabindex="1" class="form-control" placeholder="Last Name" value="" autocomplete="off" required>
                   </div>
 
@@ -446,58 +406,29 @@
       </div>
       <!--</signup-modal>-->
 
-      <!--event modal-->
-      <div id="event-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="signup-label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
 
-            <!--tile-->
-            <div class="modal-header text-center">
+    <div class="navbar navbar-fixed-bottom" id="footer">
+        <!-- Footer -->
+          <footer class="text-center">
 
-              <!--close button-->
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-
-              <!--title and colorgram-->
-              <div class="text-center">
-                <h3 class="modal-title" id="signup-label"><b>Sign Up</b></h3>
-                <hr class="colorgraph"><br>
+            <div class="">
+              <div class="row">
+                <div class="col-lg-12">
+                  Copyright &copy; Activities Hub 2017
+                </div>
               </div>
             </div>
-            <!--</modal-header>-->
 
-            <!--body -->
-            <div class="modal-body">
-              <div class="col-lg-12">
-                <form id="event-form" action="res/signup/process_signup" method="post" autocomplete="off">
-
-
-                </form>
-              </div>
-            </div>
-            <!--</modal-body>-->
-
-            <!--footer-->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-          <!--</modal-content>-->
-
+          </footer>
         </div>
-        <!--</modal-dialog>-->
 
-      </div>
-      <!--</signup-modal>-->
 
-    </div>
 
     <!--script that handles updating avatar image and uplaod button-->
-    <script src="../signup/upload_avatar.js"></script>
+    <script src="res/signup/upload_avatar.js"></script>
     <!--script that handles updating avatar image and uplaod button-->
-    <script src="../signup/validate_signup.js"></script>
+    <script src="res/signup/validate_signup.js"></script>
+    <script src="res/events/search_results.js"></script>
   </body>
 </html>
 EOPAGE;
