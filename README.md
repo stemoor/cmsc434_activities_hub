@@ -132,13 +132,76 @@ USAGE:
             INSERT INTO users (email, first_name, last_name, password, is_planner)
                 VALUES ('user@test.com', 'Test', 'User', "$2y$10$eDzDDxOjCf3QdepWGdkXQuec8Xur5ImLOpfMcbJ2LGNGjWlzjDnsm", true);
 
+            INSERT INTO users (email, first_name, last_name, password, is_planner)
+                VALUES ('user2@test.com', 'Test', 'User', "$2y$10$eDzDDxOjCf3QdepWGdkXQuec8Xur5ImLOpfMcbJ2LGNGjWlzjDnsm", true);
+
+            INSERT INTO users (email, first_name, last_name, password, is_planner)
+                VALUES ('user3@test.com', 'Test', 'User', "$2y$10$eDzDDxOjCf3QdepWGdkXQuec8Xur5ImLOpfMcbJ2LGNGjWlzjDnsm", true);
 
             INSERT INTO planners (id, organization)
-                VALUES (1, 'Microsfot');
+                VALUES (1, 'Microsoft');
+
+
+            INSERT INTO planners (id, organization)
+                VALUES (2, 'Google');
+
+
+            INSERT INTO planners (id, organization)
+                VALUES (3, 'VR Club');
+
 
             INSERT INTO events (planner_id, title, event_type, location,
                                 start_datetime, end_datetime, description,
                                 event_status, publish_status)
                 VALUES (1, 'Robotics Tech Talk', 'techtalk', 'CSIC Building #2364',
+                        '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
+                        'open', 'published');
+
+            INSERT INTO events (planner_id, title, event_type, location,
+                                start_datetime, end_datetime, description,
+                                event_status, publish_status)
+                VALUES (1, 'Careers at Microsfot Info Session', 'workshop', 'CSIC Building #2364',
+                        '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
+                        'open', 'published');
+
+            INSERT INTO events (planner_id, title, event_type, location,
+                                start_datetime, end_datetime, description,
+                                event_status, publish_status)
+                VALUES (1, 'Microsoft for Seniors', 'other', 'CSIC Building #2364',
+                        '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
+                        'open', 'published');
+
+            INSERT INTO events (planner_id, title, event_type, location,
+                                start_datetime, end_datetime, description,
+                                event_status, publish_status)
+                VALUES (2, 'The Best Tech Talk by Google', 'techtalk', 'CSIC Building #2364',
+                        '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
+                        'open', 'published');
+
+            INSERT INTO events (planner_id, title, event_type, location,
+                                start_datetime, end_datetime, description,
+                                event_status, publish_status)
+                VALUES (2, 'Cracking the Google Interview', 'workshop', 'CSIC Building #2364',
+                        '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
+                        'open', 'published');
+
+            INSERT INTO events (planner_id, title, event_type, location,
+                                start_datetime, end_datetime, description,
+                                event_status, publish_status)
+                VALUES (2, 'Google Lunch Hangout', 'other', 'CSIC Building #2364',
+                        '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
+                        'open', 'published');
+
+            INSERT INTO events (planner_id, title, event_type, location,
+                                start_datetime, end_datetime, description,
+                                event_status, publish_status)
+                VALUES (3, 'VR Club Meeting & Pizza', 'club', 'CSIC Building #2364',
+                        '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
+                        'open', 'published');
+
+            INSERT INTO events (planner_id, title, event_type, location,
+                                start_datetime, end_datetime, description,
+                                event_status, publish_status)
+                VALUES (3, 'Board and Brew Fun', 'other', 'Board & Brew',
                         '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
                         'open', 'published');

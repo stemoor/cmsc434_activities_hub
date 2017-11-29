@@ -25,8 +25,6 @@
 
     function login($email, $password, $db_connection) {
 
-        $_SESSION['passHASH'] = 'aaaa rows';
-
         $table = "users";
         //query to find user by username
         $query ="select * from $table where email=\"$email\"";
@@ -171,7 +169,7 @@
     function fetch_users($db_connection, $user_id, $isPlanner=false){
         $table;
 
-        if(isPlanner){
+        if($isPlanner){
           $table = "planners";
         } else {
           $table = "users";
@@ -202,7 +200,7 @@
 
 
                 //get first row -> there should only be one row anyway as ids are unique
-                $result->datas_seek(0);
+                $result->data_seek(0);
 
                 //get array with the columns  from the row found
                 $row = $result->fetch_array(MYSQLI_ASSOC);
@@ -213,7 +211,7 @@
     }
 
      function fetch_events($db_connection, $search_term, $category){
-
+        echo "<script>console.log('in fetch events $category')</script>";
 
         $table = "events";
 
@@ -221,8 +219,8 @@
         $query = "select * from $table ";
 
         //append condition to query if a category other than all has been selected
-        if($search_term !== "all") {
-            $query ="where category ='$category'";
+        if($category !== "all-events") {
+            $query .= "where event_type ='$category'";
         }
 
         //send out query
@@ -230,6 +228,8 @@
 
         //check result from query
         if(!$result) {
+
+            echo "<script>console.log('!events')</script>";
 
             //something went wrong with the requrest
             return null;

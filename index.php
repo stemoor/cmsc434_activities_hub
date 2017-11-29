@@ -55,7 +55,7 @@ $body = <<<EOBODY
           <!--</events-grid>-->
 
           <form id="search-form" action="search_results.php" method="POST">
-            <input type="hidden" id="search-category" name="search_category" value="all-events">
+            <input type="hidden" id="search-category-block" name="search_category" value="all-events">
           </form>
         </div>
         <!--</main section container>-->

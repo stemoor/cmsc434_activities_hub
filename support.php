@@ -11,7 +11,7 @@
         $logged = true;
         echo "<script>console.log('logged in');</script>";
     } else {
-        echo "<script>console.log('not logged in PASS HASH".$_SESSION['passHASH']."');</script>";
+        echo "<script>console.log('not logged in');</script>";
     }
 
 
@@ -29,7 +29,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Activities Hub</title>
+    <title>Activity Hub</title>
 
     <!--google map script-->
     <script src="js/googlemap/map.js"></script>
@@ -38,6 +38,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+     <script src="res/events/search_results.js"></script>
 
     <!-- Custom styles for this page -->
     <link href="css/main_style.css" rel="stylesheet">
@@ -77,26 +79,23 @@
             </ul>
 
             <!--search bar-->
-            <div class="nav-search-field" style="display:none;">
-              <form action="res/events/process_event_search.php" method="post" class="navbar-form navbar-left">
-
+            <div class="nav-search-field">
+              <form action="search_results.php" method="POST" class="navbar-form navbar-left">
                 <div class="form-group">
-                    <select id="search-category" class="search form-control">
-                        <option name="category" value="all" checked>All</option>
-                        <option name="category" value="club">Club</option>
-                        <option name="category" value="techtalk">Tech Talks</option>
-                        <option name="category" value="workshops">Workshops</option>
-                  </select>
+                    <select  name="category" id="search_category" class="search form-control">
+                        <option id="all-events-category" value="all-events">All</option>
+                        <option id="club-category" value="club">Club</option>
+                        <option id="techtalk-category" value="techtalk">Tech Talks</option>
+                        <option id="workshop-category" value="workshop">Workshops</option>
+                        <option id="other-category" value="other">Workshops</option>
+                    </select>
                 </div>
-
-
                 <div class="form-group search-box">
                   <input name="search_term" id="search_box" type="text" class="form-control search" placeholder="Search"></input>
-                  <button type="submit" class="btn btn-info search-btn form-control">
+                  <button type="submit" name="submit" class="btn btn-info search-btn form-control">
                     <span class="glyphicon glyphicon-search align-bottom"></span>
                     </button>
                 </div>
-
               </form>
             </div>
 
@@ -428,7 +427,7 @@
     <script src="res/signup/upload_avatar.js"></script>
     <!--script that handles updating avatar image and uplaod button-->
     <script src="res/signup/validate_signup.js"></script>
-    <script src="res/events/search_results.js"></script>
+
   </body>
 </html>
 EOPAGE;
