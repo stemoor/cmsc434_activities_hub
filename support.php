@@ -88,6 +88,8 @@
                         <option id="techtalk-category" value="techtalk">Tech Talks</option>
                         <option id="workshop-category" value="workshop">Workshops</option>
                         <option id="other-category" value="other">Workshops</option>
+                        <option id="organization-category" value="organization">Organization</option>
+
                     </select>
                 </div>
                 <div class="form-group search-box">

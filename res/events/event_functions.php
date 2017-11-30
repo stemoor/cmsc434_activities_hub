@@ -103,6 +103,59 @@ EOBOX;
     }
 
 
+     function fetch_events($db_connection, $search_term, $event_type, $event_status, $publish_status, $byEventType){
+
+        $result = null;
+
+        if($byEventType){
+             echo "<script>console.log('query by type')</script>";
+
+            $result = query_event_by_type($db_connection, $event_type,  $event_status, $publish_status);
+        } else {
+            echo "<script>console.log('query by organization')</script>";
+
+            $result = query_event_by_organization($db_connection, $search_term,  $event_status, $publish_status, true);
+        }
+
+        //check result from query
+        if(!$result) {
+
+            //something went wrong with the requrest
+            return null;
+
+        } else {
+
+            //request went through, check the results
+            $num_rows = $result->num_rows;
+
+            //check results from query. It reutnrs the rows from the db that matched the query
+            if ($num_rows == 0) {
+
+                //no rows found -> no event from choosen category
+                 return null;
+
+            } else {
+                return $result;
+            }
+        }
+    }
+
+    function has_search_term($event, $search_term){
+        $title = strtolower($event['title']);
+        $search_term = strtolower($search_term);
+        $terms = explode(' ', $search_term);
+
+        for($i = 0; $i < count($terms); $i++){
+            echo "<script>console.log('{$terms[$i]} + title = $title')</script>";
+            $pos = strpos($title, $terms[$i]) ;
+            if($pos !== false){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
 
 ?>

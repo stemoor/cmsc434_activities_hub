@@ -61,6 +61,7 @@ USAGE:
             create table planners (
                                     id int PRIMARY KEY,
                                     organization varchar(200) NOT NULL,
+                                    cleaned_organization varchar(200) NOT NULL,
                                     phone_number varchar(12),
                                     website varchar(100)
                                 );
@@ -82,6 +83,7 @@ USAGE:
             create table events (
                                     id int  PRIMARY KEY  AUTO_INCREMENT,
                                     planner_id int NOT NULL,
+                                    organization varchar(200) NOT NULL,
                                     title varchar(250) NOT NULL,
                                     event_type ENUM('techtalk', 'club', 'workshop', 'other') NOT NULL,
                                     location varchar(250),
@@ -138,70 +140,77 @@ USAGE:
             INSERT INTO users (email, first_name, last_name, password, is_planner)
                 VALUES ('user3@test.com', 'Test', 'User', "$2y$10$eDzDDxOjCf3QdepWGdkXQuec8Xur5ImLOpfMcbJ2LGNGjWlzjDnsm", true);
 
-            INSERT INTO planners (id, organization)
-                VALUES (1, 'Microsoft');
+            INSERT INTO planners (id, organization, cleaned_organization)
+                VALUES (1, 'Microsoft', "microsoft");
 
 
-            INSERT INTO planners (id, organization)
-                VALUES (2, 'Google');
+            INSERT INTO planners (id, organization, cleaned_organization)
+                VALUES (2, 'Google', 'google');
 
 
-            INSERT INTO planners (id, organization)
-                VALUES (3, 'VR Club');
+            INSERT INTO planners (id, organization, cleaned_organization)
+                VALUES (3, 'VR Club', 'vrclub');
 
 
-            INSERT INTO events (planner_id, title, event_type, location,
+            INSERT INTO events (planner_id, organization, title, event_type, location,
                                 start_datetime, end_datetime, description,
                                 event_status, publish_status)
-                VALUES (1, 'Robotics Tech Talk', 'techtalk', 'CSIC Building #2364',
+                VALUES (1, 'microsoft', 'Robotics Tech Talk', 'techtalk', 'CSIC Building #2364',
                         '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
                         'open', 'published');
 
-            INSERT INTO events (planner_id, title, event_type, location,
+            INSERT INTO events (planner_id, organization, title, event_type, location,
                                 start_datetime, end_datetime, description,
                                 event_status, publish_status)
-                VALUES (1, 'Careers at Microsfot Info Session', 'workshop', 'CSIC Building #2364',
+                VALUES (1, 'microsoft',  'Careers at Microsfot Info Session', 'workshop', 'CSIC Building #2364',
                         '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
                         'open', 'published');
 
-            INSERT INTO events (planner_id, title, event_type, location,
+            INSERT INTO events (planner_id, organization, title, event_type, location,
                                 start_datetime, end_datetime, description,
                                 event_status, publish_status)
-                VALUES (1, 'Microsoft for Seniors', 'other', 'CSIC Building #2364',
+                VALUES (1, 'microsoft', 'Microsoft for Seniors', 'other', 'CSIC Building #2364',
                         '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
                         'open', 'published');
 
-            INSERT INTO events (planner_id, title, event_type, location,
+            INSERT INTO events (planner_id, organization, title, event_type, location,
                                 start_datetime, end_datetime, description,
                                 event_status, publish_status)
-                VALUES (2, 'The Best Tech Talk by Google', 'techtalk', 'CSIC Building #2364',
+                VALUES (2, 'google', 'The Best Tech Talk by Google', 'techtalk', 'CSIC Building #2364',
                         '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
                         'open', 'published');
 
-            INSERT INTO events (planner_id, title, event_type, location,
+            INSERT INTO events (planner_id, organization, title, event_type, location,
                                 start_datetime, end_datetime, description,
                                 event_status, publish_status)
-                VALUES (2, 'Cracking the Google Interview', 'workshop', 'CSIC Building #2364',
+                VALUES (2,'google',  'Cracking the Google Interview', 'workshop', 'CSIC Building #2364',
                         '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
                         'open', 'published');
 
-            INSERT INTO events (planner_id, title, event_type, location,
+            INSERT INTO events (planner_id, organization, title, event_type, location,
                                 start_datetime, end_datetime, description,
                                 event_status, publish_status)
-                VALUES (2, 'Google Lunch Hangout', 'other', 'CSIC Building #2364',
+                VALUES (2, 'google', 'Google Lunch Hangout', 'other', 'CSIC Building #2364',
                         '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
                         'open', 'published');
 
-            INSERT INTO events (planner_id, title, event_type, location,
+            INSERT INTO events (planner_id, organization, title, event_type, location,
                                 start_datetime, end_datetime, description,
                                 event_status, publish_status)
-                VALUES (3, 'VR Club Meeting & Pizza', 'club', 'CSIC Building #2364',
+                VALUES (3,  'vrclub', 'VR Club Meeting & Pizza', 'club', 'CSIC Building #2364',
                         '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
                         'open', 'published');
 
-            INSERT INTO events (planner_id, title, event_type, location,
+            INSERT INTO events (planner_id, organization, title, event_type, location,
                                 start_datetime, end_datetime, description,
                                 event_status, publish_status)
-                VALUES (3, 'Board and Brew Fun', 'other', 'Board & Brew',
+                VALUES (3, 'vrclub', 'Board and Brew Fun', 'other', 'Board & Brew',
                         '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
                         'open', 'published');
+
+            INSERT INTO events (planner_id, organization, title, event_type, location,
+                                start_datetime, end_datetime, description,
+                                event_status, publish_status)
+                VALUES (3,  'vrclub', 'General Body Meeting', 'club', 'CSIC Building #2364',
+                        '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
+                        'closed', 'published');

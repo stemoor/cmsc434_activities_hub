@@ -5,6 +5,8 @@
   $search_term = null;
   $search_category = "all-events";
   $events_listing = "";
+  $byEventType = true;
+  $event_found = false;
 
     //information submited by the event category blocks
     if (isset($_POST['search-category-block'])){
@@ -25,16 +27,24 @@
           $search_term = $_POST['search_term'];
        }
 
-      unset($_POST['submit']);
+       if($search_category === 'organization'){
+          $byEventType = false;
+       }
 
+      unset($_POST['submit']);
+      unset($_POST['search_term']);
     }
 
+
+
     //fetch events from db
-    $events_list = fetch_events($db_connection, $search_term,  $search_category);
+    $events_list = fetch_events($db_connection, trim($search_term),  $search_category, 'open', 'published', $byEventType);
 
 
     ///check if result was returned
     if($events_list != null) {
+
+      echo "<script>console.log('no result from query')</script>";
 
         //found a row in the db matching the category given
         for($i = 0; $i < $events_list->num_rows; $i++){
@@ -45,22 +55,34 @@
             //get array with the columns  from the row found
             $row = $events_list->fetch_array(MYSQLI_ASSOC);
 
-            //check if event is published and open
-            if($row['publish_status'] === 'published' && $row['event_status'] === 'open') {
 
-              //if event publish and open, display create entry in the results list
-              $row['organization'] =  fetch_users($db_connection, $row['planner_id'], true)['organization'];
-              $events_listing .= generate_event_box($row);
+
+            //if searching my event type, check event titles for the search term, only list the ones that have that terms
+            if($byEventType && $search_term != null) {
+              if (has_search_term($row, $search_term)){
+
+                  echo "<script>console.log('found event with search term')</script>";
+                  $event_found = true;
+
+                  $row['organization'] =  fetch_user($db_connection, $row['planner_id'], true)['organization'];
+                  $events_listing .= generate_event_box($row);
+
+              }
+            } else {
+                $event_found = true;
+                 echo "<script>console.log('found organization with matched name')</script>";
+                //searching by organization name or no search time provided
+                $row['organization'] =  fetch_user($db_connection, $row['planner_id'], true)['organization'];
+                $events_listing .= generate_event_box($row);
             }
         }
 
-    } else {
-
-      // no matchin events found
-      $events_listing .= "<h1>Nothing Found</h1>";
     }
 
-
+    if(!$event_found) {
+      // no matchin events found
+      $events_listing = "<h1>No event matching your search was found :(</h1>";
+    }
 
 
   $body = <<<EOPAGE

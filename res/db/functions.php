@@ -166,7 +166,7 @@
 
 
 
-    function fetch_users($db_connection, $user_id, $isPlanner=false){
+    function fetch_user($db_connection, $user_id, $isPlanner=false){
         $table;
 
         if($isPlanner){
@@ -210,18 +210,21 @@
         }
     }
 
-     function fetch_events($db_connection, $search_term, $category){
-        echo "<script>console.log('in fetch events $category')</script>";
-
+    function query_event_by_organization($db_connection, $search_term, $event_status, $publish_status, $cleaned_organization){
         $table = "events";
 
-        //query to find all events
-        $query = "select * from $table ";
+        $query = "select * from $table where event_status = '$event_status' AND publish_status = '$publish_status'";
 
-        //append condition to query if a category other than all has been selected
-        if($category !== "all-events") {
-            $query .= "where event_type ='$category'";
+        //clean search term
+        if($cleaned_organization && $search_term !== null){
+            echo "<script>console.log('cleaned org $search_term ')</script>";
+
+            $search_term = str_replace(' ', '', strtolower($search_term));
+            $query .= " AND organization = '$search_term'";
         }
+
+        $query .= " ORDER BY organization";
+
 
         //send out query
         $result = $db_connection->query($query);
@@ -229,8 +232,7 @@
         //check result from query
         if(!$result) {
 
-            echo "<script>console.log('!events')</script>";
-
+             echo "<script>console.log(' !result ')</script>";
             //something went wrong with the requrest
             return null;
 
@@ -242,6 +244,47 @@
             //check results from query. It reutnrs the rows from the db that matched the query
             if ($num_rows == 0) {
 
+                //no rows found -> no event from choosen category
+                 return null;
+
+            } else {
+
+                return $result;
+            }
+        }
+
+    }
+
+    function query_event_by_type($db_connection, $event_type, $event_status, $publish_status){
+        $table = "events";
+
+         //query to find all events
+        $query = "select * from $table where";
+
+        if($event_type !== 'all-events'){
+            echo "<script>console.log('query by type = $event_type')</script>";
+            $query .= " event_type = '$event_type' AND";
+        }
+
+        $query .= "  event_status = '$event_status' AND publish_status = '$publish_status'" ;
+
+        //send out query
+        $result = $db_connection->query($query);
+
+        //check result from query
+        if(!$result) {
+             echo "<script>console.log('!result')</script>";
+            //something went wrong with the requrest
+            return null;
+
+        } else {
+
+            //request went through, check the results
+            $num_rows = $result->num_rows;
+
+            //check results from query. It reutnrs the rows from the db that matched the query
+            if ($num_rows == 0) {
+                     echo "<script>console.log('no rows')</script>";
                 //no rows found -> no event from choosen category
                  return null;
 
