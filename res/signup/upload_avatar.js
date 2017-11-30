@@ -1,5 +1,6 @@
 //listener for loading the avatar picture
 $('#avatar-file').on('change', function(){
+    alert();
     //get the avatar path
     var filename = document.getElementById("avatar-file").value;
     //get the name from the path

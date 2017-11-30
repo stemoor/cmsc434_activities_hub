@@ -58,9 +58,15 @@ button {
 }
 
 #login-submit:hover {
-  background: #E4F8D7;
+  background: #763AE3;
+  color: white;
 
 }
+
+.form-control-feedback{
+  color: #0a5d58;
+}
+
 .no-outline {
   outline: none;
 }
@@ -69,10 +75,16 @@ button {
   outline: none;
 }
 
-
 .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form{
   text-align: center;
   vertical-align: middle;
+}
+
+.tooltip.top .tooltip-inner {
+    background-color:#34c3b9;
+}
+.tooltip.top .tooltip-arrow {
+      border-top-color: #34c3b9;
 }
 
 #login-submit{

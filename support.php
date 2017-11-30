@@ -38,8 +38,7 @@
 
      <script src="res/events/search_results.js"></script>
 
-    <!--script that handles updating avatar image and uplaod button-->
-    <script src="res/signup/upload_avatar.js"></script>
+
 
 
     <!-- Custom styles for this page -->
@@ -346,7 +345,7 @@ EOPAGE;
                     <img src="imgs/user_avatar_default.png" alt="User Avatar" id="signup-avatar" class="img-circle"></img><br>
                     <!--<label for="avatar-file">Avatar</label>-->
                     <!--<input type="file" id="avatar-file" class="form-control-file">-->
-                      <label for="avatar-file" id="file-label" class="btn drop-right-shadow teal-bg" ><i class="glyphicon glyphicon-upload"></i> Upload Avatar</label>
+                      <label for="avatar-file" id="file-label" class="btn drop-right-shadow teal-bg" ><i class="glyphicon glyphicon-upload"></i> Upload Avatar: .jpg, .png</label>
                       <input id="avatar-file" style="display:none;" type="file"></input>
                   </div>
 
@@ -372,7 +371,7 @@ EOPAGE;
                     <label for="signup-password">New Password</label>
                     <input type="password" name="password" id="signup-password" tabindex="2" class="form-control drop-right-shadow borderless"
                            placeholder="New Password" autocomplete="off" required onchange="refreshWarning(this);"
-                           data-placement="bottom" title="Passwords must have more than 8 digits." >
+                           data-placement="top" title="Password must have more than 8 digits." >
                   </div>
 
                   <div class="form-group">
@@ -425,7 +424,8 @@ EOPAGE;
 
     <!--script that handles updating avatar image and uplaod button-->
     <script src="res/signup/validate_signup.js"></script>
-
+    <!--script that handles updating avatar image and uplaod button-->
+    <script src="res/signup/upload_avatar.js"></script>
 
   </body>
 </html>

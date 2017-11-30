@@ -56,11 +56,12 @@
 
 .list-item-img {
 	display: inline-block;
-	background: url("../imgs/event-list-placeholder.jpeg") 50% 50% no-repeat;
-	background-size: cover;
+	background: url("../imgs/logo_3.png") 50% 50% no-repeat;
+	background-size: auto;
 	background-position: center;
 	height: 100%;
 	width: 100%;
+	opacity: .5;
 }
 
 
