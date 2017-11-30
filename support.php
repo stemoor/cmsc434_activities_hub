@@ -53,7 +53,6 @@ EOPAGE;
 
 
             if(isset($_GET['error'])){
-                echo "<script>$('#login-btn').click();</script>";
                 $error_msg = "Invalid email or password!";
             }
 
@@ -268,7 +267,15 @@ EOPAGE;
                 <form id="login-form" action="res/login/process_login.php" method="post" autocomplete="off">
 
 
-                <p class="error" style="color:red;">$error_msg</p>
+                <p id="error" style="color:red;">$error_msg</p>
+
+                <script>
+                    var val = document.getElementById('error').innerHTML;
+                    if(val !== ""){
+                        $('#login-btn').click();
+                    }
+                </script>
+
                   <div class="form-group has-feedback">
                     <input type="email" name="email" id="login-email" tabindex="1" class="form-control" placeholder="Email" value="" autocomplete="off"  required>
                     <i class="form-control-feedback glyphicon glyphicon-user"></i>
@@ -442,8 +449,6 @@ EOPAGE;
   </body>
 </html>
 EOPAGE;
-
-
         return $head.$body_top;
     }
 
