@@ -66,7 +66,7 @@ $body = <<<EOBODY
 
       <!-- About Section -->
       <section class="teal-bg" id="about">
-        <div class="container">
+        <div class="">
 
           <!--section title-->
           <div class="row main-title">
@@ -79,7 +79,7 @@ $body = <<<EOBODY
 
           <!--section body-->
           <div class="row">
-            <div class="col-lg-4 col-lg-offset-2 event-block">
+            <div class="col-lg-4 col-lg-offset-2 about-text gray-bg drop-right-shadow">
               <p><h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h3></p>
               <br>
 
@@ -99,8 +99,8 @@ $body = <<<EOBODY
 
             </div>
 
-            <div class="col-lg-4 event-block">
-              <div class="about-img"></div>
+            <div class="col-lg-4 purple-bg drop-right-shadow">
+              <div class="about-img "></div>
             </div>
           </div>
           <!--section body-->

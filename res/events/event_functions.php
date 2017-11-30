@@ -1,10 +1,10 @@
 <?php
 
+    $event_catergories_colors['all'] = "orange";
+    $event_catergories_colors['workshop'] = "dark-pink";
     $event_catergories_colors['techtalk'] = "purple";
-    $event_catergories_colors['workshop'] = "green";
-    $event_catergories_colors['all'] = "gray";
-    $event_catergories_colors['club'] = "teal";
-    $event_catergories_colors['other'] = "light-green";
+    $event_catergories_colors['club'] = "dark-purple";
+    $event_catergories_colors['other'] = "teal";
 
     function generate_event_box($data){
 
@@ -50,15 +50,15 @@
                   <!--list-item-btns-->
                   <div class="col-sm-2">
                     <div class="list-item-btns">
-                      <button type="button" id="fav-btn" class="btn btn-info btn-lg teal-bg teal-border" >
+                      <button type="button" id="fav-btn" class="btn btn-info btn-lg gray-bg" >
                         <span class="list-item-btn-icons glyphicon glyphicon-star-empty"></span> Favotire
                       </button>
 
-                      <button type="button" id="rsvp-btn" class="btn btn-info btn-lg teal-bg teal-border">
+                      <button type="button" id="rsvp-btn" class="btn btn-info btn-lg gray-bg">
                         <span class="list-item-btn-icon glyphicon glyphicon-unchecked"></span> RSVP
                       </button>
 
-                      <button type="button" id="export-btn" class="btn btn-info btn-lg teal-bg teal-border" >
+                      <button type="button" id="export-btn" class="btn btn-info btn-lg gray-bg " >
                         <span class="list-item-btn-icon glyphicon glyphicon-calendar"></span> Export
                       </button>
                     </div>
@@ -75,13 +75,13 @@
                     <div class="dropdown list-item-footer">
                       <a class="btn" href="#description{$data['id']}" data-toggle="collapse"
                          aria-expanded="false" aria-controls="description1">
-                        <span class="glyphicon glyphicon-menu-down"></span>
+                        Event Description <span class="glyphicon glyphicon-menu-down"></span>
                       </a>
                     </div>
 
                     <div class="collapse" id="description{$data['id']}">
                       <div class="card card-body list-item-description">
-                        <h2>Abour the event</h2><br>
+                        <h2>About the event</h2><br>
                         <pre>
                             {$data['description']}"
                         </pre>

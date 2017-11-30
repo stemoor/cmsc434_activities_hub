@@ -5,7 +5,7 @@
     sec_session_start();
 
     $logged = false;
-    $error_msg = "";
+
 
     //check if logged in
     if(login_check($db_connection) == true) {
@@ -31,9 +31,6 @@
 
     <title>Activity Hub</title>
 
-    <!--google map script-->
-    <script src="js/googlemap/map.js"></script>
-
     <!--Bootstrap core JavaScript-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -48,12 +45,15 @@
     <!-- Custom styles for this page -->
     <link href="css/main_style.css" rel="stylesheet">
     <link href="css/event_search_results_style.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300|Raleway:300|Roboto:100" rel="stylesheet">
   </head>
 EOPAGE;
 
-
+    $error_msg = "";
             if(isset($_GET['error'])){
                 $error_msg = "Invalid email or password!";
+                unset($_GET['error']);
             }
 
     $body_top = <<<EOPAGE
@@ -64,7 +64,7 @@ EOPAGE;
       <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-wrapper container ">
           <div class="navbar-header">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="index.php">
               <img alt="Brand" src="imgs/brand_logo.png">
             </a>
 
@@ -102,12 +102,11 @@ EOPAGE;
                         <option id="organization-category" value="organization">Organization</option>
 
                     </select>
-                </div>
-                <div class="form-group search-box">
                   <input name="search_term" id="search_box" type="text" class="form-control search" placeholder="Search"></input>
-                  <button type="submit" name="submit" class="btn btn-info search-btn form-control">
+                  <button type="submit" name="submit" class="btn btn-info search-btn form-control dark-purple-bg">
                     <span class="glyphicon glyphicon-search align-bottom"></span>
-                    </button>
+                  </button>
+
                 </div>
               </form>
             </div>
@@ -243,8 +242,8 @@ EOPAGE;
 
       <!--login modal -->
       <div id="login-modal" class="modal right fade" tabindex="-1" role="dialog" aria-labelledby="login-label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
+        <div class="modal-dialog modal-lg ">
+          <div class="modal-content teal-bg">
 
             <!--tile-->
             <div class="modal-header">
@@ -253,8 +252,8 @@ EOPAGE;
                 <span aria-hidden="true">&times;</span>
               </button>
               <!--title and colorgram-->
-              <div class="text-center">
-                <h3 class="modal-title" id="login-label"><b>Login</b></h3>
+              <div class="text-center ">
+                <h2 class="modal-title" id="login-label">Login</h2>
                 <hr class="colorgraph"><br>
               </div>
             </div>
@@ -277,53 +276,35 @@ EOPAGE;
                 </script>
 
                   <div class="form-group has-feedback">
-                    <input type="email" name="email" id="login-email" tabindex="1" class="form-control" placeholder="Email" value="" autocomplete="off"  required>
+                    <input type="email" name="email" id="login-email" tabindex="1" class="form-control drop-right-shadow" placeholder="Email" value="" autocomplete="off"  required>
                     <i class="form-control-feedback glyphicon glyphicon-user"></i>
                   </div>
                   <!--</user name input>-->
 
                   <!--password input-->
                   <div class="form-group has-feedback">
-                    <input type="password" name="password" id="login-password" tabindex="1" class="form-control" placeholder="Password" autocomplete="off" required>
+                    <input type="password" name="password" id="login-password" tabindex="1" class="form-control drop-right-shadow" placeholder="Password" autocomplete="off" required>
                      <i class="form-control-feedback glyphicon glyphicon-lock"></i>
                   </div>
 
                   <!--remember me option and submit button-->
                   <div class="form-group">
                     <div class="row">
-                      <div class="col-xs-7">
-                        <input type="checkbox" tabindex="3" name="remember" id="remember">
-                        <label for="remember"> Remember Me</label>
-                      </div>
-                      <div class="col-xs-5 pull-right">
-                        <input type="submit" name="submit" id="login-submit" tabindex="4" class="form-control btn btn-success" value="Log In">
+                      <div class="col-xs-12 text-center">
+                        <input type="submit" name="submit" id="login-submit" tabindex="4" class="form-control btn btn-success green-bg drop-right-shadow" value="Log In">
                       </div>
                     </div>
                   </div>
-
-                  <!--forgot password link-->
-                  <div class="form-group">
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <div class="text-center">
-                          <a href="http://phpoll.com/recover" tabindex="5" class="forgot-password">Forgot Password?</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <input type="hidden" class="hide" name="token" id="login-token" value="a465a2791ae0bae853cf4bf485dbe1b6">
 
                 </form>
               </div>
             </div>
             <!--</modal-body>-->
 
-            <!--footer-->
+            <!--footer
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
-            <!--</modal-footer>-->
+           </modal-footer>-->
 
           </div>
           <!--</modal-content>-->
@@ -337,7 +318,7 @@ EOPAGE;
       <!--signup modal-->
       <div id="signup-modal" class="modal fade right" tabindex="-1" role="dialog" aria-labelledby="signup-label" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-          <div class="modal-content">
+          <div class="modal-content green-bg">
 
             <!--tile-->
             <div class="modal-header text-center">
@@ -349,7 +330,7 @@ EOPAGE;
 
               <!--title and colorgram-->
               <div class="text-center">
-                <h3 class="modal-title" id="signup-label"><b>Sign Up</b></h3>
+                <h2 class="modal-title" id="signup-label">Sign Up</h2>
                 <hr class="colorgraph"><br>
               </div>
             </div>
@@ -365,48 +346,48 @@ EOPAGE;
                     <img src="imgs/user_avatar_default.png" alt="User Avatar" id="signup-avatar" class="img-circle"></img><br>
                     <!--<label for="avatar-file">Avatar</label>-->
                     <!--<input type="file" id="avatar-file" class="form-control-file">-->
-                      <label for="avatar-file" id="file-label" class="btn" style="border: solid 1px;"><i class="glyphicon glyphicon-upload"></i> Upload Avatar</label>
+                      <label for="avatar-file" id="file-label" class="btn drop-right-shadow teal-bg" ><i class="glyphicon glyphicon-upload"></i> Upload Avatar</label>
                       <input id="avatar-file" style="display:none;" type="file"></input>
                   </div>
 
                   <div class="form-group has-feedback">
-                    <label for="firstname">Fisrt Name</label>
-                    <input type="text" name="first-name" id="firstname" tabindex="1" class="form-control"
+                    <label for="firstname">First Name</label>
+                    <input type="text" name="first-name" id="firstname" tabindex="1" class="form-control borderless drop-right-shadow"
                            placeholder="First Name" value="" autocomplete="off" required onchange="refreshWarning(this);">
                   </div>
 
                   <div class="form-group has-feedback">
                     <label for="lastname">Last Name</label>
-                    <input type="text" name="last-name" id="lastname" tabindex="1" class="form-control"
+                    <input type="text" name="last-name" id="lastname" tabindex="1" class="form-control borderless drop-right-shadow"
                            placeholder="Last Name" value="" autocomplete="off" required onchange="refreshWarning(this);">
                   </div>
 
                   <div class="form-group has-feedback">
                     <label for="signup-email">Email</label>
-                    <input type="email" name="email" id="signup-email" tabindex="1" class="form-control" placeholder="Last Name" value="" autocomplete="off" required>
+                    <input type="email" name="email" id="signup-email" tabindex="1" class="form-control drop-right-shadow borderless" placeholder="Email" value="" autocomplete="off" required>
                   </div>
 
                   <p class="error" id="pass_error"></p>
                   <div class="form-group">
                     <label for="signup-password">New Password</label>
-                    <input type="password" name="password" id="signup-password" tabindex="2" class="form-control"
+                    <input type="password" name="password" id="signup-password" tabindex="2" class="form-control drop-right-shadow borderless"
                            placeholder="New Password" autocomplete="off" required onchange="refreshWarning(this);"
                            data-placement="bottom" title="Passwords must have more than 8 digits." >
                   </div>
 
                   <div class="form-group">
                     <label for="re-signup-password">Re-enter New Password</label>
-                    <input type="password" name="re-password" id="signup-repassword" tabindex="2" class="form-control"
+                    <input type="password" name="re-password" id="signup-repassword" tabindex="2" class="form-control borderless drop-right-shadow"
                            placeholder="Re-Password" autocomplete="off" required onchange="refreshWarning(this);">
                   </div>
 
                   <div class="form-group">
                     <div class="row">
                       <div class="col-xs-7 pull-right">
-                        <input type="submit" name="signup-submit" id="signup-submit" tabindex="4" class="form-control btn btn-success" value="Create Acount">
+                        <input type="submit" name="signup-submit" id="signup-submit" tabindex="4" class="form-control btn btn-success drop-right-shadow teal-bg" value="Create Acount">
                       </div>
                       <div class="col-xs-5 pull-right">
-                        <input type="reset" name="signup-reset" id="signup-reset" tabindex="4" class="form-control btn btn-success" value="Reset">
+                        <input type="reset" name="signup-reset" id="signup-reset" tabindex="4" class="form-control btn btn-success drop-right-shadow teal-bg"  value="Clear">
                       </div>
 
                     </div>
