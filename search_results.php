@@ -10,12 +10,10 @@
 
     //information submited by the event category blocks
     if (isset($_POST['search-category-block'])){
-
-        echo "<script>console.log('from block')</script>";
-
-        //retrieve information
+       //retrieve information
         $search_category = $_POST["search-category-block"];
         unset($_POST['search-category-block']);
+        echo "<script>console.log('$search_category')</script>";
     }
 
     //information submited by the nav search bar

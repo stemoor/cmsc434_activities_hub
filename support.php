@@ -5,6 +5,7 @@
     sec_session_start();
 
     $logged = false;
+    $error_msg = "";
 
     //check if logged in
     if(login_check($db_connection) == true) {
@@ -14,9 +15,8 @@
         echo "<script>console.log('not logged in');</script>";
     }
 
-
     function generate_page($body, $page) {
-        $page = <<<EOPAGE
+        $head = <<<EOPAGE
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +27,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="imgs/brand_logo.png">
 
     <title>Activity Hub</title>
 
@@ -41,11 +41,23 @@
 
      <script src="res/events/search_results.js"></script>
 
+    <!--script that handles updating avatar image and uplaod button-->
+    <script src="res/signup/upload_avatar.js"></script>
+
+
     <!-- Custom styles for this page -->
     <link href="css/main_style.css" rel="stylesheet">
     <link href="css/event_search_results_style.css" rel="stylesheet">
   </head>
+EOPAGE;
 
+
+            if(isset($_GET['error'])){
+                echo "<script>$('#login-btn').click();</script>";
+                $error_msg = "Invalid email or password!";
+            }
+
+    $body_top = <<<EOPAGE
   <body>
 
     <div id="$page" class="page-wrapper">
@@ -54,7 +66,7 @@
         <div class="navbar-wrapper container ">
           <div class="navbar-header">
             <a class="navbar-brand" href="#">
-              <img alt="Brand" src="">
+              <img alt="Brand" src="imgs/brand_logo.png">
             </a>
 
             <!-- menu button for when navigation bar is collapsed for mobile-->
@@ -155,6 +167,7 @@
 
       </nav>
       <!--/.navbar-->
+
             $body
 
       <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
@@ -252,11 +265,10 @@
             <div class="modal-body">
               <div class="col-lg-12">
 
-                <!--adds error mgs if login was unsuccessful-->
-
                 <form id="login-form" action="res/login/process_login.php" method="post" autocomplete="off">
 
-                  <!--user_avatar_default name input-->
+
+                <p class="error" style="color:red;">$error_msg</p>
                   <div class="form-group has-feedback">
                     <input type="email" name="email" id="login-email" tabindex="1" class="form-control" placeholder="Email" value="" autocomplete="off"  required>
                     <i class="form-control-feedback glyphicon glyphicon-user"></i>
@@ -423,18 +435,16 @@
           </footer>
         </div>
 
-
-
-    <!--script that handles updating avatar image and uplaod button-->
-    <script src="res/signup/upload_avatar.js"></script>
     <!--script that handles updating avatar image and uplaod button-->
     <script src="res/signup/validate_signup.js"></script>
+
 
   </body>
 </html>
 EOPAGE;
 
-        return $page;
+
+        return $head.$body_top;
     }
 
 ?>

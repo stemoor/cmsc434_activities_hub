@@ -108,7 +108,7 @@ EOBOX;
         $result = null;
 
         if($byEventType){
-             echo "<script>console.log('query by type')</script>";
+             echo "<script>console.log('query by type = $event_type')</script>";
 
             $result = query_event_by_type($db_connection, $event_type,  $event_status, $publish_status);
         } else {
