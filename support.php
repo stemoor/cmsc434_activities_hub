@@ -134,25 +134,17 @@ EOPAGE;
                 </a>
               </li>
 
-              <!-- Actions Menu -->
+              <!-- Account panel -->
+              <!--account panel-->
               <li class="page-scroll">
-                <a href="#" id="dropdownActionButton" class="dropdown-toggle"  data-toggle="dropdown">
-                  <span class="glyphicon glyphicon-th-large"></span>
-                  <span class="caret"></span>
+                <a href="#" id="account-btn" class="account-nav-btn" data-toggle="modal" data-target="#account-modal">
+                  <!-- <span class="glyphicon glyphicon-th-large"></span> Account -->
+                   <img alt="Brand" class="img-circle" src="imgs/user_avatar_default.png">SM
                 </a>
 
-                <!-- drop down buttons-->
-                <ul class="dropdown-menu dropdown-lr animated slideInRight" role="menu" aria-labelledby="dropdownActionButton" >
-                  <li>
-                    <div class="col-lg-12">
-                      <div class="text-center">
-                        <h3><b>Sign Up</b></h3>
-                        <hr class="colorgraph"><br>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
               </li>
+            <!-- Account Menu -->
+
             </ul>
             <!--</ nav bar buttons>-->
 
@@ -167,6 +159,7 @@ EOPAGE;
 
             $body
 
+
       <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
       <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
         <a class="btn btn-primary" href="#page-top">
@@ -176,7 +169,7 @@ EOPAGE;
 
      </div>
       <!--new event modal-->
-      <div id="new-event-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="new-event-label" aria-hidden="true">
+      <div id="new-event-modal" class="modal fade dark-overlay-bg " tabindex="-1" role="dialog" aria-labelledby="new-event-label" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <!--title-->
@@ -240,7 +233,7 @@ EOPAGE;
 
 
       <!--login modal -->
-      <div id="login-modal" class="modal right fade" tabindex="-1" role="dialog" aria-labelledby="login-label" aria-hidden="true">
+      <div id="login-modal" class="modal right fade dark-overlay-bg " tabindex="-1" role="dialog" aria-labelledby="login-label" aria-hidden="true">
         <div class="modal-dialog modal-lg ">
           <div class="modal-content teal-bg">
 
@@ -315,7 +308,7 @@ EOPAGE;
       <!--</login-modal>-->
 
       <!--signup modal-->
-      <div id="signup-modal" class="modal fade right" tabindex="-1" role="dialog" aria-labelledby="signup-label" aria-hidden="true">
+      <div id="signup-modal" class="modal fade right dark-overlay-bg " tabindex="-1" role="dialog" aria-labelledby="signup-label" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content green-bg">
 
@@ -406,8 +399,74 @@ EOPAGE;
       </div>
       <!--</signup-modal>-->
 
+      <!--      <!--account modal-->
+      <div id="account-modal" class="no-overlay-bg modal fade right in" tabindex="-1" role="dialog" aria-labelledby="account-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content black-bg">
 
-    <div class="navbar navbar-fixed-bottom" id="footer">
+            <!--tile-->
+            <div class="modal-header text-center">
+
+              <!--close button-->
+              <button id='account-close' type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+
+              <!--title and colorgram-->
+              <div class="text-center">
+                <h2 class="modal-title" id="signup-label">  Stefani Moore   </h2>
+                <hr class="colorgraph"><br>
+              </div>
+            </div>
+            <!--</modal-header>-->
+
+            <!--body -->
+            <div class=" text-center">
+              <div class="col-lg-12 modal-body">
+                <div class="account-modal-body">
+                    <img src="imgs/user_avatar_default.png" alt="User Avatar" id="signup-avatar" class="img-circle"></img><br>
+                </div>
+
+                <div class="text-center account-side-panel-nav">
+                  <ul class="nav flex-column">
+                    <li class="nav-item" onclick="goToEventSearchResults('all-events')">
+                      <a id="" class="nav-link" href="#">
+                        <i class="list-side-panel-icon glyphicon glyphicon-minus"></i>My Account
+                      </a>
+                    </li>
+                    <li class="nav-item" onclick="goToEventSearchResults('workshop')">
+                      <a id="" class="nav-link" href="#">
+                        <i class="list-side-panel-icon glyphicon glyphicon-minus"></i>Events I am going!
+                      </a>
+                    </li>
+                    <li class="nav-item" onclick="goToEventSearchResults('techtalk')">
+                      <a id="" class=" nav-link " href="#">
+                        <i class="list-side-panel-icon glyphicon glyphicon-minus"></i>Favorited Events
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+
+
+              </div>
+            </div>
+            <!--</modal-body>-->
+
+          </div>
+          <!--</modal-content>-->
+
+        </div>
+        <!--</modal-dialog>-->
+
+      </div>
+      <!--</account-modal>-->-->
+
+
+
+
+
+    <!-- <div class="navbar navbar-fixed-bottom" id="footer"> -->
         <!-- Footer -->
           <footer class="text-center">
 
@@ -420,7 +479,7 @@ EOPAGE;
             </div>
 
           </footer>
-        </div>
+    <!-- </div> -->
 
     <!--script that handles updating avatar image and uplaod button-->
     <script src="res/signup/validate_signup.js"></script>

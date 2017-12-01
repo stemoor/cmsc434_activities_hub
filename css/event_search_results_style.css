@@ -1,10 +1,11 @@
 #events-list{
-	padding-right: 5%;
-	padding-top: 60px;
+	padding-top: 55px;
+	height: fit-content;
 }
 
 #event-search-page {
 	background: white;
+	height: fit-content;
 }
 
 
@@ -15,6 +16,7 @@
 	padding-right: 5%;
 	padding-left: 5%;
 	border-left: 1px solid rgba(0,0,0, .3);
+	height: fit-content;
 }
 
 
@@ -111,23 +113,21 @@
 	padding: 5%;
 	text-align: left;
 	background: rgba(0,0,0,.03);
+	margin-bottom: 5%;
 }
 
-/*----------------- Side Panel*/
+/*----------------- Categories Side Panel*/
 .list-side-panel-container{
 	padding:0px;
 	display:table;
 	margin-top: 3%;
-	margin-right: 5%;
 }
 
 .list-side-panel{
-	position: relative;
+	position: fixed;
 	height: 100%;
-}
-
-.list-side-panel-nav{
-	margin-top: 5%;
+	width: inherit;
+	padding-right: 3%;
 }
 
 .list-side-panel-nav .nav-item a{
@@ -150,3 +150,5 @@
 	padding-right: 5%;
 	padding-left: 10%;
 }
+
+

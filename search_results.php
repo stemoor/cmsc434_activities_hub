@@ -139,9 +139,6 @@
             </div>
             <!--</list of events>-->
 
-            <div class="col-sm-2">
-            </div>
-
           </div>
           <!--</main body row>-->
 

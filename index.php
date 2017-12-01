@@ -13,18 +13,18 @@ $body = <<<EOBODY
 
           <div class="events-grid">
             <diV class="main-title">
-              <h1>Looking for an event? Browse all of them!</h1>
+              <h1>Looking for an event? </h1>
             </diV>
 
             <div class="row">
-              <div id="workshop" class="col-sm-4 col-sm-offset-2 green-bg event-block event-block-btn" onclick="goToEventSearchResults('workshop')">
+              <div id="workshop" class="col-sm-4 col-sm-offset-2 green-bg event-block event-block-btn drop-right-shadow" onclick="goToEventSearchResults('workshop')">
                 <div class="card ">
                   <div class="card-block">
                    <h2>Workshops</h2>
                   </div>
                 </div>
               </div>
-              <div id="techtalk" class="col-sm-4 purple-bg event-block event-block-btn" onclick="goToEventSearchResults('techtalk')">
+              <div id="techtalk" class="col-sm-4 purple-bg event-block event-block-btn drop-right-shadow" onclick="goToEventSearchResults('techtalk')">
                 <div class="card ">
                   <div class="card-block">
                     <h2>Tech Talks</h2>
@@ -36,14 +36,14 @@ $body = <<<EOBODY
 
             <div class="row ">
 
-              <div id="club" class="col-sm-4   col-sm-offset-2 teal-bg event-block event-block-btn" onclick="goToEventSearchResults('club')">
+              <div id="club" class="col-sm-4   col-sm-offset-2 teal-bg event-block event-block-btn drop-right-shadow" onclick="goToEventSearchResults('club')">
                 <div class="card ">
                   <div class="card-block">
                     <h2>Club Meetings</h2>
                   </div>
                 </div>
               </div>
-              <div id="all-events" class="col-sm-4 pink-bg event-block event-block-btn" onclick="goToEventSearchResults('all-events')">
+              <div id="all-events" class="col-sm-4 pink-bg event-block event-block-btn drop-right-shadow" onclick="goToEventSearchResults('all-events')">
                 <div class="card ">
                   <div class="card-block">
                     <h2><i class="glyphicon glyphicon-plus" ></i>All Events</h2>
