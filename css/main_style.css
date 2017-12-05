@@ -12,14 +12,31 @@ body {
   font-family: 'Raleway', sans-serif;
   grid-template-rows: auto 1fr auto;
   min-height: 100%;
-  display: grid;
 }
 .section-body {
   height: fit-content;
 }
+
+.formatted-text {
+    color: #000000;
+    font-weight: normal;
+    font-family: 'Montserrat', sans-serif;
+}
+
 input,
 button {
     align-self: left;
+}
+
+#country_code, #number_1, #number_2, #number_3{
+  width: 60px;
+  display: inline;
+  padding: 5px;
+}
+
+p {
+  margin: 10px 0 10px;
+  display: inline;
 }
 
 .about-text {
@@ -492,7 +509,6 @@ ul.dropdown-lr {
 
 footer {
 
-  margin-top: 5%;
    background: #101010;
    color: #9d9d9d;
    height: 50px;

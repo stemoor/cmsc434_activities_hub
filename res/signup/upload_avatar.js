@@ -1,11 +1,16 @@
 //listener for loading the avatar picture
 $('#avatar-file').on('change', function(){
-    alert();
-    //get the avatar path
+     //get the avatar path
     var filename = document.getElementById("avatar-file").value;
     //get the name from the path
     var last_slash = filename.lastIndexOf("\\");
     filename = filename.substr(last_slash + 1);
+
+    //verify file extension
+    if(!filename.endsWith('.png') || !filename.endsWith('.jpg')) {
+        document.getElementById('file-label').innerHTML = "<i class='glyphicon glyphicon-upload'></i><strong> invalid format, upload: .jpg or .png</strong> ";
+        return;
+    }
 
     //if user selected a picture
     if(filename !== "") {

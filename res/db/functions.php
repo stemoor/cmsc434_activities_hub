@@ -296,5 +296,41 @@
     }
 
 
+    function checkUserExists($db_connection, $email){
+
+        $table = "users";
+
+        $query = "select * from $table where email='$email'";
+
+        //send out query
+        $result = $db_connection->query($query);
+
+         //check result from query
+        if(!$result) {
+
+            //something went wrong with the requrest
+            return false;
+
+        } else {
+
+             //request went through, check the results
+            $num_rows = $result->num_rows;
+
+            //check results from query. It reutnrs the rows from the db that matched the query
+            if ($num_rows == 0) {
+
+                //no rows found -> no event from choosen category
+                return false;
+
+            } else {
+
+                //user in the table
+                return true;
+            }
+        }
+
+    }
+
+
 
 ?>

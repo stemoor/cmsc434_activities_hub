@@ -3,8 +3,6 @@
     require("../db/db_connect.php");
     require("../db/functions.php");
 
-    sec_session_start();
-    
     //make sure information was submitted
     if (isset($_POST["submit"])) {
 

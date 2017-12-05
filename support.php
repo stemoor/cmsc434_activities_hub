@@ -49,9 +49,16 @@
   </head>
 EOPAGE;
 
-    $error_msg = "";
+    //check error messages
+    $error_msg[1] = "";
+    $error_msg[2] = "";
             if(isset($_GET['error'])){
-                $error_msg = "Invalid email or password!";
+                if($_GET['error'] == 1){
+                    $error_msg[1] = "Invalid email or password!";
+                } else if($_GET['error'] == 2) {
+                    $error_msg[2]= "Email already linked to an account";
+                }
+
                 unset($_GET['error']);
             }
 
@@ -129,7 +136,7 @@ EOPAGE;
 
               <!--sign up button and drod down form-->
               <li class="page-scroll">
-                <a href="#" class="" data-toggle="modal" data-target="#signup-modal">
+                <a href="#" class="" id="signup-btn" data-toggle="modal" data-target="#signup-modal">
                   <span class="glyphicon glyphicon-plus"></span> Sign Up
                 </a>
               </li>
@@ -258,7 +265,7 @@ EOPAGE;
                 <form id="login-form" action="res/login/process_login.php" method="post" autocomplete="off">
 
 
-                <p id="error" style="color:red;">$error_msg</p>
+                <p id="error" class="error" style="color:red;">{$error_msg[1]}</p>
 
                 <script>
                     var val = document.getElementById('error').innerHTML;
@@ -339,20 +346,29 @@ EOPAGE;
                     <!--<label for="avatar-file">Avatar</label>-->
                     <!--<input type="file" id="avatar-file" class="form-control-file">-->
                       <label for="avatar-file" id="file-label" class="btn drop-right-shadow teal-bg" ><i class="glyphicon glyphicon-upload"></i> Upload Avatar: .jpg, .png</label>
-                      <input id="avatar-file" style="display:none;" type="file"></input>
+                      <input id="avatar-file" name="avatar-file" style="display:none;" type="file"></input>
                   </div>
 
                   <div class="form-group has-feedback">
                     <label for="firstname">First Name</label>
-                    <input type="text" name="first-name" id="firstname" tabindex="1" class="form-control borderless drop-right-shadow"
+                    <input type="text" name="firstname" id="firstname" tabindex="1" class="form-control borderless drop-right-shadow"
                            placeholder="First Name" value="" autocomplete="off" required onchange="refreshWarning(this);">
                   </div>
 
                   <div class="form-group has-feedback">
                     <label for="lastname">Last Name</label>
-                    <input type="text" name="last-name" id="lastname" tabindex="1" class="form-control borderless drop-right-shadow"
+                    <input type="text" name="lastname" id="lastname" tabindex="1" class="form-control borderless drop-right-shadow"
                            placeholder="Last Name" value="" autocomplete="off" required onchange="refreshWarning(this);">
                   </div>
+
+                   <p id="error_2" class="error" style="color:red;">{$error_msg[2]}</p>
+
+                <script>
+                    var val = document.getElementById('error_2').innerHTML;
+                    if(val !== ""){
+                        $('#signup-btn').click();
+                    }
+                </script>
 
                   <div class="form-group has-feedback">
                     <label for="signup-email">Email</label>
@@ -369,9 +385,56 @@ EOPAGE;
 
                   <div class="form-group">
                     <label for="re-signup-password">Re-enter New Password</label>
-                    <input type="password" name="re-password" id="signup-repassword" tabindex="2" class="form-control borderless drop-right-shadow"
+                    <input type="password" name="repassword" id="signup-repassword" tabindex="2" class="form-control borderless drop-right-shadow"
                            placeholder="Re-Password" autocomplete="off" required onchange="refreshWarning(this);">
                   </div>
+
+                 <div class="form-group">
+                    <input type="checkbox" name="planner" id="planner" tabindex="2" class="borderless" value="yes"
+                            data-toggle="collapse" data-target="#organization-info"
+                            onchange="refreshWarning(this);" onclick="appendSignupForm(this)">
+                            <span class="formatted-text"> Get veryfied as a UMD afiliated organization</span>
+
+                    <div id="organization-info" class="formatted-text  collapse">
+
+                        <div class="form-group has-feedback">
+                          <label for="organization">Organization Name</label>
+                          <input type="text" name="organization" id="organization" tabindex="1" class="organization-info-inner form-control borderless drop-right-shadow"
+                                 placeholder="Organization Name" value="" autocomplete="off">
+                        </div>
+
+                        <div class="form-group has-feedback">
+                          <label for="country_code">Phone Number</label><br>
+                          <input type="text" name="country_code" id="country_code" tabindex="1" class="phone organization-info-inner form-control borderless drop-right-shadow"
+                                 size="2" autocomplete="off"  placeholder="+1" maxlength="2" minlength="1">
+                          <input type="text" name="number_1" id="number_1" tabindex="1" class="phone organization-info-inner form-control borderless drop-right-shadow"
+                                 size="3" autocomplete="off" maxlength="3" minlength="3">
+                          <input type="text" name="number_2" id="number_2" tabindex="1" class="phone organization-info-inner form-control borderless drop-right-shadow"
+                                 size="3" autocomplete="off" maxlength="3" minlength="3">
+                          <input type="text" name="number_3" id="number_3" tabindex="1" class="phone organization-info-inner form-control borderless drop-right-shadow"
+                                 size="4" autocomplete="off" maxlength="4" minlength="4">
+                        </div>
+
+                        <div class="form-group has-feedback">
+                          <label for="website">Organization Website</label>
+                          <input type="url" name="website" id="website" tabindex="1" class="form-control borderless drop-right-shadow"
+                                 placeholder="url" value="" autocomplete="off">
+                        </div>
+
+                        <p>To be approved as a UMD affiliated organization, this account must be for either for a UMD department, official club, student organization, or sponsors. </p>
+                  </div>
+
+                  <script>
+                    function appendSignupForm(checkbox){
+                        var body = document.getElementById('organization-info-inner');
+                        if(checkbox.checked){
+
+                            $('.organization-info-inner').prop('required', true);
+                        } else {
+                            $('.organization-info-inner').prop('required', false);
+                        }
+                    }
+                  </script>
 
                   <div class="form-group">
                     <div class="row">
@@ -399,7 +462,9 @@ EOPAGE;
       </div>
       <!--</signup-modal>-->
 
-      <!--      <!--account modal-->
+
+
+      <!--account modal-->
       <div id="account-modal" class="no-overlay-bg modal fade right in" tabindex="-1" role="dialog" aria-labelledby="account-label" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content black-bg">
@@ -460,10 +525,7 @@ EOPAGE;
         <!--</modal-dialog>-->
 
       </div>
-      <!--</account-modal>-->-->
-
-
-
+      <!--</account-modal>-->
 
 
     <!-- <div class="navbar navbar-fixed-bottom" id="footer"> -->

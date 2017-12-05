@@ -56,6 +56,8 @@ function validate_input(){
         return false;
     }
 
+    //if everything is good, prompt user for rest of info
+    
     return true;
 
 }
