@@ -8,11 +8,11 @@ document.getElementById("signup-form").onsubmit = validate_input;
 function compare_passwords(password, confirm_password) {
 
     if(password.value !== confirm_password.value) {
-        console.log("don't match p: " + password + " rep: " + confirm_password);
+
         confirm_password.setCustomValidity("Passwords don't match.");
         return false;
     } else {
-        console.log("match");
+
         confirm_password.setCustomValidity("");
         return true;
     }
@@ -57,11 +57,21 @@ function validate_input(){
     }
 
     //if everything is good, prompt user for rest of info
-    
+
     return true;
 
 }
 
 function refreshWarning(input){
     input.setCustomValidity("");
+}
+
+$('.close').on('click', resetErrorMsgs);
+
+function resetErrorMsgs(){
+    errors = document.getElementsByClassName("error");
+
+    for (var i = 0; i < errors.length; i++ ){
+        errors[i].innerHTML = "";
+    }
 }

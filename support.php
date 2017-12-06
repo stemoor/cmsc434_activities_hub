@@ -4,18 +4,25 @@
 
     sec_session_start();
 
-    $logged = false;
-
+    $logged_in = false;
+    $user_name = "";
+    $is_planner = false;
 
     //check if logged in
-    if(login_check($db_connection) == true) {
-        $logged = true;
-        echo "<script>console.log('logged in');</script>";
+    if(login_check($db_connection) === true) {
+        $logged_in = true;
+        $user_name = $_SESSION['user_name'];
+        $is_planner = $_SESSION['is_planner'];
+
+        echo "<script>console.log('$user_name logged in');</script>";
     } else {
+        $logged_in = false;
         echo "<script>console.log('not logged in');</script>";
     }
 
     function generate_page($body, $page) {
+        global $user_name;
+        global $logged_in;
         $head = <<<EOPAGE
 
 <!DOCTYPE html>
@@ -37,9 +44,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
      <script src="res/events/search_results.js"></script>
-
-
-
+     <script src="res/login/login_functions.js"></script>
 
     <!-- Custom styles for this page -->
     <link href="css/main_style.css" rel="stylesheet">
@@ -54,9 +59,9 @@ EOPAGE;
     $error_msg[2] = "";
             if(isset($_GET['error'])){
                 if($_GET['error'] == 1){
-                    $error_msg[1] = "Invalid email or password!";
+                    $error_msg[1] = "Invalid account information!";
                 } else if($_GET['error'] == 2) {
-                    $error_msg[2]= "Email already linked to an account";
+                    $error_msg[2]= "Email already linked to another account";
                 }
 
                 unset($_GET['error']);
@@ -64,6 +69,7 @@ EOPAGE;
 
     $body_top = <<<EOPAGE
   <body>
+
 
     <div id="$page" class="page-wrapper">
       <!--navigation bar-->
@@ -127,32 +133,55 @@ EOPAGE;
                 </a>
               </li>
 
-              <!--login button and login dropdown form-->
+              <!--login button-->
               <li class="dropdown page-scroll">
                 <a href="#" id="login-btn" class="" data-toggle="modal" data-target="#login-modal">
                   <span class="glyphicon glyphicon-log-in"></span> Login
                 </a>
               </li>
 
-              <!--sign up button and drod down form-->
+
+              <!--sign up button-->
               <li class="page-scroll">
                 <a href="#" class="" id="signup-btn" data-toggle="modal" data-target="#signup-modal">
                   <span class="glyphicon glyphicon-plus"></span> Sign Up
                 </a>
               </li>
-
               <!-- Account panel -->
+
               <!--account panel-->
               <li class="page-scroll">
-                <a href="#" id="account-btn" class="account-nav-btn" data-toggle="modal" data-target="#account-modal">
+                <a href="#" id="account-btn" class="account-nav-btn" data-toggle="modal" data-target="#account-modal" style="display:none;">
                   <!-- <span class="glyphicon glyphicon-th-large"></span> Account -->
-                   <img alt="Brand" class="img-circle" src="imgs/user_avatar_default.png">SM
+                   <img alt="Brand" class="img-circle" src="imgs/user_avatar_default.png"> &nbsp;Hi, $user_name!
                 </a>
-
               </li>
             <!-- Account Menu -->
 
-            </ul>
+            <!--logout button-->
+              <li class="dropdown page-scroll">
+
+                <a href="#" id="logout-btn" class="" onclick="logout()">
+                  <span class="glyphicon glyphicon-log-out"></span> Logout
+                </a>
+
+                <form id="logout-form" action="res/logout/process_logout.php" method="POST" style="display:none;">
+                    <input type="hidden" name="logout">
+                </form>
+              </li>
+
+              <script>
+
+                function logout(){
+
+                      var res = confirm("Are you sure you sure you want to logout?");
+                      if(res){
+                            document.getElementById("logout-form").submit();
+                      }
+                }
+             </script>
+
+             </ul>
             <!--</ nav bar buttons>-->
 
           </div>
@@ -163,6 +192,18 @@ EOPAGE;
 
       </nav>
       <!--/.navbar-->
+
+EOPAGE;
+            if($logged_in){
+                $body_top .= '<script>toggle_control_buttons(true);</script>';
+
+            } else {
+                $body_top .= '<script>toggle_control_buttons(false);</script>';
+            }
+
+
+    $body_top .= <<<EOPAGE
+
 
             $body
 
@@ -265,14 +306,7 @@ EOPAGE;
                 <form id="login-form" action="res/login/process_login.php" method="post" autocomplete="off">
 
 
-                <p id="error" class="error" style="color:red;">{$error_msg[1]}</p>
-
-                <script>
-                    var val = document.getElementById('error').innerHTML;
-                    if(val !== ""){
-                        $('#login-btn').click();
-                    }
-                </script>
+                <p id="login_error" class="error" style="color:red;">{$error_msg[1]}</p>
 
                   <div class="form-group has-feedback">
                     <input type="email" name="email" id="login-email" tabindex="1" class="form-control drop-right-shadow" placeholder="Email" value="" autocomplete="off"  required>
@@ -317,7 +351,7 @@ EOPAGE;
       <!--signup modal-->
       <div id="signup-modal" class="modal fade right dark-overlay-bg " tabindex="-1" role="dialog" aria-labelledby="signup-label" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-          <div class="modal-content green-bg">
+          <div class="modal-content light-purple-bg">
 
             <!--tile-->
             <div class="modal-header text-center">
@@ -342,10 +376,11 @@ EOPAGE;
                 <form id="signup-form" action="res/signup/process_signup.php" method="post" autocomplete="off">
 
                   <div class="form-group text-center">
-                    <img src="imgs/user_avatar_default.png" alt="User Avatar" id="signup-avatar" class="img-circle"></img><br>
+                    <img src="imgs/user_avatar_default.png" alt="User Avatar" id="signup-avatar" class="img-circle" ></img><br>
                     <!--<label for="avatar-file">Avatar</label>-->
                     <!--<input type="file" id="avatar-file" class="form-control-file">-->
-                      <label for="avatar-file" id="file-label" class="btn drop-right-shadow teal-bg" ><i class="glyphicon glyphicon-upload"></i> Upload Avatar: .jpg, .png</label>
+                    <p id="load-avatar-error" class="error" style="color:red;"></p>
+                      <label for="avatar-file" id="file-label" class="btn drop-right-shadow green-bg" ><i class="glyphicon glyphicon-upload"></i> Upload Avatar: .jpg, .png</label>
                       <input id="avatar-file" name="avatar-file" style="display:none;" type="file"></input>
                   </div>
 
@@ -362,13 +397,6 @@ EOPAGE;
                   </div>
 
                    <p id="error_2" class="error" style="color:red;">{$error_msg[2]}</p>
-
-                <script>
-                    var val = document.getElementById('error_2').innerHTML;
-                    if(val !== ""){
-                        $('#signup-btn').click();
-                    }
-                </script>
 
                   <div class="form-group has-feedback">
                     <label for="signup-email">Email</label>
@@ -394,35 +422,36 @@ EOPAGE;
                             data-toggle="collapse" data-target="#organization-info"
                             onchange="refreshWarning(this);" onclick="appendSignupForm(this)">
                             <span class="formatted-text"> Get veryfied as a UMD afiliated organization</span>
+                </div>
 
-                    <div id="organization-info" class="formatted-text  collapse">
+                <div id="organization-info" class="formatted-text  collapse">
 
-                        <div class="form-group has-feedback">
-                          <label for="organization">Organization Name</label>
-                          <input type="text" name="organization" id="organization" tabindex="1" class="organization-info-inner form-control borderless drop-right-shadow"
-                                 placeholder="Organization Name" value="" autocomplete="off">
-                        </div>
+                    <div class="form-group has-feedback">
+                      <label for="organization">Organization Name</label>
+                      <input type="text" name="organization" id="organization" tabindex="1" class="organization-info-inner form-control borderless drop-right-shadow"
+                             placeholder="Organization Name" value="" autocomplete="off">
+                    </div>
 
-                        <div class="form-group has-feedback">
-                          <label for="country_code">Phone Number</label><br>
-                          <input type="text" name="country_code" id="country_code" tabindex="1" class="phone organization-info-inner form-control borderless drop-right-shadow"
-                                 size="2" autocomplete="off"  placeholder="+1" maxlength="2" minlength="1">
-                          <input type="text" name="number_1" id="number_1" tabindex="1" class="phone organization-info-inner form-control borderless drop-right-shadow"
-                                 size="3" autocomplete="off" maxlength="3" minlength="3">
-                          <input type="text" name="number_2" id="number_2" tabindex="1" class="phone organization-info-inner form-control borderless drop-right-shadow"
-                                 size="3" autocomplete="off" maxlength="3" minlength="3">
-                          <input type="text" name="number_3" id="number_3" tabindex="1" class="phone organization-info-inner form-control borderless drop-right-shadow"
-                                 size="4" autocomplete="off" maxlength="4" minlength="4">
-                        </div>
+                    <div class="form-group has-feedback">
+                      <label for="country_code">Phone Number</label><br>
+                      <input type="text" name="country_code" id="country_code" tabindex="1" class="phone organization-info-inner form-control borderless drop-right-shadow"
+                             size="2" autocomplete="off"  placeholder="+1" maxlength="2" minlength="1">
+                      <input type="text" name="number_1" id="number_1" tabindex="1" class="phone organization-info-inner form-control borderless drop-right-shadow"
+                             size="3" autocomplete="off" maxlength="3" minlength="3">
+                      <input type="text" name="number_2" id="number_2" tabindex="1" class="phone organization-info-inner form-control borderless drop-right-shadow"
+                             size="3" autocomplete="off" maxlength="3" minlength="3">
+                      <input type="text" name="number_3" id="number_3" tabindex="1" class="phone organization-info-inner form-control borderless drop-right-shadow"
+                             size="4" autocomplete="off" maxlength="4" minlength="4">
+                    </div>
 
-                        <div class="form-group has-feedback">
-                          <label for="website">Organization Website</label>
-                          <input type="url" name="website" id="website" tabindex="1" class="form-control borderless drop-right-shadow"
-                                 placeholder="url" value="" autocomplete="off">
-                        </div>
+                    <div class="form-group has-feedback">
+                      <label for="website">Organization Website</label>
+                      <input type="url" name="website" id="website" tabindex="1" class="form-control borderless drop-right-shadow organization-info-inner"
+                             placeholder="url" value="" autocomplete="off">
+                    </div>
 
-                        <p>To be approved as a UMD affiliated organization, this account must be for either for a UMD department, official club, student organization, or sponsors. </p>
-                  </div>
+                    <p>To be approved as a UMD affiliated organization, this account must be for either for a UMD department, official club, student organization, or sponsors. </p>
+                 </div>
 
                   <script>
                     function appendSignupForm(checkbox){
@@ -439,10 +468,10 @@ EOPAGE;
                   <div class="form-group">
                     <div class="row">
                       <div class="col-xs-7 pull-right">
-                        <input type="submit" name="signup-submit" id="signup-submit" tabindex="4" class="form-control btn btn-success drop-right-shadow teal-bg" value="Create Acount">
+                        <input type="submit" name="signup-submit" id="signup-submit" tabindex="4" class="form-control btn btn-success drop-right-shadow green-bg" value="Create Acount">
                       </div>
                       <div class="col-xs-5 pull-right">
-                        <input type="reset" name="signup-reset" id="signup-reset" tabindex="4" class="form-control btn btn-success drop-right-shadow teal-bg"  value="Clear">
+                        <input type="reset" name="signup-reset" id="signup-reset" tabindex="4" class="form-control btn btn-success drop-right-shadow green-bg"  value="Clear">
                       </div>
 
                     </div>
@@ -463,35 +492,29 @@ EOPAGE;
       <!--</signup-modal>-->
 
 
-
-      <!--account modal-->
+     <!--<!--account modal-->
       <div id="account-modal" class="no-overlay-bg modal fade right in" tabindex="-1" role="dialog" aria-labelledby="account-label" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content black-bg">
-
             <!--tile-->
             <div class="modal-header text-center">
-
               <!--close button-->
               <button id='account-close' type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-
               <!--title and colorgram-->
               <div class="text-center">
-                <h2 class="modal-title" id="signup-label">  Stefani Moore   </h2>
+                <h2 class="modal-title" id="saccount-label">  Stefani Moore   </h2>
                 <hr class="colorgraph"><br>
               </div>
             </div>
             <!--</modal-header>-->
-
             <!--body -->
             <div class=" text-center">
               <div class="col-lg-12 modal-body">
                 <div class="account-modal-body">
                     <img src="imgs/user_avatar_default.png" alt="User Avatar" id="signup-avatar" class="img-circle"></img><br>
                 </div>
-
                 <div class="text-center account-side-panel-nav">
                   <ul class="nav flex-column">
                     <li class="nav-item" onclick="goToEventSearchResults('all-events')">
@@ -511,42 +534,34 @@ EOPAGE;
                     </li>
                   </ul>
                 </div>
-
-
-
               </div>
             </div>
             <!--</modal-body>-->
-
           </div>
           <!--</modal-content>-->
-
         </div>
         <!--</modal-dialog>-->
-
       </div>
       <!--</account-modal>-->
-
-
-    <!-- <div class="navbar navbar-fixed-bottom" id="footer"> -->
-        <!-- Footer -->
-          <footer class="text-center">
-
-            <div class="">
-              <div class="row">
-                <div class="col-lg-12">
-                  Copyright &copy; Activities Hub 2017
-                </div>
-              </div>
-            </div>
-
-          </footer>
-    <!-- </div> -->
 
     <!--script that handles updating avatar image and uplaod button-->
     <script src="res/signup/validate_signup.js"></script>
     <!--script that handles updating avatar image and uplaod button-->
     <script src="res/signup/upload_avatar.js"></script>
+
+
+    <script>
+        var val = document.getElementById('login_error').innerHTML;
+        if(val !== ""){
+            $('#login-btn').click();
+        }
+
+        var val = document.getElementById('error_2').innerHTML;
+        if(val !== ""){
+            $('#signup-btn').click();
+        }
+
+    </script>
 
   </body>
 </html>

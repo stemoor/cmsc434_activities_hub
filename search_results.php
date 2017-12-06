@@ -57,7 +57,7 @@
 
                   $event_found = true;
 
-                  $row['organization'] =  fetch_user($db_connection, $row['planner_id'], true)['organization'];
+                  $row['organization'] =  fetch_user_by_id($db_connection, $row['planner_id'], true)['organization'];
                   $events_listing .= generate_event_box($row);
 
               }
@@ -65,7 +65,7 @@
                 $event_found = true;
 
                 //searching by organization name or no search time provided
-                $row['organization'] =  fetch_user($db_connection, $row['planner_id'], true)['organization'];
+                $row['organization'] =  fetch_user_by_id($db_connection, $row['planner_id'], true)['organization'];
                 $events_listing .= generate_event_box($row);
             }
         }

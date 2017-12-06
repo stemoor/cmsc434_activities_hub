@@ -46,7 +46,7 @@ $body = <<<EOBODY
               <div id="all-events" class="col-sm-4 pink-bg event-block event-block-btn drop-right-shadow" onclick="goToEventSearchResults('all-events')">
                 <div class="card ">
                   <div class="card-block">
-                    <h2><i class="glyphicon glyphicon-plus" ></i>All Events</h2>
+                    <h2>All Events</h2>
                   </div>
                 </div>
               </div>
@@ -71,7 +71,7 @@ $body = <<<EOBODY
           <!--section title-->
           <div class="row main-title">
             <div class="col-lg-12 text-center">
-              <h1>About Us</h1>
+              <h1>Who we are and what we do ...</h1>
               <hr class="star-light">
             </div>
           </div>
@@ -80,21 +80,19 @@ $body = <<<EOBODY
           <!--section body-->
           <div class="row">
             <div class="col-lg-4 col-lg-offset-2 about-text gray-bg drop-right-shadow">
-              <p><h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h3></p>
+
+
+              <p class="text-center"><h3>Activities Hub provides a centralized location for clubs and organizations to
+              promote their events and members of the University of Maryland to discover them.</h3></p>
               <br>
 
               <p class="text-left">
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-                  when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-              </p> <br>
+                Users can browse through the clubs listed and favorite the groups they are apart of to receive updates on those particular events.
+                In addition, this site allows the user to RSVP or favorite the events they wish to attend around the campues, including professional workshops and tech talks.
 
-              <p>
-                <strong>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</strong>
-              </p><br>
-
+              </p> <br><br>
               <p class="text-left">
-                It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+                This site was created and maintained by university of Maryland students for university of Maryland students. Enjoy!
               </p>
 
             </div>

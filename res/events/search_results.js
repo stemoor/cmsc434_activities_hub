@@ -1,5 +1,4 @@
 function goToEventSearchResults(id) {
-      console.log("ID = " + id);
 
       $('#search-category-block').val(id);
 

@@ -14,7 +14,7 @@ body {
   min-height: 100%;
 }
 .section-body {
-  height: fit-content;
+  height: auto;
 }
 
 .formatted-text {
@@ -64,6 +64,7 @@ p {
 .form-group label {
     color: #000000;
     font-weight: normal;
+    font-size: 1.3em;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -260,6 +261,10 @@ a.btn.btn-info {
   margin-bottom: 6%;
 }
 
+#signup-avatar:hover{
+  cursor: pointer;
+}
+
 .modal input{
   font-family: 'Montserrat', sans-serif;
   font-size: 1.1em;
@@ -270,6 +275,17 @@ a.btn.btn-info {
   border: none;
 }
 
+#signup-close{
+  font-size: 3em;
+  color: black;
+}
+
+.error {
+  font-size: 1.15em;
+  text-align: left;
+  font-weight: bolder;
+  width: 100%;
+}
 /*******************************
     login Modal
 */
@@ -529,7 +545,9 @@ footer {
 }
 
 
-
+.light-purple-bg{
+  background: #c49cde;
+}
 .purple-bg {
 	 background: #9b38bd;
 }
@@ -539,7 +557,7 @@ footer {
 }
 
 .green-bg {
-	background: #cfde00;
+	background: #e3f031;
 }
 
 .teal-bg {
@@ -566,6 +584,10 @@ footer {
 
 .gray-bg {
    background: rgb(237, 242, 249);
+}
+
+.light-teal-bg {
+  background: #7ae0d9;
 }
 
 .light-green-bg {
@@ -650,10 +672,10 @@ footer {
 
 }
 
-#account-modal.no-overlay.modal.face.right.in .modal-backdrop.in {
+/*#account-modal.no-overlay.modal.face.right.in .modal-backdrop.in {
   opacity: 0;
 	background: transparent;
-}
+}*/
 
 #account-modal .modal-title{
   color: white;
@@ -670,10 +692,6 @@ footer {
   color:#9d9d9d;
 }
 
-#account-btn {
- /* display: none;*/
-}
-
 .account-side-panel-nav .nav-item a:hover{
   color: white;
   background: #484848;
@@ -682,6 +700,5 @@ footer {
 .account-nav-btn img{
   height: 55px;
   width: 55px;
-  padding-right: 5%;
   vertical-align: middle;
 }
