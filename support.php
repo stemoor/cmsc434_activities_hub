@@ -504,7 +504,7 @@ EOPAGE;
               </button>
               <!--title and colorgram-->
               <div class="text-center">
-                <h2 class="modal-title" id="saccount-label">  Stefani Moore   </h2>
+                <h2 class="modal-title" id="saccount-label">  $user_name   </h2>
                 <hr class="colorgraph"><br>
               </div>
             </div>
