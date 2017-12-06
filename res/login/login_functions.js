@@ -13,10 +13,3 @@ function toggle_control_buttons(signedIn){
     }
 }
 
-function logout(){
-
-    var res = confirm("Are you sure you sure you want to logout?");
-    if(res){
-          document.getElementById("logout-form").submit();
-    }
-}
