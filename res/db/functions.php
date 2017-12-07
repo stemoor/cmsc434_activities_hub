@@ -77,7 +77,7 @@
                     $_SESSION['user_id'] = $row['id'];
                     $_SESSION['login_string'] = hash('sha256', $db_password.$user_browser);
                     $_SESSION['seed'] = $user_browser;
-                    $_SESSION['user_name'] = $row['first_name'];
+                    $_SESSION['user_name'] =  $row['first_name'];
                     $_SESSION['is_planner'] = $row['is_planner'];
 
                     //login successful
@@ -278,7 +278,7 @@
             $query .= " AND organization = '$search_term'";
         }
 
-        $query .= " ORDER BY organization";
+        $query .= " ORDER BY start_datetime, organization";
 
 
         //send out query
@@ -321,7 +321,7 @@
             $query .= " event_type = '$event_type' AND";
         }
 
-        $query .= "  event_status = '$event_status' AND publish_status = '$publish_status'" ;
+        $query .= "  event_status = '$event_status' AND publish_status = '$publish_status' ORDER by start_datetime" ;
 
         //send out query
         $result = $db_connection->query($query);
@@ -389,6 +389,9 @@
 
 
     function insert_user($db_connection, $fistname, $lastname, $email, $password, $avatar, $is_planner){
+
+        $password = password_hash($password, PASSWORD_DEFAULT);
+
         $query = "INSERT INTO users (email, first_name, last_name, password, avatar, is_planner)
                 VALUES ('$email', '$fistname', '$lastname', '$password', '$avatar', '$is_planner')";
 
@@ -405,6 +408,23 @@
         return $db_connection->query($query);
 
     }
+
+    function get_user_avatar($db_connection, $user_id){
+
+        //get user data
+        $data = fetch_user_by_id($db_connection, $user_id, false);
+
+        //check user data was actually returned
+        if($data !== null ){
+
+            //return the image
+            return $data['avatar'];
+
+        } else {
+            return null;
+        }
+    }
+
 
 
 ?>

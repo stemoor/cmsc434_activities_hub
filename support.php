@@ -7,12 +7,21 @@
     $logged_in = false;
     $user_name = "";
     $is_planner = false;
+    $avatar = "imgs/user_avatar_default.png"; //regulat default avatar
 
     //check if logged in
     if(login_check($db_connection) === true) {
         $logged_in = true;
-        $user_name = $_SESSION['user_name'];
+        $user_name = ucfirst($_SESSION['user_name']);
         $is_planner = $_SESSION['is_planner'];
+
+        //retrieve avatar stored in db
+        $db_avatar = get_user_avatar($db_connection, $_SESSION['user_id']);
+
+        //check if value returned is not null, if so, display picture
+        if($db_avatar !== null){
+            $avatar = "data:image/png;base64," . base64_encode(get_user_avatar($db_connection, $_SESSION['user_id']));
+        }
 
         echo "<script>console.log('$user_name logged in');</script>";
     } else {
@@ -23,6 +32,8 @@
     function generate_page($body, $page) {
         global $user_name;
         global $logged_in;
+        global  $is_planner;
+        global $avatar;
         $head = <<<EOPAGE
 
 <!DOCTYPE html>
@@ -126,12 +137,7 @@ EOPAGE;
             <!--buttons for sign up and log in-->
             <ul class="nav navbar-nav navbar-right">
 
-              <!--new event button-->
-              <li class="page-scroll">
-                <a href="#" class="" data-toggle="modal" data-target="#new-event-modal" >
-                  <span class="glyphicon glyphicon glyphicon-plus align-text-bottom"></span> Event
-                </a>
-              </li>
+
 
               <!--login button-->
               <li class="dropdown page-scroll">
@@ -151,9 +157,9 @@ EOPAGE;
 
               <!--account panel-->
               <li class="page-scroll">
-                <a href="#" id="account-btn" class="account-nav-btn" data-toggle="modal" data-target="#account-modal" style="display:none;">
+                <a href="#" id="account-btn" class="account-nav-btn" data-toggle="modal" data-target="#account-modal" style="display:none;" onclick="update_account_modal($is_planner);">
                   <!-- <span class="glyphicon glyphicon-th-large"></span> Account -->
-                   <img alt="Brand" class="img-circle" src="imgs/user_avatar_default.png"> &nbsp;Hi, $user_name!
+                   <img alt="Brand" class="img-circle" src="$avatar"> &nbsp;Hi, $user_name!
                 </a>
               </li>
             <!-- Account Menu -->
@@ -194,11 +200,22 @@ EOPAGE;
       <!--/.navbar-->
 
 EOPAGE;
+            //check if user is logged in
             if($logged_in){
                 $body_top .= '<script>toggle_control_buttons(true);</script>';
 
+                //if logged in and a planner, turn on planner only features
+                if($is_planner) {
+                    $body_top .= '<script>toggle_planner_features(true);</script>';
+                    $body_top .= '<script>toggle_basic_user_features(false);</script>';
+                } else {
+                    $body_top .= '<script>toggle_planner_features(false);</script>';
+                    $body_top .= '<script>toggle_basic_user_features(true);</script>';
+                }
+
             } else {
                 $body_top .= '<script>toggle_control_buttons(false);</script>';
+                $body_top .= '<script>toggle_planner_features(false);</script>';
             }
 
 
@@ -217,57 +234,114 @@ EOPAGE;
 
      </div>
       <!--new event modal-->
-      <div id="new-event-modal" class="modal fade dark-overlay-bg " tabindex="-1" role="dialog" aria-labelledby="new-event-label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+      <div id="new-event-modal" class="modal right fade dark-overlay-bg " tabindex="-1" role="dialog" aria-labelledby="new-event-label" aria-hidden="true">
+        <div id="new-event-dialog" class="modal-dialog modal-lg">
           <div class="modal-content">
-            <!--title-->
+            <!--tile-->
             <div class="modal-header">
-              <h1 class="modal-title" id="new-event-label">Create a new event</h1>
+              <!--close button-->
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
+              <!--title and colorgram-->
+              <div class="text-center ">
+                <h2 class="modal-title" id="new-event-title">Create New Event!</h2>
+                <hr class="colorgraph"><br>
+              </div>
             </div>
             <!--</modal-header>-->
 
             <!-- Content of the new event modal -->
             <div class="modal-body">
               <form class="new-event-form">
-                 <div class="form-block">
-                    <div class="left-form">
-                      Event name <br>
-                        <input type="text" name="eventname" placeholder="e.g. Free South Campus barbecue"><br>
-                      Event day <br>
-                        <input id="date" type="date"> <br>
-                      Time <br>
-                       From <input type="time" name="timefrom"> Till <input type="time" name="timetill"> <br>
-                      Description <br>
-                        <textarea name="Text1" cols="40" rows="5" placeholder="Give a description of your event here..."></textarea> <br>
-                      Tickets required <br>
-                        <input type="radio" name="ticketsrequired" value="yes"> Yes
-                        <input type="radio" name="ticketsrequired" value="no"> No <br>
-                      Price <br>
-                        Free <input type="checkbox" name="free" value="free"> or $ <input type="number" min="0.00" max="10000.00" step="0.01"  placeholder="0.00"> <br>
-                      Link to buy tickets: <br>
-                        <input type="text" name="link" placeholder="e.g. buyyourtickershere.com/tickets"> <br>
+                 <div class="row">
+                    <div class="col-sm-6">
+
+                        <div class="form-container">
+                            <div class="form-group ">
+                                <label for="event_name">Event name</label>
+                                <input type="text" name="event_name" id="event_name" tabindex="1" class="form-control drop-right-shadow" placeholder="e.g. Free South Campus barbecue" required>
+                            </div>
+
+
+                            <div class="form-group ">
+                                <label for="start-datetime">Start Date and Time</label>
+                                <input  id="start-datetime" type="datetime-local" name="start-datetime" tabindex="1" class="form-control drop-right-shadow" required>
+                            </div>
+
+
+                            <div class="form-group ">
+                                <label for="end-datetime">End Date and Time</label>
+                                <input  id="end-datetime" type="datetime-local" name="end-datetime" tabindex="1" class="form-control drop-right-shadow" required>
+                            </div>
+
+                            <div class="form-group ">
+                                <label for="ticket">Ticket Required? </label>
+                                <input  id="ticket" type="radio" name="ticket" value="true" tabindex="1" class=" drop-right-shadow" required> Yes
+                                <input  id="" type="radio" name="ticket" value="false" tabindex="1" class=" drop-right-shadow" required> No
+                            </div>
+
+                            <div class="form-group ">
+                                <label for="fee">Enter ticket price: $</label>
+                                <input id="fee" name"fee" class="form-control drop-right-shadow" type="number" min="0.00" max="10000.00" step="0.01"
+                                    placeholder="0.00" value="0.00" width='50px'>
+                            </div>
+
+
+                            <div class="form-group has-feedback">
+                                <label for="ticket_link">Link for Ticket Purchase</label>
+                                <input  id="ticket_link" type="text" name="ticket_link" tabindex="1" class="form-control drop-right-shadow"
+                                placeholder="e.g. free or tickets.com" required>
+                            </div>
+
+                            <div class="form-group ">
+                                <label for="event_pic">Upload a picture (optional)</label>
+                                <input id="event_pic" name="event_pic" class="form-control drop-right-shadow"  type="file">
+                            </div>
+
+                            <div class="important">
+                                <div class="form-group ">
+                                    <label for="publish">Publish this event?</label> <br>
+                                    <input id="publish" name="publish" class="drop-right-shadow"  type="radio" value="true" required> Yes!
+                                    <input id="publish" name="publish" class="drop-right-shadow"  type="radio" value="false" required> No, save for later!
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- end of left side of grid -->
+
+
+                   <div class="col-sm-6">
+                        <div class="form-container">
+
+                              <div class="form-group ">
+                                  <label for="description">Event Description</label>
+                                  <textarea id="description" name="description" cols="40" rows="5" placeholder="Add additional description of the event here..."
+                                  class="form-control drop-right-shadow" required></textarea>
+                             </div>
+
+                        </div>
+                 </div>
+                  <!-- end of right side of grid -->
+
+                </div>
+                <!-- end of row -->
+
+                <div class="row">
+
+                    <div class="footer col-sm-12">
+                        <div class="event-footer form-group">
+                            <input type="submit" name="new-event-submit" id="new-event-submit" tabindex="4" class="form-control btn btn-success drop-right-shadow green-bg" value="Create New Event">
+                        </div>
                     </div>
                 </div>
-                <div id=rightformblock class="form-block">
-                  <div class="right-form">
-                    <h5>Optional: upload an event picture</h5> <br>
-                      <input name="myFile" type="file"> <br>
-                      <img src="imgs/placeholder.jpg">
-                  </div>
-                </div>
+
+
               </form>
             </div>
             <!--</modal-body>-->
-
-            <!--footer-->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-            <!--</modal-footer>-->
 
           </div>
           <!--</modal-content>-->
@@ -373,15 +447,16 @@ EOPAGE;
             <div class="modal-body">
               <div class="col-lg-12">
 
-                <form id="signup-form" action="res/signup/process_signup.php" method="post" autocomplete="off">
+                <form id="signup-form" action="res/signup/process_signup.php" method="post" autocomplete="off" enctype="multipart/form-data">
 
                   <div class="form-group text-center">
+
                     <img src="imgs/user_avatar_default.png" alt="User Avatar" id="signup-avatar" class="img-circle" ></img><br>
-                    <!--<label for="avatar-file">Avatar</label>-->
-                    <!--<input type="file" id="avatar-file" class="form-control-file">-->
+
                     <p id="load-avatar-error" class="error" style="color:red;"></p>
+
                       <label for="avatar-file" id="file-label" class="btn drop-right-shadow green-bg" ><i class="glyphicon glyphicon-upload"></i> Upload Avatar: .jpg, .png</label>
-                      <input id="avatar-file" name="avatar-file" style="display:none;" type="file"></input>
+                      <input id="avatar-file" name="avatar" style="display:none;" type="file"></input>
                   </div>
 
                   <div class="form-group has-feedback">
@@ -418,7 +493,7 @@ EOPAGE;
                   </div>
 
                  <div class="form-group">
-                    <input type="checkbox" name="planner" id="planner" tabindex="2" class="borderless" value="yes"
+                    <input type="checkbox" name="planner" id="planner" tabindex="2" class="borderless" value="true"
                             data-toggle="collapse" data-target="#organization-info"
                             onchange="refreshWarning(this);" onclick="appendSignupForm(this)">
                             <span class="formatted-text"> Get veryfied as a UMD afiliated organization</span>
@@ -504,7 +579,7 @@ EOPAGE;
               </button>
               <!--title and colorgram-->
               <div class="text-center">
-                <h2 class="modal-title" id="saccount-label">  $user_name   </h2>
+                <h2 class="modal-title" id="saccount-label">Hi,  $user_name   </h2>
                 <hr class="colorgraph"><br>
               </div>
             </div>
@@ -513,23 +588,46 @@ EOPAGE;
             <div class=" text-center">
               <div class="col-lg-12 modal-body">
                 <div class="account-modal-body">
-                    <img src="imgs/user_avatar_default.png" alt="User Avatar" id="signup-avatar" class="img-circle"></img><br>
+                    <img src="$avatar" alt="User Avatar" id="signup-avatar" class="img-circle"></img><br>
                 </div>
                 <div class="text-center account-side-panel-nav">
                   <ul class="nav flex-column">
+
                     <li class="nav-item" onclick="goToEventSearchResults('all-events')">
                       <a id="" class="nav-link" href="#">
-                        <i class="list-side-panel-icon glyphicon glyphicon-minus"></i>My Account
+                        <i class="list-side-panel-icon glyphicon glyphicon-user"></i>My Account
                       </a>
                     </li>
-                    <li class="nav-item" onclick="goToEventSearchResults('workshop')">
-                      <a id="" class="nav-link" href="#">
-                        <i class="list-side-panel-icon glyphicon glyphicon-minus"></i>Events I am going!
+
+                    <!--new event button-->
+                    <li class="nav-item ">
+                      <a id="new_event-btn" href="#" class="nav-link planner_features" data-toggle="modal" data-target="#new-event-modal" onclick="close_account_modal()">
+                        <i class="list-side-panel-icon glyphicon glyphicon glyphicon-plus align-text-bottom"></i> New Event
                       </a>
                     </li>
-                    <li class="nav-item" onclick="goToEventSearchResults('techtalk')">
+
+                    <!--published events button-->
+                    <li class="nav-item" >
+                      <a id="published_events"  class="nav-link planner_features" href="#" class="nav-link">
+                        <i class="list-side-panel-icon glyphicon glyphicon-send align-text-bottom"></i> Published Events
+                      </a>
+                    </li>
+
+                    <!--saved events button-->
+                    <li  class="nav-item" >
+                      <a id="saved_events" href="#" class="nav-link planner_features" >
+                        <i class="list-side-panel-icon glyphicon glyphicon-floppy-disk align-text-bottom"></i> Saved Events
+                      </a>
+                    </li>
+
+                    <li id="rsvpd_events" class="nav-item basic_user_features" onclick="goToEventSearchResults('workshop')">
+                      <a  class="nav-link" href="#">
+                        <i class="list-side-panel-icon glyphicon glyphicon-check"></i>Events I am going!
+                      </a>
+                    </li>
+                    <li class="nav-item basic_user_features" onclick="goToEventSearchResults('techtalk')">
                       <a id="" class=" nav-link " href="#">
-                        <i class="list-side-panel-icon glyphicon glyphicon-minus"></i>Favorited Events
+                        <i class="list-side-panel-icon glyphicon glyphicon-star"></i>Favorited Events
                       </a>
                     </li>
                   </ul>

@@ -10,7 +10,7 @@
     if (isset($_POST["logout"])) {
 
         //log out
-        logout($db_connection);
+        logout($db_connection );
 
         //get prev url
         $from = $_SERVER['HTTP_REFERER'];

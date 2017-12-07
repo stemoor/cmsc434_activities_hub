@@ -10,6 +10,8 @@
 
         global  $event_catergories_colors;
 
+        $event_type = ucfirst($data['event_type']);
+
         $event_box = <<<EOBOX
 
 
@@ -38,7 +40,7 @@
                     <!--list-item-title--->
 
                     <div class="list-item-info">
-                        <p class=""> Event Type: {$data['event_type']}</p>
+                        <p class=""> Event Type: {$event_type}</p>
                         <p class=""> Start Date: {$data['start_datetime']}</p>
                         <p class=""> End Date: {$data['end_datetime']}</p>
                         <p class=""> Location: {$data['location']}</p>
