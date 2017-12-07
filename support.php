@@ -78,7 +78,7 @@ EOPAGE;
                     $error_msg[1] = "Invalid account information!";
                 } else if($_GET['error'] == 2) {
                     $error_msg[2]= "Email already linked to another account";
-                } 
+                }
                 unset($_GET['error']);
             }
 
@@ -125,7 +125,7 @@ EOPAGE;
                         <option id="club-category" value="club">Club</option>
                         <option id="techtalk-category" value="techtalk">Tech Talks</option>
                         <option id="workshop-category" value="workshop">Workshops</option>
-                        <option id="other-category" value="other">Workshops</option>
+                        <option id="other-category" value="other">Other</option>
                         <option id="organization-category" value="organization">Organization</option>
 
                     </select>
@@ -203,6 +203,9 @@ EOPAGE;
       </nav>
       <!--/.navbar-->
 
+        $body
+
+
 EOPAGE;
             //check if user is logged in
             if($logged_in){
@@ -224,10 +227,6 @@ EOPAGE;
 
 
     $body_top .= <<<EOPAGE
-
-
-            $body
-
 
       <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
       <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
@@ -262,9 +261,26 @@ EOPAGE;
                     <div class="col-sm-6">
 
                         <div class="form-container">
+
+
+                            <div class="form-group">
+                                <label for="new-event-category">Pick Event Catergory </label>
+                                <select  name="new-event-category" id="new-event-category" class="search form-control">
+                                    <option id="" value="club">Club Meeting</option>
+                                    <option id="" value="techtalk">Tech Talks</option>
+                                    <option id="" value="workshop">Workshops</option>
+                                    <option id="" value="other">Other</option>
+                                </select>
+                            </div>
                             <div class="form-group ">
                                 <label for="event_name">Event name</label>
                                 <input type="text" name="event_name" id="event_name" tabindex="1" class="form-control drop-right-shadow" placeholder="e.g. Free South Campus barbecue" required>
+                            </div>
+
+                             <div class="form-group ">
+                                <label for="location">Location</label>
+                                <input type="text" name="location" id="location" tabindex="1" class="form-control drop-right-shadow"
+                                    placeholder="e.g. A.V Williams Room #1254" required>
                             </div>
 
 
@@ -277,25 +293,6 @@ EOPAGE;
                             <div class="form-group ">
                                 <label for="end-datetime">End Date and Time</label>
                                 <input  id="end-datetime" type="datetime-local" name="end-datetime" tabindex="1" class="form-control drop-right-shadow" required>
-                            </div>
-
-                            <div class="form-group ">
-                                <label for="ticket">Ticket Required? </label>
-                                <input  id="ticket" type="radio" name="ticket" value="true" tabindex="1" class=" drop-right-shadow" required> Yes
-                                <input  id="" type="radio" name="ticket" value="false" tabindex="1" class=" drop-right-shadow" required> No
-                            </div>
-
-                            <div class="form-group ">
-                                <label for="fee">Enter ticket price: $</label>
-                                <input id="fee" name"fee" class="form-control drop-right-shadow" type="number" min="0.00" max="10000.00" step="0.01"
-                                    placeholder="0.00" value="0.00" width='50px'>
-                            </div>
-
-
-                            <div class="form-group has-feedback">
-                                <label for="ticket_link">Link for Ticket Purchase</label>
-                                <input  id="ticket_link" type="text" name="ticket_link" tabindex="1" class="form-control drop-right-shadow"
-                                placeholder="e.g. free or tickets.com" required>
                             </div>
 
                             <div class="form-group ">

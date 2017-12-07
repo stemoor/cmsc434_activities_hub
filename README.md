@@ -44,16 +44,17 @@ USAGE:
 
         -> use "describe users" to make user that the table looks like the one below:
 
-            +------------+--------------+------+-----+---------+----------------+
-            | Field      | Type         | Null | Key | Default | Extra          |
-            +------------+--------------+------+-----+---------+----------------+
-            | id         | int(11)      | NO   | PRI | NULL    | auto_increment |
-            | email      | varchar(100) | NO   | UNI | NULL    |                |
-            | name       | varchar(100) | YES  |     | NULL    |                |
-            | password   | varchar(60)  | NO   |     | NULL    |                |
-            | avatar     | blob         | YES  |     | NULL    |                |
-            | is_planner | tinyint(1)   | YES  |     | NULL    |                |
-            +------------+--------------+------+-----+---------+----------------+
+        +------------+--------------+------+-----+---------+----------------+
+        | Field      | Type         | Null | Key | Default | Extra          |
+        +------------+--------------+------+-----+---------+----------------+
+        | id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+        | email      | varchar(100) | NO   | UNI | NULL    |                |
+        | first_name | varchar(100) | YES  |     | NULL    |                |
+        | last_name  | varchar(100) | YES  |     | NULL    |                |
+        | password   | varchar(60)  | NO   |     | NULL    |                |
+        | avatar     | blob         | YES  |     | NULL    |                |
+        | is_planner | tinyint(1)   | YES  |     | NULL    |                |
+        +------------+--------------+------+-----+---------+----------------+
 
 
         7. Copy paste the command below to create the "planners" table
@@ -69,14 +70,15 @@ USAGE:
 
         -> use "describe planners " to make user that the table looks like the one below:
 
-            +--------------+--------------+------+-----+---------+-------+
-            | Field        | Type         | Null | Key | Default | Extra |
-            +--------------+--------------+------+-----+---------+-------+
-            | id           | int(11)      | NO   | PRI | NULL    |       |
-            | organization | varchar(200) | NO   |     | NULL    |       |
-            | phone_number | varchar(12)  | YES  |     | NULL    |       |
-            | website      | varchar(100) | YES  |     | NULL    |       |
-            +--------------+--------------+------+-----+---------+-------+
+        +----------------------+--------------+------+-----+---------+-------+
+        | Field                | Type         | Null | Key | Default | Extra |
+        +----------------------+--------------+------+-----+---------+-------+
+        | id                   | int(11)      | NO   | PRI | NULL    |       |
+        | organization         | varchar(200) | NO   |     | NULL    |       |
+        | cleaned_organization | varchar(200) | NO   |     | NULL    |       |
+        | phone_number         | varchar(12)  | YES  |     | NULL    |       |
+        | website              | varchar(100) | YES  |     | NULL    |       |
+        +----------------------+--------------+------+-----+---------+-------+
 
         8. Copy paste the command below to create the "events" table
 
@@ -102,6 +104,7 @@ USAGE:
             +----------------+--------------------------------------------+------+-----+---------+----------------+
             | id             | int(11)                                    | NO   | PRI | NULL    | auto_increment |
             | planner_id     | int(11)                                    | NO   |     | NULL    |                |
+            | organization   | varchar(200)                               | NO   |     | NULL    |                |
             | title          | varchar(250)                               | NO   |     | NULL    |                |
             | event_type     | enum('techtalk','club','workshop','other') | NO   |     | NULL    |                |
             | location       | varchar(250)                               | YES  |     | NULL    |                |

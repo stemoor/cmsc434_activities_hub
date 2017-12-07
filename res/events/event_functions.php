@@ -51,29 +51,58 @@
 
                   <!--list-item-btns-->
                   <div class="col-sm-2">
-                    <div class="list-item-btns">
+                    <div class="list-item-btns basic_user_features">
                         <form action="res/events/process_user_event_actions.php" method="POST">
                             <button type="submit" name="favorite" id="fav-btn" class="btn btn-info btn-lg gray-bg" >
                               <span class="list-item-btn-icons glyphicon glyphicon-star-empty"></span> Favotire
                             </button>
-                            <input type="hidden" name="event_id" value="{$data['id']}">
-                        </form>
 
-                        <form action="res/events/process_user_event_actions.php" method="POST">
-                            <button type="submit" name="rsvp-btn" id="rsvp-btn" class="btn btn-info btn-lg gray-bg">
+                            <button type="submit" name="rsvp" id="rsvp-btn" class="btn btn-info btn-lg gray-bg">
                               <span class="list-item-btn-icon glyphicon glyphicon-unchecked"></span> RSVP
                             </button>
-                            <input type="hidden" name="event_id" value="{$data['id']}">
-                        </form>
 
-                        <form action="res/events/process_user_event_actions.php" method="POST">
                             <button type="submit" name="export" id="export-btn" class="btn btn-info btn-lg gray-bg " >
                               <span class="list-item-btn-icon glyphicon glyphicon-calendar"></span> Export
                             </button>
+
                             <input type="hidden" name="event_id" value="{$data['id']}">
 
                         </form>
                     </div>
+
+EOBOX;
+
+    //check if planner can modify this event
+    if(isset($_SESSION['user_id']) && $_SESSION['user_id'] === $data['planner_id']) {
+        $event_box .= <<<EOBOX
+
+                    <div class="list-item-btns planner_features">
+                        <form action="res/events/process_planner_event_actions.php" method="POST">
+                            <button type="submit" name="close-event" id="" class="btn btn-info btn-lg gray-bg" >
+                              <span class="list-item-btn-icons glyphicon glyphicon-remove"></span> Close
+                            </button>
+
+                            <button type="submit" name="unpublish" id="" class="btn btn-info btn-lg gray-bg">
+                              <span class="list-item-btn-icon glyphicon glyphicon-eye-close"></span> Unpublish
+                            </button>
+
+                            <button type="submit" name="list-guests" id="" class="btn btn-info btn-lg gray-bg">
+                              <span class="list-item-btn-icon glyphicon glyphicon-list"></span> Atendees
+                            </button>
+
+
+                            <input type="hidden" name="event_id" value="{$data['id']}">
+
+                        </form>
+                    </div>
+
+
+EOBOX;
+    }
+
+
+        $event_box .= <<<EOBOX
+
 
                   </div>
                   <!--</list-item-btns>-->
@@ -109,6 +138,8 @@
 
 
 EOBOX;
+
+
 
     return $event_box;
 
