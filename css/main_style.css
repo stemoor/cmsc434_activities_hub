@@ -24,6 +24,17 @@ body {
 
 }
 
+.event-block:hover{
+  background: rgba(250,250,250,.8);
+  color: black;
+  cursor: pointer;
+  box-shadow: 8px 8px 5px rgba(0,0,0,.2);
+}
+
+.navbar-form {
+  margin: 0px;
+}
+
 #account-close {
   color: white;
 }
@@ -85,6 +96,15 @@ textarea.form-control {
   .modal-lg {
       width: 50%;
   }
+}
+
+.about-img{
+  background-image:  url("https://farm9.static.flickr.com/8059/8231788295_430d4a09eb_b.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  width: 500px;
+  border-right: 50px solid #34c3b9;
 }
 
 .footer .col-sm-12{

@@ -116,17 +116,40 @@ USAGE:
         9. Copy paste the command below to create the "rsvp_list" table
 
             create table rsvp_list (
-                                        event_id int  PRIMARY KEY  AUTO_INCREMENT,
+                                        id int  PRIMARY KEY  AUTO_INCREMENT,
+                                        event_id int  NOT NULL,
                                         user_id int  NOT NULL
                                     );
 
 
+        -> use "describe rsvp_list " to make user that the table looks like the one below:
+
+            +----------+---------+------+-----+---------+----------------+
+            | Field    | Type    | Null | Key | Default | Extra          |
+            +----------+---------+------+-----+---------+----------------+
+            | id       | int(11) | NO   | PRI | NULL    | auto_increment |
+            | event_id | int(11) | NO   |     | NULL    |                |
+            | user_id  | int(11) | NO   |     | NULL    |                |
+            +----------+---------+------+-----+---------+----------------+
+
         10. Copy paste the command below to create the "favorited_events" table
 
             create table favorited_events   (
-                                                user_id int PRIMARY KEY,
+                                                id int  PRIMARY KEY  AUTO_INCREMENT,
+                                                user_id int  NOT NULL,
                                                 event_id int  NOT NULL
                                             );
+
+
+        -> use "describe favorited_events " to make user that the table looks like the one below:
+
+            +----------+---------+------+-----+---------+----------------+
+            | Field    | Type    | Null | Key | Default | Extra          |
+            +----------+---------+------+-----+---------+----------------+
+            | id       | int(11) | NO   | PRI | NULL    | auto_increment |
+            | user_id  | int(11) | NO   |     | NULL    |                |
+            | event_id | int(11) | NO   |     | NULL    |                |
+            +----------+---------+------+-----+---------+----------------+
 
 
         11. Insert test data to the user table

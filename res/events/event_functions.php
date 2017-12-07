@@ -52,17 +52,27 @@
                   <!--list-item-btns-->
                   <div class="col-sm-2">
                     <div class="list-item-btns">
-                      <button type="button" id="fav-btn" class="btn btn-info btn-lg gray-bg" >
-                        <span class="list-item-btn-icons glyphicon glyphicon-star-empty"></span> Favotire
-                      </button>
+                        <form action="res/events/process_user_event_actions.php" method="POST">
+                            <button type="submit" name="favorite" id="fav-btn" class="btn btn-info btn-lg gray-bg" >
+                              <span class="list-item-btn-icons glyphicon glyphicon-star-empty"></span> Favotire
+                            </button>
+                            <input type="hidden" name="event_id" value="{$data['id']}">
+                        </form>
 
-                      <button type="button" id="rsvp-btn" class="btn btn-info btn-lg gray-bg">
-                        <span class="list-item-btn-icon glyphicon glyphicon-unchecked"></span> RSVP
-                      </button>
+                        <form action="res/events/process_user_event_actions.php" method="POST">
+                            <button type="submit" name="rsvp-btn" id="rsvp-btn" class="btn btn-info btn-lg gray-bg">
+                              <span class="list-item-btn-icon glyphicon glyphicon-unchecked"></span> RSVP
+                            </button>
+                            <input type="hidden" name="event_id" value="{$data['id']}">
+                        </form>
 
-                      <button type="button" id="export-btn" class="btn btn-info btn-lg gray-bg " >
-                        <span class="list-item-btn-icon glyphicon glyphicon-calendar"></span> Export
-                      </button>
+                        <form action="res/events/process_user_event_actions.php" method="POST">
+                            <button type="submit" name="export" id="export-btn" class="btn btn-info btn-lg gray-bg " >
+                              <span class="list-item-btn-icon glyphicon glyphicon-calendar"></span> Export
+                            </button>
+                            <input type="hidden" name="event_id" value="{$data['id']}">
+
+                        </form>
                     </div>
 
                   </div>

@@ -23,6 +23,11 @@
             $avatar = "data:image/png;base64," . base64_encode(get_user_avatar($db_connection, $_SESSION['user_id']));
         }
 
+        if(isset($_SESSION['action_completed'])){
+              echo "<script>alert('".$_SESSION['action_completed']."');</script>";
+              unset($_SESSION['action_completed']);
+        }
+
         echo "<script>console.log('$user_name logged in');</script>";
     } else {
         $logged_in = false;
@@ -73,8 +78,7 @@ EOPAGE;
                     $error_msg[1] = "Invalid account information!";
                 } else if($_GET['error'] == 2) {
                     $error_msg[2]= "Email already linked to another account";
-                }
-
+                } 
                 unset($_GET['error']);
             }
 
