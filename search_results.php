@@ -10,6 +10,7 @@
   $event_found = false;
   $search_result_message = "";
 
+  $logged_in = login_check($db_connection);
 
     //information submited by the event category blocks
     if (isset($_POST['search_category'])){
@@ -45,6 +46,14 @@
     //fetch events from db
     $events_list = fetch_events($db_connection, trim($search_term),  $search_category, 'open', 'published', $byEventType);
 
+    $list_events_rsvp = null;
+    $list_events_favorited = null;
+
+    //if user logged in, retrieve information about favirited or saved events
+    if($logged_in) {
+      $list_events_favorited = fetch_user_events($db_connection, $_SESSION['user_id'], false, false);
+      $list_events_rsvp = fetch_user_events($db_connection, $_SESSION['user_id'], true, false);
+    }
 
     ///check if result was returned
     if($events_list != null) {
@@ -58,6 +67,19 @@
             //get array with the columns  from the row found
             $row = $events_list->fetch_array(MYSQLI_ASSOC);
 
+            $is_favorited = false;
+            $is_rsvped = false;
+
+            //check if events are already rsvped or saved by user
+            if($list_events_rsvp != null) {
+              $is_rsvped = in_array($row['id'], $list_events_rsvp);
+
+            }
+
+            if($list_events_favorited != null){
+              $is_favorited = in_array($row['id'], $list_events_favorited);
+
+            }
 
 
             //if searching my event type, check event titles for the search term, only list the ones that have that terms
@@ -67,7 +89,7 @@
                   $event_found = true;
 
                   $row['organization'] =  fetch_user_by_id($db_connection, $row['planner_id'], true)['organization'];
-                  $events_listing .= generate_event_box($row);
+                  $events_listing .= generate_event_box($row, $is_favorited, $is_rsvped);
 
               }
             } else {
@@ -75,7 +97,8 @@
 
                 //searching by organization name or no search time provided
                 $row['organization'] =  fetch_user_by_id($db_connection, $row['planner_id'], true)['organization'];
-                $events_listing .= generate_event_box($row);
+
+                $events_listing .= generate_event_box($row, $is_favorited, $is_rsvped);
             }
         }
 
@@ -178,4 +201,10 @@ EOPAGE;
 
   echo"<script>update_search_box('$search_term', '$search_category');</script>";
   echo "<script>update_search_categories('$search_category');</script>";
+
+  if(isset($_SESSION['failed_action']) && $_SESSION['failed_action'] === true){
+    echo "<script>ask_to_login()</script>";
+    unset($_SESSION['failed_action']);
+  }
+
 ?>

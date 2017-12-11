@@ -26,3 +26,10 @@ function update_search_categories(id){
 
 }
 
+function ask_to_login(){
+    res = confirm("You must be logged to complete this action. Do you want to Login?");
+
+    if(res){
+        $('#login-btn').click();
+    }
+}

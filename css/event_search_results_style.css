@@ -90,9 +90,19 @@
 .list-item-btns .btn {
 	min-width: 125px;
 	margin-bottom: 5%;
-	font-size: 1em;
+	font-size: 1.3em;
 	border: none;
 	color: #575555;
+	text-align: justify;
+
+}
+
+
+.list-item-btns .selected{
+	background: rgb(213, 220, 231);
+	color: gray;
+	border: none;
+	outline: 0;
 
 }
 

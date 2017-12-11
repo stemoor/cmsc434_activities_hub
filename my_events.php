@@ -34,7 +34,7 @@
 
 
     //fetch events from db
-    $events_list = fetch_user_events($db_connection, $_SESSION['user_id'], $from_rsvp_list);
+    $events_list = fetch_user_events($db_connection, $_SESSION['user_id'], $from_rsvp_list, true);
 
 
     ///check if result was returned

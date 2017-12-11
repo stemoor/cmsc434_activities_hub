@@ -79,10 +79,8 @@ EOPAGE;
                     $error_msg[1] = "Invalid account information!";
                 } else if($_GET['error'] == 2) {
                     $error_msg[2]= "Email already linked to another account";
-                } else if($_GET['error'] == 5){
-                    echo "<script>ask_to_login()</script>";
-                }
 
+                }
                 unset($_GET['error']);
             }
 
@@ -625,19 +623,20 @@ EOPAGE;
                       </a>
                     </li>
 
-                    <form action"my_events.php" method = "POST" class="basic_user_features">
 
-                        <li id="rsvpd_events" class="nav-item basic_user_features" onclick="goToEventSearchResults('workshop')">
-                          <a  class="nav-link" href="my_events.php">
-                            <i class="list-side-panel-icon glyphicon glyphicon-check"></i>Events I am going!
-                          </a>
-                        </li>
-                        <li class="nav-item basic_user_features" onclick="goToEventSearchResults('techtalk')">
-                          <a id="" class=" nav-link " href="my_events.php">
-                            <i class="list-side-panel-icon glyphicon glyphicon-star"></i>Favorited Events
-                          </a>
-                        </li>
-                    </form>
+
+                    <li id="rsvpd_events" class="nav-item basic_user_features" onclick="goToEventSearchResults('workshop')">
+                      <a  class="nav-link" href="my_events.php">
+                        <i class="list-side-panel-icon glyphicon glyphicon-check"></i>Events I am going!
+                      </a>
+                    </li>
+                    <li class="nav-item basic_user_features" onclick="goToEventSearchResults('techtalk')">
+                      <a id="" class=" nav-link " href="my_events.php">
+                        <i class="list-side-panel-icon glyphicon glyphicon-star"></i>Favorited Events
+                      </a>
+                    </li>
+
+
                   </ul>
                 </div>
               </div>
@@ -668,14 +667,6 @@ EOPAGE;
         }
 
 
-        function ask_to_login(){
-              alert("jhey");
-            res = confirm("You must be logged . Login?");
-
-            if(res){
-                $('#login-btn').click();
-            }
-        }
 
 
     </script>

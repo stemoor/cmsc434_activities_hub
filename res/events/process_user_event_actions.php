@@ -20,24 +20,15 @@
 
         if(isset($_POST['favorite'])) {
 
-            echo "fav";
-
             $table = 'favorited_events';
-            $message = "Event added to your favorited list!";
-            $error_msg = "You already favorited this event! Go to your account to see list of all favorited events." ;
 
         } else if (isset($_POST['rsvp'])){
 
 
-            echo "rsvp";
             $table = 'rsvp_list';
-            $message = "RSVP to event successfully!";
-            $error_msg = "You are already going to this event! Go to your account to see list of all RSVPed events." ;
 
         } else if (isset($_POST['export'])){
-            echo "export set";
-            //fake complete this action as we won't implement this
-            $_SESSION['action_completed'] = "Event exported to your calendar successfully!";
+
 
             header('Location:'.$from);
             die();
@@ -48,31 +39,25 @@
 
         $res = $db_connection->query($query);
 
-        if($res && $res->num_rows == 0 ){
+        if(!$res) {
 
             //no results! so add new list to table
             $query = "INSERT INTO $table (user_id, event_id) VALUES ('$user_id', '$event_id')";
 
-            if($db_connection->query($query)){
-
-                //action successfull
-                $_SESSION['action_completed'] = $message;
-
-            } else {
+            if(!$db_connection->query($query)){
                 $_SESSION['action_completed'] = "Uh oh, there was a problem processing your request. Please refresh the page and try again!";
             }
         } else {
-
-            $_SESSION['action_completed'] = $error_msg;
+            $_SESSION['failed_action'] = false;
 
         }
 
-        //return to prev page
-        header('Location:'.$from);
     } else{
 
-        //return to prev page
-        header('Location:'.$from."?error=5");
+        $_SESSION['failed_action'] = true;
     }
+
+        //return to prev page
+        header('Location:'.$from);
 
 ?>

@@ -6,9 +6,10 @@
     $event_catergories_colors['club'] = "dark-purple";
     $event_catergories_colors['other'] = "teal";
 
-    function generate_event_box($data){
 
-
+    function generate_event_box($data, $is_favorited, $is_rsvped){
+        global  $db_connection;
+        global $logged_in;
         global  $event_catergories_colors;
 
 
@@ -55,12 +56,34 @@
                   <div class="col-sm-2">
                     <div class="list-item-btns basic_user_features">
                         <form action="res/events/process_user_event_actions.php" method="POST">
-                            <button type="submit" name="favorite" id="fav-btn" class="btn btn-info btn-lg gray-bg">
-                              <span class="list-item-btn-icons glyphicon glyphicon-star-empty"></span> Favotire
-                            </button>
+                            <button type="submit" name="favorite" id="fav-btn" class='btn btn-info btn-lg gray-bg
+EOBOX;
 
-                            <button type="submit" name="rsvp" id="rsvp-btn" class="btn btn-info btn-lg gray-bg">
-                              <span class="list-item-btn-icon glyphicon glyphicon-unchecked"></span> RSVP
+                if($is_favorited){
+                    $event_box .= " selected disabled'><span class='list-item-btn-icons glyphicon glyphicon-star'></span>";
+
+                } else{
+                    $event_box .= "'><span class='list-item-btn-icons glyphicon glyphicon-star-empty'></span>";
+                }
+
+ $event_box .= <<<EOBOX
+
+                            Favorite</button>
+
+                            <button type="submit" name="rsvp" id="rsvp-btn" class='btn btn-info btn-lg gray-bg
+EOBOX;
+
+                if($is_rsvped){
+                    $event_box .= " selected disabled'><span class='list-item-btn-icons glyphicon glyphicon-check'></span>";
+
+                } else{
+                    $event_box .= "'><span class='list-item-btn-icons glyphicon glyphicon-unchecked'></span>";
+                }
+
+ $event_box .= <<<EOBOX
+
+
+                            RSVP
                             </button>
 
                             <button type="submit" name="export" id="export-btn" class="btn btn-info btn-lg gray-bg ">
@@ -201,7 +224,7 @@ EOBOX;
         return false;
     }
 
-    function fetch_user_events($db_connection, $user_id, $from_rsvp_list){
+    function fetch_user_events($db_connection, $user_id, $from_rsvp_list, $include_event_info){
 
         $table = 'favorited_events';
 
@@ -230,15 +253,22 @@ EOBOX;
                 //get the event id
                 $event_id = $row['event_id'];
 
-                //now query database for the event info from events table
-                $query = "select * from events where id='$event_id order by start_datetime DESC'";
+                if($include_event_info) {
 
-                $event = $db_connection->query($query);
+                     //now query database for the event info from events table
+                    $query = "select * from events where id='$event_id order by start_datetime DESC'";
 
-                if($event){
-                    //get first element, there should only be one and add it to final list
-                    $data[$i] = $event->data_seek(0)->fetch_array(MYSQLI_ASSOC);
+                    $event = $db_connection->query($query);
+
+                    if($event){
+                        //get first element, there should only be one and add it to final list
+                        $data[$i] = $event->data_seek(0)->fetch_array(MYSQLI_ASSOC);
+                    }
+
+                } else {
+                    $data[$i] = $event_id;
                 }
+
 
 
             }
