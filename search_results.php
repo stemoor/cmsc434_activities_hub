@@ -1,12 +1,15 @@
 <?php
   include_once("support.php");
   include_once("res/events/event_functions.php");
+  include_once("res/events/event_categories.php");
 
   $search_term = null;
   $search_category = "all-events";
   $events_listing = "";
   $byEventType = true;
   $event_found = false;
+  $search_result_message = "";
+
 
     //information submited by the event category blocks
     if (isset($_POST['search_category'])){
@@ -14,16 +17,22 @@
        //retrieve information
         $search_category = $_POST["search_category"];
         unset($_POST['search_category']);
+        $search_result_message = "All results for <b>".$event_categories[$search_category]."</b>.";
     }
 
     //information submited by the nav search bar
-    if (isset($_POST['submit'])) {
+    if (isset($_POST['search-bar-submit'])) {
 
        $search_category = $_POST['category'];
+       $search_result_message = "All Results for ";
 
-       if(isset($_POST['search_term'])){
+       if(isset($_POST['search_term']) && $_POST['search_term']  !== ""){
           $search_term = $_POST['search_term'];
+          $search_result_message .= "'<i>".$search_term."'</i> in the ";
        }
+
+       $search_result_message .= '<b>'.$event_categories[$search_category].'</b> category.';
+
 
        if($search_category === 'organization'){
           $byEventType = false;
@@ -92,19 +101,29 @@
                 <div class="list-side-panel-nav">
                   <ul class="nav flex-column">
                     <li class="nav-item" onclick="goToEventSearchResults('all-events')">
-                      <a id="all-events-btn" class="all-events nav-link orange-bg drop-right-shadow" href="#">All Events<i class="list-side-panel-icon glyphicon glyphicon-plus"></i></a>
+                      <a id="all-events-btn" class="all-events nav-link orange-bg drop-right-shadow" href="#">All Events
+                        <i class="list-side-panel-icon glyphicon glyphicon-plus"></i>
+                      </a>
                     </li>
                     <li class="nav-item" onclick="goToEventSearchResults('workshop')">
-                      <a id="workshops-btn" class="workshop nav-link dark-pink-bg drop-right-shadow" href="#">Workshops<i class="list-side-panel-icon glyphicon glyphicon-minus"></i></a>
+                      <a id="workshop-btn" class="workshop nav-link dark-pink-bg drop-right-shadow" href="#">Workshops
+                        <i class="list-side-panel-icon glyphicon glyphicon-plus"></i>
+                      </a>
                     </li>
                     <li class="nav-item" onclick="goToEventSearchResults('techtalk')">
-                      <a id="techtalk-btn" class="techtalk nav-link purple-bg drop-right-shadow" href="#">Tech Talks<i class="list-side-panel-icon glyphicon glyphicon-minus"></i></a>
+                      <a id="techtalk-btn" class="techtalk nav-link purple-bg drop-right-shadow" href="#">Tech Talks
+                        <i class="list-side-panel-icon glyphicon glyphicon-plus"></i>
+                      </a>
                     </li>
                     <li class="nav-item" onclick="goToEventSearchResults('club')">
-                      <a id="clubs-btn" class="club nav-link dark-purple-bg drop-right-shadow" href="#">Clubs<i class="list-side-panel-icon glyphicon glyphicon-minus"></i></a>
+                      <a id="club-btn" class="club nav-link dark-purple-bg drop-right-shadow" href="#">Clubs
+                        <i class="list-side-panel-icon glyphicon glyphicon-plus"></i>
+                      </a>
                     </li>
                    <li class="nav-item"  onclick="goToEventSearchResults('other')">
-                      <a id="other-btn" class="other nav-link teal-bg drop-right-shadow" href="#">Others<i class="list-side-panel-icon glyphicon glyphicon-minus"></i></a>
+                      <a id="other-btn" class="other nav-link teal-bg drop-right-shadow" href="#">Others
+                        <i class="list-side-panel-icon glyphicon glyphicon-plus"></i>
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -114,11 +133,14 @@
               <form id="search-form" action="search_results.php" method="POST">
                 <input type="hidden" id="search-category-block" name="search_category" value="all-events">
               </form>
+
+
             </div>
             <!--</conrol panel>-->
 
             <!--list of events-->
             <div class="col-sm-8 list-wrapper">
+            <h3>$search_result_message</h3>
 
               $events_listing
 
@@ -153,10 +175,7 @@
 EOPAGE;
 
   echo generate_page($body,  'event-search-page');
-  if (isset($_POST['submit'])) {
-    echo"<script>setSearchCategoryOptions('$search_category');</script>";
 
-    unset($_POST['submit']);
-    unset($_POST['search_term']);
-  }
+  echo"<script>update_search_box('$search_term', '$search_category');</script>";
+  echo "<script>update_search_categories('$search_category');</script>";
 ?>

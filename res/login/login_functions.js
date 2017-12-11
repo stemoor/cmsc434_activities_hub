@@ -58,3 +58,11 @@ function update_account_modal(isPlanner){
 function close_account_modal(){
     $('#account-close').click();
 }
+
+function ask_to_login(){
+    res = confirm("You must be logged . Login?");
+
+    if(res){
+        $('#login-btn').click();
+    } 
+}

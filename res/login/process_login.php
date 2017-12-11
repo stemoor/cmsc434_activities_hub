@@ -13,16 +13,21 @@
         $email = trim($_POST["email"]);
         $password = trim($_POST["password"]);
 
+        //get prev url
+        $from = $_SERVER['HTTP_REFERER'];
+
         //attempt to login
         if(login($email, $password, $db_connection)) {
 
             //login success
-            header('Location: ../../index.php');
+            //go back to previous page
+            header('Location: '.$from);
 
         } else {
-            
+
             //login failed
-            header('Location: ../../index.php?error=1');
+            //go back to previous page with an errorS
+            header('Location: '.$from.'?error=1');
         }
     }
 

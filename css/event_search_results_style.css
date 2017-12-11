@@ -1,12 +1,17 @@
 #events-list{
 	padding-top: 55px;
-	height: 100%;
+	height: -webkit-fill-available;
+	background: white;
 }
 
 #event-search-page {
 	background: white;
+	height: -webkit-fill-available;
 }
 
+#events-list .section-body {
+	background: white;
+}
 
 .list-wrapper {
 	position: relative;

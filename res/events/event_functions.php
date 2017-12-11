@@ -8,7 +8,9 @@
 
     function generate_event_box($data){
 
+
         global  $event_catergories_colors;
+
 
         $event_type = ucfirst($data['event_type']);
 
@@ -53,7 +55,7 @@
                   <div class="col-sm-2">
                     <div class="list-item-btns basic_user_features">
                         <form action="res/events/process_user_event_actions.php" method="POST">
-                            <button type="submit" name="favorite" id="fav-btn" class="btn btn-info btn-lg gray-bg" >
+                            <button type="submit" name="favorite" id="fav-btn" class="btn btn-info btn-lg gray-bg">
                               <span class="list-item-btn-icons glyphicon glyphicon-star-empty"></span> Favotire
                             </button>
 
@@ -61,7 +63,7 @@
                               <span class="list-item-btn-icon glyphicon glyphicon-unchecked"></span> RSVP
                             </button>
 
-                            <button type="submit" name="export" id="export-btn" class="btn btn-info btn-lg gray-bg " >
+                            <button type="submit" name="export" id="export-btn" class="btn btn-info btn-lg gray-bg ">
                               <span class="list-item-btn-icon glyphicon glyphicon-calendar"></span> Export
                             </button>
 
@@ -197,6 +199,55 @@ EOBOX;
         }
 
         return false;
+    }
+
+    function fetch_user_events($db_connection, $user_id, $from_rsvp_list){
+
+        $table = 'favorited_events';
+
+        //stablish the table to query
+        if($from_rsvp_list){
+            $table = 'rsvp_list';
+        }
+
+        #query the table for list of events
+        $query = "SELECT event_id from $table where user_id = '$user_id'";
+
+        $result = $db_connection->query($query);
+
+        if($result && $result->num_rows > 0){
+            //grab each event
+            $data = null;
+
+            for($i = 0; $i < $result->num_rows; $i++){
+
+                //get current row
+                $result->data_seek($i);
+
+                //get array with the columns  from the row found
+                $row = $result->fetch_array(MYSQLI_ASSOC);
+
+                //get the event id
+                $event_id = $row['event_id'];
+
+                //now query database for the event info from events table
+                $query = "select * from events where id='$event_id order by start_datetime DESC'";
+
+                $event = $db_connection->query($query);
+
+                if($event){
+                    //get first element, there should only be one and add it to final list
+                    $data[$i] = $event->data_seek(0)->fetch_array(MYSQLI_ASSOC);
+                }
+
+
+            }
+
+            return $data;
+        }
+
+        return null;
+
     }
 
 

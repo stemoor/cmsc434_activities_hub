@@ -39,6 +39,7 @@
         global $logged_in;
         global  $is_planner;
         global $avatar;
+        global $logged_in;
         $head = <<<EOPAGE
 
 <!DOCTYPE html>
@@ -78,7 +79,10 @@ EOPAGE;
                     $error_msg[1] = "Invalid account information!";
                 } else if($_GET['error'] == 2) {
                     $error_msg[2]= "Email already linked to another account";
+                } else if($_GET['error'] == 5){
+                    echo "<script>ask_to_login()</script>";
                 }
+
                 unset($_GET['error']);
             }
 
@@ -104,7 +108,7 @@ EOPAGE;
             </button>
 
             <!--title of the page-->
-            <a class="navbar-brand navbar-left" href="index.php">Activitie Hub</a>
+            <a class="navbar-brand navbar-left" href="index.php">Activity Hub</a>
           </div>
 
           <!--add every nav bar button/link under here so it can be collapsed for mobal-->
@@ -130,7 +134,7 @@ EOPAGE;
 
                     </select>
                   <input name="search_term" id="search_box" type="text" class="form-control search" placeholder="Search"></input>
-                  <button type="submit" name="submit" class="btn btn-info search-btn form-control dark-purple-bg">
+                  <button type="submit" name="search-bar-submit" class="btn btn-info search-btn form-control dark-purple-bg">
                     <span class="glyphicon glyphicon-search align-bottom"></span>
                   </button>
 
@@ -621,16 +625,19 @@ EOPAGE;
                       </a>
                     </li>
 
-                    <li id="rsvpd_events" class="nav-item basic_user_features" onclick="goToEventSearchResults('workshop')">
-                      <a  class="nav-link" href="#">
-                        <i class="list-side-panel-icon glyphicon glyphicon-check"></i>Events I am going!
-                      </a>
-                    </li>
-                    <li class="nav-item basic_user_features" onclick="goToEventSearchResults('techtalk')">
-                      <a id="" class=" nav-link " href="#">
-                        <i class="list-side-panel-icon glyphicon glyphicon-star"></i>Favorited Events
-                      </a>
-                    </li>
+                    <form action"my_events.php" method = "POST" class="basic_user_features">
+
+                        <li id="rsvpd_events" class="nav-item basic_user_features" onclick="goToEventSearchResults('workshop')">
+                          <a  class="nav-link" href="my_events.php">
+                            <i class="list-side-panel-icon glyphicon glyphicon-check"></i>Events I am going!
+                          </a>
+                        </li>
+                        <li class="nav-item basic_user_features" onclick="goToEventSearchResults('techtalk')">
+                          <a id="" class=" nav-link " href="my_events.php">
+                            <i class="list-side-panel-icon glyphicon glyphicon-star"></i>Favorited Events
+                          </a>
+                        </li>
+                    </form>
                   </ul>
                 </div>
               </div>
@@ -659,6 +666,17 @@ EOPAGE;
         if(val !== ""){
             $('#signup-btn').click();
         }
+
+
+        function ask_to_login(){
+              alert("jhey");
+            res = confirm("You must be logged . Login?");
+
+            if(res){
+                $('#login-btn').click();
+            }
+        }
+
 
     </script>
 

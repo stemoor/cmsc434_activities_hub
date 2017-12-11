@@ -34,7 +34,7 @@
 
 
     //fetch events from db
-    $events_list = fetch_events($db_connection, trim($search_term),  $search_category, 'open', 'published', $byEventType);
+    $events_list = fetch_user_events($db_connection, $_SESSION['user_id'], $from_rsvp_list);
 
 
     ///check if result was returned

@@ -14,8 +14,11 @@ body {
   min-height: 100%;
 }
 .section-body {
-  height: auto;
+  height: fit-content;
+
 }
+
+
 
 .formatted-text {
     color: #000000;
