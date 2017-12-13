@@ -5,13 +5,28 @@
 
   $search_term = null;
   $search_category = "all-events";
-  $events_listing = "";
   $byEventType = true;
-  $event_found = false;
-  $from_rsvp_list = false;
+  $from_fav_list = "";
+  $from_rsvp_list = "";
+  $from_rsvp_list_in = "";
+  $from_fav_list_in = "";
+
   $logged_in = login_check($db_connection);
   $page_title = "RSVPed Events";
 
+  //in case user is loggs out form here
+  $_SESSION['on_my_list'] = "true";
+
+   //check which tab should be active
+    if(isset($_GET['rsvp']) && $_GET['rsvp'] === "true"){
+      $from_rsvp_list = "active";
+      $from_rsvp_list_in = "in ". $from_rsvp_list;
+      unset($_GET['rsvp']);
+    } else{
+      $from_fav_list = "active";
+      $from_fav_list_in = "in ". $from_fav_list;
+       unset($_GET['rsvp']);
+    }
 
     //information submited by the event category blocks
     if (isset($_POST['search_category'])){
@@ -36,56 +51,81 @@
 
     }
 
-    //came from user accoutn panel
-    if(isset($_GET['rsvp'])){
-      $from_rsvp_list = $_GET['rsvp'] === 'true';
-      $page_title = "Favorited Events";
-      unset($_GET['rsvp']);
-    }
-
-    //fetch events from db
-    $events_list = fetch_user_events($db_connection, $_SESSION['user_id'], $from_rsvp_list, true);
-
-    $list_events_rsvp = null;
+    $rsvp_data = null;
+    $favorited_data = null;
     $list_events_favorited = null;
+    $list_events_rsvp = null;
 
     //if user logged in, retrieve information about favirited or saved events
     if($logged_in) {
-      $list_events_favorited = fetch_user_events($db_connection, $_SESSION['user_id'], false, false);
+
+      //fetch rsvp events from db
+      $rsvp_data = fetch_user_events($db_connection, $_SESSION['user_id'], true, true);
+
+      //fetch favorited events from db
+      $favorited_data = fetch_user_events($db_connection, $_SESSION['user_id'], false, true);
+
+      //fetch ids for setting buttons
       $list_events_rsvp = fetch_user_events($db_connection, $_SESSION['user_id'], true, false);
+      $list_events_favorited = fetch_user_events($db_connection, $_SESSION['user_id'], false, false);
     }
 
-
-    ///check if result was returned
-    if($events_list !== null) {
-        $event_found = true;
+    $events_listing_rsvp = "";
+    $events_listing_fav = "";
 
 
-        for($i = 0; $i < sizeof($events_list); $i++){
+    $rsvp_count = 0;
+    $fav_count = 0;
+    ///process rsvp events
+    if($rsvp_data !== null) {
+
+        $rsvp_count = sizeof($rsvp_data);
+
+        for($i = 0; $i < $rsvp_count; $i++){
 
             $is_favorited = false;
             $is_rsvped = false;
 
-            //check if events are already rsvped or saved by user
-            if($list_events_rsvp != null) {
-              $is_rsvped = in_array($events_list[$i]['id'], $list_events_rsvp);
-            }
-
             if($list_events_favorited != null){
-              $is_favorited = in_array($events_list[$i]['id'], $list_events_favorited);
+              $is_favorited = in_array($rsvp_data[$i]['id'], $list_events_favorited);
 
             }
 
-           $row['organization'] =  fetch_user_by_id($db_connection, $events_list[$i]['planner_id'], true)['organization'];
-           $events_listing .= generate_event_box($events_list[$i], $is_favorited, $is_rsvped);
-
+           $row['organization'] =  fetch_user_by_id($db_connection, $rsvp_data[$i]['planner_id'], true)['organization'];
+           $events_listing_rsvp .= generate_event_box($rsvp_data[$i], $is_favorited, true);
         }
 
+    } else {
+      // no matchin events found
+      $events_listing_rsvp = "<h3>No events in this list.</h3>";
     }
 
-    if(!$event_found) {
+
+
+    ///process rsvp events
+    if($favorited_data != null) {
+
+        $fav_count = 0;
+        for($i = 0; $i < sizeof($favorited_data); $i++){
+
+            $is_rsvped = false;
+
+            //if rsvp no need to show in the favorited
+            if($list_events_rsvp != null && !in_array($favorited_data[$i]['id'], $list_events_rsvp)){
+               $row['organization'] =  fetch_user_by_id($db_connection, $favorited_data[$i]['planner_id'], true)['organization'];
+               $events_listing_fav .= generate_event_box($favorited_data[$i], true, $is_rsvped);
+               $fav_count++;
+            }
+        }
+
+    } else {
       // no matchin events found
-      $events_listing = "<h1>You have not events in this list.</h1>";
+      $events_listing_fav = "<h3>No events in this list.</h3>";
+    }
+
+    //last check for empty fav list
+    if($events_listing_fav === ""){
+       $events_listing_fav = "<h3>No events in this list.</h3>";
     }
 
   $body = <<<EOPAGE
@@ -132,47 +172,38 @@
             <!--list of events-->
             <div class="col-sm-8 list-wrapper">
 
-              <div class="my_results_page_title text-center">
-                <ul class="nav nav-tabs nav-justified">
-                  <li class="nav-item">
-                      <a class="nav-link active" data-toggle="tab" href="#rsvp_list" role="tab">
-                        <i class="acc-modal-icon  glyphicon glyphicon-check"></i> RSVP Events</a>
+              <div class="my_results_page_title">
+
+                <!-- events tab -->
+                <ul class="nav nav-tabs nav-justified" role="tablist">
+                  <li class="nav-item $from_rsvp_list" role="presentation">
+                      <a class="nav-link" data-toggle="tab" href="#rsvp_list"  role="tab" aria-controls="rsvp_list">
+                        <i class="acc-modal-icon  glyphicon glyphicon-check"></i> RSVP Events ( $rsvp_count )</a>
                   </li>
-                  <li class="nav-item">
-                      <a class="nav-link" data-toggle="tab" href="#favorite_list" role="tab">
-                        <i class="acc-modal-icon  glyphicon glyphicon-star"></i> Favorite Events</a>
+                  <li class="nav-item $from_fav_list" role="presentation">
+                      <a class="nav-link" data-toggle="tab" href="#favorite_list" role="tab" aria-controls="favorite_list">
+                        <i class="acc-modal-icon  glyphicon glyphicon-star"></i> Favorite Events ( $fav_count )</a>
                   </li>
-              </ul>
-              </div>
+                </ul>
+               </div>
+               <!-- /.events tab -->
 
-              <!-- Tab panels -->
-              <div class="tab-content card">
-                  <!--Panel 1-->
-                  <div class="tab-pane fade in show active" id="rsvp_list" role="tabpanel">
-                    $events_listing
-                  </div>
-                  <!--/.Panel 1-->
-                  <!--Panel 2-->
-                  <div class="tab-pane fade" id="favorite_list" role="tabpanel">
+                <!-- Tab panels -->
+                <div class="tab-content card">
+                    <!--Panel 1-->
+                    <div class="tab-pane fade $from_rsvp_list_in" id="rsvp_list" role="tabpanel">
+                      $events_listing_rsvp
+                    </div>
+                    <!--/.Panel 1-->
 
-                  </div>
-                  <!--/.Panel 2-->
-              </div>
+                    <!--Panel 2-->
+                    <div class="tab-pane fade $from_fav_list_in" id="favorite_list" role="tabpanel">
+                      $events_listing_fav
+                    </div>
+                    <!--/.Panel 2-->
 
-
-
-              <div class="event-pagination">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                  </ul>
-                </nav>
-              </div>
-
+                </div>
+                <!-- Tab panels -->
 
             </div>
             <!--</list of events>-->

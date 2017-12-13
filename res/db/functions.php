@@ -79,7 +79,7 @@
                     $_SESSION['seed'] = $user_browser;
                     $_SESSION['user_name'] =  $row['first_name'];
                     $_SESSION['is_planner'] = $row['is_planner'];
-
+                    
                     //login successful
                     return true;
 
@@ -394,6 +394,15 @@
 
         $query = "INSERT INTO users (email, first_name, last_name, password, avatar, is_planner)
                 VALUES ('$email', '$fistname', '$lastname', '$password', '$avatar', '$is_planner')";
+
+        return $db_connection->query($query);
+
+    }
+
+    function insert_event($db_connection, $planner_id, $organization, $title, $event_type, $location, $start_datetime, $end_datetime, $description, $event_status, $publish_status, $picture){
+
+        $query = "INSERT INTO events (planner_id, organization, title, event_type, location, start_datetime, end_datetime, description, event_status, publish_status, picture)
+                VALUES ('$planner_id', '$organization', '$title', '$event_type', '$location', '$start_datetime', '$end_datetime', '$description', '$event_status', '$publish_status', '$picture')";
 
         return $db_connection->query($query);
 

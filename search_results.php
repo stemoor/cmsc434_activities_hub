@@ -51,8 +51,8 @@
 
     //if user logged in, retrieve information about favirited or saved events
     if($logged_in) {
-      $list_events_favorited = fetch_user_events($db_connection, $_SESSION['user_id'], false, false);
-      $list_events_rsvp = fetch_user_events($db_connection, $_SESSION['user_id'], true, false);
+      $list_events_favorited = fetch_user_events($db_connection, $_SESSION['user_id'], false, false, false);
+      $list_events_rsvp = fetch_user_events($db_connection, $_SESSION['user_id'], true, false, false);
     }
 
     ///check if result was returned

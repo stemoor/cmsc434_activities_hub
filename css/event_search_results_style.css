@@ -63,7 +63,6 @@
 
 .list-item-img {
 	display: inline-block;
-	background: url("../imgs/logo_3.png") 50% 50% no-repeat;
 	background-size: auto;
 	background-position: center;
 	height: 100%;
@@ -89,7 +88,7 @@
 }
 
 .list-item-btns .btn {
-	min-width: 125px;
+	min-width: 142px;
 	margin-bottom: 5%;
 	font-size: 1.3em;
 	border: none;
@@ -139,6 +138,16 @@
 	text-align: left;
 	background: rgba(0,0,0,.03);
 	margin-bottom: 5%;
+
+}
+
+pre{
+	white-space: pre-wrap;
+	text-align: left;
+	padding: 4%;
+	word-break: normal;
+	font-family: 'Raleway', sans-serif;
+	font-size: 1.2em;
 }
 
 /*----------------- Categories Side Panel*/
@@ -175,5 +184,3 @@
 	padding-right: 5%;
 	padding-left: 10%;
 }
-
-

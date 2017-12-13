@@ -19,3 +19,7 @@
     background: rgb(178, 236, 37);
 
 }
+
+.tab-content {
+  display: block;
+}

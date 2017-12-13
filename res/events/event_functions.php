@@ -15,6 +15,11 @@
 
         $event_type = ucfirst($data['event_type']);
 
+        $image = "src='imgs/event_place_holder_img.png'";
+        if($data['picture'] !== null){
+            $image = "src='data:image/png;base64," . base64_encode($data['picture'])."'";
+        }
+
         $event_box = <<<EOBOX
 
 
@@ -27,7 +32,7 @@
                   <!--list-item-image-->
                   <div class="col-sm-3">
                     <div class="list-item-img-container drop-right-shadow">
-                      <div class="list-item-img"></div>
+                      <img $image class="list-item-img"></img>
                     </div>
                   </div>
                   <!-- </list-item-image> -->
@@ -176,9 +181,11 @@ EOBOX;
         $result = null;
 
         if($byEventType){
+             echo "<script>console.log('query by type = $event_type')</script>";
 
             $result = query_event_by_type($db_connection, $event_type,  $event_status, $publish_status);
         } else {
+            echo "<script>console.log('query by organization')</script>";
 
             $result = query_event_by_organization($db_connection, $search_term,  $event_status, $publish_status, true);
         }
@@ -224,13 +231,13 @@ EOBOX;
 
     function fetch_user_events($db_connection, $user_id, $from_rsvp_list, $include_event_info){
 
+
         $table = 'favorited_events';
 
         //stablish the table to query
         if($from_rsvp_list){
             $table = 'rsvp_list';
         }
-
 
         #query the table for list of events
         $query = "SELECT event_id from $table where user_id = '$user_id'";
@@ -245,6 +252,8 @@ EOBOX;
             //grab each event
             $data;
 
+
+            $count = 0;
             for($i = 0; $i < $result->num_rows; $i++){
 
                 //get current row
@@ -258,8 +267,8 @@ EOBOX;
 
                 if($include_event_info) {
 
-                     //now query database for the event info from events table
-                    $query = "select * from events where id='$event_id' order by start_datetime DESC";
+                     //now query database for the event info from events table order by morst rescent
+                    $query = "select * from events where id='$event_id' and event_status = 'open'and publish_status = 'published' order by start_datetime DESC";
 
                     $event = $db_connection->query($query);
 
@@ -272,13 +281,15 @@ EOBOX;
 
                         //get first element, there should only be one, so add it to final list
                         $event->data_seek(0);
-                        $data[$i] = $event->fetch_array(MYSQLI_ASSOC);
+                        $data[$count] = $event->fetch_array(MYSQLI_ASSOC);
+                        $count++;
                     }
 
                 } else {
 
                     //no need for event information, just add the event id to the data
-                    $data[$i] = $event_id;
+                    $data[$count] = $event_id;
+                    $count++;
                 }
 
             }

@@ -12,11 +12,11 @@
         //log out
         logout($db_connection );
 
-        //get prev url
-        $from = $_SERVER['HTTP_REFERER'];
+            //get prev url
+            $from = $_SERVER['HTTP_REFERER'];
 
-        //return to prev url
-        header('Location:'.$from);
+            //return to prev url
+            header('Location: ../../index.php');
 
     }
 

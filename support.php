@@ -56,8 +56,8 @@
     <title>Activity Hub</title>
 
     <!--Bootstrap core JavaScript-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
      <script src="res/events/search_results.js"></script>
@@ -228,6 +228,17 @@ EOPAGE;
                 $body_top .= '<script>toggle_planner_features(false);</script>';
             }
 
+            if(isset($_SESSION['event_created'])){
+                if( $_SESSION['event_created']){
+                    $body_top .= '<script>alert("Event Created Successfully!");</script>';
+                } else {
+                    $body_top .= '<script>alert("Opps, something went wrong with creating event. Try again later!");</script>';
+                }
+
+                unset($_SESSION['event_created']);
+
+            }
+
 
     $body_top .= <<<EOPAGE
 
@@ -259,7 +270,7 @@ EOPAGE;
 
             <!-- Content of the new event modal -->
             <div class="modal-body">
-              <form class="new-event-form">
+              <form class="new-event-form" action="res/events/process_add_event.php" method="POST" enctype="multipart/form-data">
                  <div class="row">
                     <div class="col-sm-6">
 
@@ -624,14 +635,15 @@ EOPAGE;
                       </a>
                     </li>
 
-                    <li id="rsvpd_events" class="nav-item basic_user_features">
-                      <a  class="nav-link" href="my_events.php?rsvp=false">
-                        <i class="acc-modal-icon  glyphicon glyphicon-check"></i>Events Attending
+                    <li id="" class="nav-item basic_user_features">
+                      <a  class="nav-link" href="my_events.php?rsvp=true">
+                        <i class="acc-modal-icon  glyphicon glyphicon-check"></i>RSVP'd Events
                       </a>
                     </li>
+
                     <li class="nav-item basic_user_features">
-                      <a id="" class=" nav-link " href="my_events.php?rsvp=true">
-                        <i class="acc-modal-icon  glyphicon glyphicon-star"></i>Favorited Events
+                      <a id="" class=" nav-link " href="my_events.php?rsvp=false">
+                        <i class="acc-modal-icon  glyphicon glyphicon-star"></i>Favorite Events
                       </a>
                     </li>
 
@@ -674,7 +686,9 @@ EOPAGE;
 
     </script>
 
+
   </body>
+
 </html>
 EOPAGE;
         return $head.$body_top;
