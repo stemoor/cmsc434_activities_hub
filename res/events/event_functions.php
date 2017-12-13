@@ -19,7 +19,7 @@
 
 
             <!--<event listing {$data['id']}>-->
-              <div id="{$data["id"]}" class="list-item right-border {$event_catergories_colors[$data['event_type']]}-border drop-right-shadow">
+              <div id="event{$data["id"]}" class="list-item right-border {$event_catergories_colors[$data['event_type']]}-border drop-right-shadow">
 
                 <!-- list-item-body -->
                 <div class="row list-item-body">
@@ -176,11 +176,9 @@ EOBOX;
         $result = null;
 
         if($byEventType){
-             echo "<script>console.log('query by type = $event_type')</script>";
 
             $result = query_event_by_type($db_connection, $event_type,  $event_status, $publish_status);
         } else {
-            echo "<script>console.log('query by organization')</script>";
 
             $result = query_event_by_organization($db_connection, $search_term,  $event_status, $publish_status, true);
         }
@@ -233,14 +231,19 @@ EOBOX;
             $table = 'rsvp_list';
         }
 
+
         #query the table for list of events
         $query = "SELECT event_id from $table where user_id = '$user_id'";
 
         $result = $db_connection->query($query);
 
-        if($result && $result->num_rows > 0){
+        if(!$result){
+
+            //something went bad with db
+            return null;
+        } else if($result->num_rows > 0){
             //grab each event
-            $data = null;
+            $data;
 
             for($i = 0; $i < $result->num_rows; $i++){
 
@@ -256,30 +259,33 @@ EOBOX;
                 if($include_event_info) {
 
                      //now query database for the event info from events table
-                    $query = "select * from events where id='$event_id order by start_datetime DESC'";
+                    $query = "select * from events where id='$event_id' order by start_datetime DESC";
 
                     $event = $db_connection->query($query);
 
-                    if($event){
-                        //get first element, there should only be one and add it to final list
-                        $data[$i] = $event->data_seek(0)->fetch_array(MYSQLI_ASSOC);
+                    if(!$event){
+
+                        //something went wrong with database
+                        return null;
+
+                    } else if ($event->num_rows > 0){
+
+                        //get first element, there should only be one, so add it to final list
+                        $event->data_seek(0);
+                        $data[$i] = $event->fetch_array(MYSQLI_ASSOC);
                     }
 
                 } else {
+
+                    //no need for event information, just add the event id to the data
                     $data[$i] = $event_id;
                 }
-
-
 
             }
 
             return $data;
         }
 
-        return null;
-
     }
-
-
 
 ?>

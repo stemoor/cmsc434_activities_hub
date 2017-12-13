@@ -4,6 +4,16 @@ function goToEventSearchResults(id) {
       document.getElementById("search-form").submit();
 }
 
+
+function get_list_of_user_events(list_type){
+
+        $('#my_events_type').val(list_type);
+
+        alert(list_type);
+
+        document.getElementById("user-events-form").submit();
+
+}
 function update_search_box(term, category){
         document.getElementById('search_box').value = term;
         document.getElementById(category + "-category").selected = 'selected';

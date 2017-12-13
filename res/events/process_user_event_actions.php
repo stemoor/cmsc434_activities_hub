@@ -29,7 +29,7 @@
 
         } else if (isset($_POST['export'])){
 
-
+            $_SESSION['action_completed'] = "Event Exported Successfully!";
             header('Location:'.$from);
             die();
         }
@@ -58,6 +58,6 @@
     }
 
         //return to prev page
-        header('Location:'.$from);
+        header('Location:'.$from."#event".$event_id);
 
 ?>

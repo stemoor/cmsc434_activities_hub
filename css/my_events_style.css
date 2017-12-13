@@ -1,0 +1,21 @@
+.my_results_page_title {
+    padding-bottom: .5%;
+
+    margin-bottom: 5%;
+
+}
+
+.nav-tabs.nav-justified {
+
+}
+
+
+.nav-tabs.nav-justified>li>a{
+    font-size: 1.2em;
+    text-align: center;
+    color: rgba(0,0,0, 1);
+}
+.nav-tabs.nav-justified>li>a:hover {
+    background: rgb(178, 236, 37);
+
+}

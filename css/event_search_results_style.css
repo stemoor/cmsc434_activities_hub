@@ -1,5 +1,5 @@
 #events-list{
-	padding-top: 55px;
+	padding-top: 75px;
 	height: -webkit-fill-available;
 	background: white;
 }
@@ -31,6 +31,7 @@
     margin-bottom: 5%;
     background-color: white;
 	padding: 2% 5% 0% 5%;
+	color: #3e3d3d;
 }
 
 .list-item-header {
@@ -41,11 +42,11 @@
 
 .list-item-title {
 	font-size: 1.5em;
-	color: gray;
+	color: #3e3d3d;
 }
 
 .list-item-subtitle{
-	color: gray;
+	color: #3e3d3d;
 	font-size: 1.2em;
 }
 
@@ -94,23 +95,33 @@
 	border: none;
 	color: #575555;
 	text-align: justify;
+	background: transparent;
+	color:  #3e3d3d;
+	border: 1px solid rgb(176, 168, 195);
 
 }
 
 
 .list-item-btns .selected{
+	/*background: rgb(61, 43, 113);*/
+	/*color: #f0e9e9;*/
+	border: none;
+
 	background: rgb(213, 220, 231);
 	color: gray;
-	border: none;
+	/*color:  rgb(61, 43, 113);*/
+	/*border: 1px solid rgb(61, 43, 113);*/
 	outline: 0;
 
 }
 
 .list-item-btns .btn:hover, .list-item-btns .btn:focus{
 	background: rgb(213, 220, 231);
-	color: gray;
+	color: #3e3d3d;
 	border: none;
 	outline: 0;
+		background: rgb(178, 236, 37);
+	/*color: #f0e9e9;*/
 }
 
 .list-item-footer{
@@ -160,7 +171,9 @@
 }
 
 
-.list-side-panel-icon{
+.list-side-panel-icon, .acc-modal-icon {
 	padding-right: 5%;
 	padding-left: 10%;
 }
+
+

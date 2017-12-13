@@ -345,7 +345,8 @@ a.btn.btn-info {
   width: 150px;
   position: relative;
   align-self: center;
-  margin-bottom: 6%;
+  margin-bottom: 10%;
+  margin-top: 5%;
 }
 
 #signup-avatar:hover{
@@ -501,6 +502,7 @@ ul.dropdown-lr {
   border-bottom-color: #EEEEEE;
   padding-bottom: 0px;
   border: none;
+
 }
 
 .modal-footer {
@@ -599,6 +601,10 @@ footer {
 
 .dark-green-bg {
 	 background: #c2d54a;
+}
+
+.white-bg {
+  background: white;
 }
 
 .green-bg {
@@ -734,12 +740,12 @@ footer {
   font-size: 1.5em;
   margin-bottom: 5%;
   text-align: justify;
-  color:#9d9d9d;
+  color:#b7b5b5;
 }
 
 .account-side-panel-nav .nav-item a:hover{
   color: white;
-  background: #484848;
+  background: #292828;
 }
 
 .account-nav-btn img{

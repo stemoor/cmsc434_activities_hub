@@ -66,6 +66,7 @@
     <!-- Custom styles for this page -->
     <link href="css/main_style.css" rel="stylesheet">
     <link href="css/event_search_results_style.css" rel="stylesheet">
+    <link href="css/my_events_style.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300|Raleway:300|Roboto:100" rel="stylesheet">
   </head>
@@ -573,7 +574,7 @@ EOPAGE;
      <!--<!--account modal-->
       <div id="account-modal" class="no-overlay-bg modal fade right in" tabindex="-1" role="dialog" aria-labelledby="account-label" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-          <div class="modal-content black-bg">
+          <div class="modal-content dark-gray-bg">
             <!--tile-->
             <div class="modal-header text-center">
               <!--close button-->
@@ -591,53 +592,55 @@ EOPAGE;
             <div class=" text-center">
               <div class="col-lg-12 modal-body">
                 <div class="account-modal-body">
-                    <img src="$avatar" alt="User Avatar" id="signup-avatar" class="img-circle"></img><br>
+                    <img src="$avatar" alt="User Avatar" id="signup-avatar" class="img-circle drop-right-shadow"></img><br>
                 </div>
                 <div class="text-center account-side-panel-nav">
                   <ul class="nav flex-column">
 
-                    <li class="nav-item" onclick="goToEventSearchResults('all-events')">
+                    <li class="nav-item">
                       <a id="" class="nav-link" href="#">
-                        <i class="list-side-panel-icon glyphicon glyphicon-user"></i>My Account
+                        <i class="acc-modal-icon glyphicon glyphicon-user"></i>My Account
                       </a>
                     </li>
 
                     <!--new event button-->
                     <li class="nav-item ">
                       <a id="new_event-btn" href="#" class="nav-link planner_features" data-toggle="modal" data-target="#new-event-modal" onclick="close_account_modal()">
-                        <i class="list-side-panel-icon glyphicon glyphicon glyphicon-plus align-text-bottom"></i> New Event
+                        <i class="acc-modal-icon  glyphicon glyphicon glyphicon-plus align-text-bottom"></i> New Event
                       </a>
                     </li>
 
                     <!--published events button-->
                     <li class="nav-item" >
                       <a id="published_events"  class="nav-link planner_features" href="#" class="nav-link">
-                        <i class="list-side-panel-icon glyphicon glyphicon-send align-text-bottom"></i> Published Events
+                        <i class="acc-modal-icon  glyphicon glyphicon-send align-text-bottom"></i> Published Events
                       </a>
                     </li>
 
                     <!--saved events button-->
                     <li  class="nav-item" >
                       <a id="saved_events" href="#" class="nav-link planner_features" >
-                        <i class="list-side-panel-icon glyphicon glyphicon-floppy-disk align-text-bottom"></i> Saved Events
+                        <i class="acc-modal-icon  glyphicon glyphicon-floppy-disk align-text-bottom"></i> Saved Events
                       </a>
                     </li>
 
-
-
-                    <li id="rsvpd_events" class="nav-item basic_user_features" onclick="goToEventSearchResults('workshop')">
-                      <a  class="nav-link" href="my_events.php">
-                        <i class="list-side-panel-icon glyphicon glyphicon-check"></i>Events I am going!
+                    <li id="rsvpd_events" class="nav-item basic_user_features">
+                      <a  class="nav-link" href="my_events.php?rsvp=false">
+                        <i class="acc-modal-icon  glyphicon glyphicon-check"></i>Events Attending
                       </a>
                     </li>
-                    <li class="nav-item basic_user_features" onclick="goToEventSearchResults('techtalk')">
-                      <a id="" class=" nav-link " href="my_events.php">
-                        <i class="list-side-panel-icon glyphicon glyphicon-star"></i>Favorited Events
+                    <li class="nav-item basic_user_features">
+                      <a id="" class=" nav-link " href="my_events.php?rsvp=true">
+                        <i class="acc-modal-icon  glyphicon glyphicon-star"></i>Favorited Events
                       </a>
                     </li>
-
 
                   </ul>
+
+
+                    <form id="user-events-form" action="my_events.php" method="POST" style="display:none;">
+                        <input type="hidden">
+                    </form>
                 </div>
               </div>
             </div>

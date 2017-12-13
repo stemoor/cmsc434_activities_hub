@@ -1,12 +1,17 @@
 <?php
   include_once("support.php");
   include_once("res/events/event_functions.php");
+  include_once("res/events/event_categories.php");
 
   $search_term = null;
   $search_category = "all-events";
   $events_listing = "";
   $byEventType = true;
   $event_found = false;
+  $from_rsvp_list = false;
+  $logged_in = login_check($db_connection);
+  $page_title = "RSVPed Events";
+
 
     //information submited by the event category blocks
     if (isset($_POST['search_category'])){
@@ -17,7 +22,7 @@
     }
 
     //information submited by the nav search bar
-    if (isset($_POST['submit'])) {
+    if (isset($_POST['search-bar-submit'])) {
 
        $search_category = $_POST['category'];
 
@@ -31,60 +36,67 @@
 
     }
 
-
+    //came from user accoutn panel
+    if(isset($_GET['rsvp'])){
+      $from_rsvp_list = $_GET['rsvp'] === 'true';
+      $page_title = "Favorited Events";
+      unset($_GET['rsvp']);
+    }
 
     //fetch events from db
     $events_list = fetch_user_events($db_connection, $_SESSION['user_id'], $from_rsvp_list, true);
 
+    $list_events_rsvp = null;
+    $list_events_favorited = null;
+
+    //if user logged in, retrieve information about favirited or saved events
+    if($logged_in) {
+      $list_events_favorited = fetch_user_events($db_connection, $_SESSION['user_id'], false, false);
+      $list_events_rsvp = fetch_user_events($db_connection, $_SESSION['user_id'], true, false);
+    }
+
 
     ///check if result was returned
-    if($events_list != null) {
-
-        //found a row in the db matching the category given
-        for($i = 0; $i < $events_list->num_rows; $i++){
-
-            //get first row -> there should only be one row anyway as email are unique
-            $events_list->data_seek($i);
-
-            //get array with the columns  from the row found
-            $row = $events_list->fetch_array(MYSQLI_ASSOC);
+    if($events_list !== null) {
+        $event_found = true;
 
 
+        for($i = 0; $i < sizeof($events_list); $i++){
 
-            //if searching my event type, check event titles for the search term, only list the ones that have that terms
-            if($byEventType && $search_term != null) {
-              if (has_search_term($row, $search_term)){
+            $is_favorited = false;
+            $is_rsvped = false;
 
-                  $event_found = true;
-
-                  $row['organization'] =  fetch_user_by_id($db_connection, $row['planner_id'], true)['organization'];
-                  $events_listing .= generate_event_box($row);
-
-              }
-            } else {
-                $event_found = true;
-
-                //searching by organization name or no search time provided
-                $row['organization'] =  fetch_user_by_id($db_connection, $row['planner_id'], true)['organization'];
-                $events_listing .= generate_event_box($row);
+            //check if events are already rsvped or saved by user
+            if($list_events_rsvp != null) {
+              $is_rsvped = in_array($events_list[$i]['id'], $list_events_rsvp);
             }
+
+            if($list_events_favorited != null){
+              $is_favorited = in_array($events_list[$i]['id'], $list_events_favorited);
+
+            }
+
+           $row['organization'] =  fetch_user_by_id($db_connection, $events_list[$i]['planner_id'], true)['organization'];
+           $events_listing .= generate_event_box($events_list[$i], $is_favorited, $is_rsvped);
+
         }
 
     }
 
     if(!$event_found) {
       // no matchin events found
-      $events_listing = "<h1>No event matching your search was found :(</h1>";
+      $events_listing = "<h1>You have not events in this list.</h1>";
     }
-
 
   $body = <<<EOPAGE
 
       <!-- results section Section -->
       <section class="" id="events-list">
         <div class="section-body">
+
           <div class="row">
             <!--control pannel -->
+
             <div class="col-sm-2 list-side-panel-container">
 
               <div class="list-side-panel">
@@ -120,7 +132,34 @@
             <!--list of events-->
             <div class="col-sm-8 list-wrapper">
 
-              $events_listing
+              <div class="my_results_page_title text-center">
+                <ul class="nav nav-tabs nav-justified">
+                  <li class="nav-item">
+                      <a class="nav-link active" data-toggle="tab" href="#rsvp_list" role="tab">
+                        <i class="acc-modal-icon  glyphicon glyphicon-check"></i> RSVP Events</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" data-toggle="tab" href="#favorite_list" role="tab">
+                        <i class="acc-modal-icon  glyphicon glyphicon-star"></i> Favorite Events</a>
+                  </li>
+              </ul>
+              </div>
+
+              <!-- Tab panels -->
+              <div class="tab-content card">
+                  <!--Panel 1-->
+                  <div class="tab-pane fade in show active" id="rsvp_list" role="tabpanel">
+                    $events_listing
+                  </div>
+                  <!--/.Panel 1-->
+                  <!--Panel 2-->
+                  <div class="tab-pane fade" id="favorite_list" role="tabpanel">
+
+                  </div>
+                  <!--/.Panel 2-->
+              </div>
+
+
 
               <div class="event-pagination">
                 <nav aria-label="Page navigation example">
@@ -133,7 +172,6 @@
                   </ul>
                 </nav>
               </div>
-
 
 
             </div>

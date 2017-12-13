@@ -240,3 +240,24 @@ USAGE:
                 VALUES (3,  'vrclub', 'General Body Meeting', 'club', 'CSIC Building #2364',
                         '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
                         'closed', 'published');
+
+
+    - Commands to reset the tables
+
+            1. Reset events status:
+
+                UPDATE events SET event_status = 'open' where event_status = 'closed';
+                UPDATE events SET publish_status = 'published' where publish_status = 'unpublished';
+
+            2. Delet all entries from the rsvp_list and favorited events tables
+
+                 delete from rsvp_list;
+
+                 delete from favorited_events;
+
+            3. To drop tables and start from scracth
+
+                drop table rsvp_list;
+                ...
+                drop table favorited_events;
+
