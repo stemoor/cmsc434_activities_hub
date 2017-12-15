@@ -103,8 +103,10 @@ textarea.form-control {
 
 .about-img{
   background-image:  url("https://farm9.static.flickr.com/8059/8231788295_430d4a09eb_b.jpg");
+  /*background: url("../imgs/about_pic.png");*/
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   height: 400px;
   width: 500px;
   border-right: 50px solid #34c3b9;
@@ -510,8 +512,15 @@ ul.dropdown-lr {
   height: auto;
 }
 
+select#new-event-category.search.form-control{
+  font-size: 1.3em;
+}
 
-
+.publish-status{
+  font-size:  1.3em;
+  color: #000000;
+  padding: 2%;
+}
 
 .form-control.search, #search_category{
   display: inline-block;
@@ -519,6 +528,7 @@ ul.dropdown-lr {
   height: 40px;
   margin-right : -2%;
   font-size: 1em;
+  color: #000000;
 }
 
 .form-container{

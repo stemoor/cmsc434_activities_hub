@@ -299,4 +299,185 @@ EOBOX;
 
     }
 
+    function fetch_planner_events($db_connection, $user_id, $publish_status){
+
+        $query = "select * from events where planner_id = '$user_id' and publish_status = '$publish_status' order by start_datetime";
+
+        $res = $db_connection->query($query);
+
+        if(!$res) {
+            //oops, something went wrong with the database;
+            echo "problem in db";
+            return null;
+        } else {
+
+            if($res->num_rows > 0){
+                return $res;
+            }
+        }
+
+        //no match found
+        return null;
+
+    }
+
+
+    function get_list_of_guests($event_id, $include_guest_info){
+        global  $db_connection;
+
+        $query = "select user_id from rsvp_list where event_id = '$event_id'";
+
+        $res = $db_connection->query($query);
+
+        if(!$res){
+            return null;
+        } else {
+            return $res;
+        }
+
+    }
+
+    function generate_planner_event_box($data){
+        global  $db_connection;
+        global  $logged_in;
+        global  $event_catergories_colors;
+
+        $num_guests = get_list_of_guests($data['id'], false);
+
+        if($num_guests === null){
+            $num_guests = 0;
+        } else {
+            $num_guests = $num_guests->num_rows;
+        }
+
+
+        $event_type = ucfirst($data['event_type']);
+
+        $image = "src='imgs/event_place_holder_img.png'";
+        if($data['picture'] !== null){
+            $image = "src='data:image/png;base64," . base64_encode($data['picture'])."'";
+        }
+
+        $event_box = <<<EOBOX
+
+
+            <!--<event listing {$data['id']}>-->
+              <div id="event{$data["id"]}" class="list-item right-border {$event_catergories_colors[$data['event_type']]}-border drop-right-shadow">
+
+                <!-- list-item-body -->
+                <div class="row list-item-body">
+
+                  <!--list-item-image-->
+                  <div class="col-sm-3">
+                    <div class="list-item-img-container drop-right-shadow">
+                      <img $image class="list-item-img"></img>
+                    </div>
+                  </div>
+                  <!-- </list-item-image> -->
+
+                  <!--description -->
+                  <div class="col-sm-7">
+
+                    <!--list-item-title-->
+                    <div class="list-item-header">
+                       <h4 class="list-item-title">{$data['title']}</h4>
+                       <h5 class="list-item-subtitle">{$data['organization']}</h5>
+                    </div>
+                    <!--list-item-title--->
+
+                    <div class="list-item-info">
+                        <p class=""> Event Type: {$event_type}</p>
+                        <p class=""> Start Date: {$data['start_datetime']}</p>
+                        <p class=""> End Date: {$data['end_datetime']}</p>
+                        <p class=""> Location: {$data['location']}</p>
+                    </div>
+                    <!-- </list-item-info> -->
+
+                  </div>
+
+                  <!--list-item-btns-->
+                  <div class="col-sm-2">
+                    <div class="list-item-btns planner_features">
+                        <form action="res/events/process_planner_event_actions.php" method="POST">
+                            <button type='submit' name='close-event' class='btn btn-info btn-lg gray-bg
+
+
+EOBOX;
+
+                if($data['event_status'] === 'closed'){
+                    $event_box .= "'><span class='list-item-btn-icons glyphicon glyphicon-eye-open'></span> Open";
+
+                } else{
+                    $event_box .= " selected'><span class='list-item-btn-icons glyphicon glyphicon-eye-close'></span> Close";
+                }
+
+ $event_box .= <<<EOBOX
+
+                            </button>
+
+
+EOBOX;
+
+                if($data['publish_status'] === 'published'){
+                    $event_box .= "<button type='submit' name='unpublish' class='btn btn-info btn-lg gray-bgselected'><span class='list-item-btn-icon glyphicon glyphicon-minus'></span> Unpublish";
+
+                } else{
+                    $event_box .= "<button type='submit' name='publish' class='btn btn-info btn-lg gray-bg'><span class='list-item-btn-icons glyphicon glyphicon-send'></span> Publish";
+                }
+
+ $event_box .= <<<EOBOX
+
+                            </button>
+
+                            <button type="submit" name="list-guests" id="" class="btn btn-info btn-lg gray-bg">
+                              ($num_guests) Atendee(s)
+                            </button>
+
+
+                            <input type="hidden" name="event_id" value="{$data['id']}">
+
+                        </form>
+                    </div>
+
+                  </div>
+                  <!--</list-item-btns>-->
+
+                </div>
+                <!--</list-item-body>-->
+
+                <!--list item footer -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="dropdown list-item-footer">
+                      <a class="btn" href="#description{$data['id']}" data-toggle="collapse"
+                         aria-expanded="false" aria-controls="description1">
+                        Event Description <span class="glyphicon glyphicon-menu-down"></span>
+                      </a>
+                    </div>
+
+                    <div class="collapse" id="description{$data['id']}">
+                      <div class="card card-body list-item-description">
+                        <h2>About the event</h2><br>
+                        <pre>
+                            {$data['description']}"
+                        </pre>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <!--</list-item-footer> -->
+
+              </div>
+              <!--</list-item>-->
+
+
+EOBOX;
+
+
+
+    return $event_box;
+
+    }
+
 ?>

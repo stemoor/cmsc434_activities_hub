@@ -29,7 +29,16 @@
         $error_msg = "This event is already unpublished" ;
         $action = "publish_status = 'unpublished'";
 
-    } else if (isset($_POST['list-guests']))  {
+    } else if (isset($_POST['publish'])){
+
+        echo "pub";
+
+        $message = "Event has been published! Users can now RSVP";
+        $error_msg = "This event is already published" ;
+        $action = "publish_status = 'published'";
+
+    }
+    else if (isset($_POST['list-guests']))  {
 
         //fake complete this action as we won't implement this
         $_SESSION['action_completed'] = "List of attendes for this event was sent to your email!";

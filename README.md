@@ -178,33 +178,6 @@ USAGE:
                 VALUES (3, 'VR Club', 'vrclub');
 
 
-            INSERT INTO events (planner_id, organization, title, event_type, location,
-                                start_datetime, end_datetime, description,
-                                event_status, publish_status)
-                VALUES (1, 'microsoft', 'Robotics Tech Talk', 'techtalk', 'CSIC Building #2364',
-                        '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
-                        'open', 'published');
-
-            INSERT INTO events (planner_id, organization, title, event_type, location,
-                                start_datetime, end_datetime, description,
-                                event_status, publish_status)
-                VALUES (1, 'microsoft',  'Careers at Microsfot Info Session', 'workshop', 'CSIC Building #2364',
-                        '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
-                        'open', 'published');
-
-            INSERT INTO events (planner_id, organization, title, event_type, location,
-                                start_datetime, end_datetime, description,
-                                event_status, publish_status)
-                VALUES (1, 'microsoft', 'Microsoft for Seniors', 'other', 'CSIC Building #2364',
-                        '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
-                        'open', 'published');
-
-            INSERT INTO events (planner_id, organization, title, event_type, location,
-                                start_datetime, end_datetime, description,
-                                event_status, publish_status)
-                VALUES (2, 'google', 'The Best Tech Talk by Google', 'techtalk', 'CSIC Building #2364',
-                        '12/12/17 05:00 pm', '12/12/17 10:00 pm', 'No Description',
-                        'open', 'published');
 
             INSERT INTO events (planner_id, organization, title, event_type, location,
                                 start_datetime, end_datetime, description,

@@ -28,10 +28,8 @@
               unset($_SESSION['action_completed']);
         }
 
-        echo "<script>console.log('$user_name logged in');</script>";
     } else {
         $logged_in = false;
-        echo "<script>console.log('not logged in');</script>";
     }
 
     function generate_page($body, $page) {
@@ -314,11 +312,11 @@ EOPAGE;
                                 <input id="event_pic" name="event_pic" class="form-control drop-right-shadow"  type="file">
                             </div>
 
-                            <div class="important">
-                                <div class="form-group ">
+                            <div class="important publish-status">
+                                <div class="form-group">
                                     <label for="publish">Publish this event?</label> <br>
-                                    <input id="publish" name="publish" class="drop-right-shadow"  type="radio" value="true" required> Yes!
-                                    <input id="publish" name="publish" class="drop-right-shadow"  type="radio" value="false" required> No, save for later!
+                                    <input  name="publish" class="drop-right-shadow"  type="radio" value="true" required> Yes!
+                                    <input name="publish" class="drop-right-shadow"  type="radio" value="false" required> No, save for later!
                                 </div>
                             </div>
 
@@ -623,15 +621,15 @@ EOPAGE;
 
                     <!--published events button-->
                     <li class="nav-item" >
-                      <a id="published_events"  class="nav-link planner_features" href="#" class="nav-link">
+                      <a id="published_events"  class="nav-link planner_features" href="planner_events.php?published=true" class="nav-link">
                         <i class="acc-modal-icon  glyphicon glyphicon-send align-text-bottom"></i> Published Events
                       </a>
                     </li>
 
                     <!--saved events button-->
                     <li  class="nav-item" >
-                      <a id="saved_events" href="#" class="nav-link planner_features" >
-                        <i class="acc-modal-icon  glyphicon glyphicon-floppy-disk align-text-bottom"></i> Saved Events
+                      <a id="saved_events" href="planner_events.php?published=false" class="nav-link planner_features" >
+                        <i class="acc-modal-icon  glyphicon glyphicon-pencil align-text-bottom"></i> Event Drafts
                       </a>
                     </li>
 
